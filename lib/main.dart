@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'task_data.dart';
-import 'task_view.dart';
+import 'package:tasks/data/database_helper.dart';
+import 'package:tasks/model/task.dart';
 
 void main() => runApp(new TasksApp());
 
@@ -13,6 +13,7 @@ class TasksApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.teal,
         canvasColor: Colors.transparent,
+        fontFamily: 'Raleway',
       ),
       home: new TasksHomePage(),
     );
@@ -30,121 +31,239 @@ class _TasksHomePageState extends State<TasksHomePage> {
         context: context,
         builder: (builder) {
           return new Container(
-            height: 350.0,
-            color: Colors.transparent,
-            child: new Container(
-                decoration: new BoxDecoration(
+            height: 530.0,
+            decoration: new BoxDecoration(
+                color: Colors.white,
+                borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(10.0),
+                    topRight: const Radius.circular(10.0))),
+            child: new Column(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  currentAccountPicture: new DecoratedBox(
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new AssetImage("assets/user/satya_profile.png"),
+                      ),
+                    ),
+                  ),
+                  margin: EdgeInsets.all(0.0),
+                  accountEmail: new Text(
+                    "satyabrat.me@gmail.com",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  accountName: new Text(
+                    "Satyabrat Sahoo",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  decoration: new BoxDecoration(
                     color: Colors.white,
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0))),
-                child: new Center(
-                  child: new Text("Hi modal sheet"),
-                )),
+                  ),
+                ),
+                new Divider(
+                  height: 4.0,
+                  indent: 2.0,
+                ),
+                new ListTile(
+                  title: new Text(
+                    "My Tasks",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new Divider(
+                  height: 4.0,
+                ),
+                new ListTile(
+                  leading: new Icon(
+                    Icons.add,
+                  ),
+                  title: new Text(
+                    "Create new list",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new Divider(
+                  height: 4.0,
+                ),
+                new ListTile(
+                  leading: new Icon(
+                    Icons.feedback,
+                  ),
+                  title: new Text(
+                    "Send feedback",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new Divider(
+                  height: 4.0,
+                ),
+                new ListTile(
+                  title: new Text(
+                    "Open-source licenses",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new Divider(
+                  height: 4.0,
+                ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Text(
+                      "Privacy Policy",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    new Container(
+                      width: 26.0,
+                    ),
+                    //new Icon(
+                    //Icons.,
+                    //),
+                    new Text(
+                      "Terms of service",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           );
         });
   }
 
   void _modalBottomSheetMore() {
     showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return new Container(
-            height: 350.0,
-            color: Colors.transparent,
-            child: new Container(
-                decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0))),
-                child: new Center(
-                  child: new Text("Hi modal sheet"),
-                )),
-          );
-        });
+      context: context,
+      builder: (builder) {
+        return new Container(
+          height: 370.0,
+          decoration: new BoxDecoration(
+              color: Colors.white,
+              borderRadius: new BorderRadius.only(
+                  topLeft: const Radius.circular(10.0),
+                  topRight: const Radius.circular(10.0))),
+          child: new Padding(
+            padding: EdgeInsets.all(
+              10.0,
+            ),
+            child: new Column(
+              children: <Widget>[
+                new ListTile(
+                  title: const Text(
+                    'Sort By',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new ListTile(
+                  leading: new Container(
+                    width: 4.0,
+                  ),
+                  title: const Text(
+                    'My Order',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  trailing: new Icon(Icons.check),
+                ),
+                new ListTile(
+                  leading: new Container(
+                    width: 4.0,
+                  ),
+                  title: const Text(
+                    'Date',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  trailing: new Icon(Icons.check),
+                ),
+                new Divider(
+                  height: 10.0,
+                ),
+                new ListTile(
+                  title: const Text(
+                    'Rename List',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new ListTile(
+                  title: const Text(
+                    'Delete List',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                new ListTile(
+                  title: const Text(
+                    'Delete all completed tasks',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
+
+  void onNewTaskSave() {
+    if (_newTask != null) {
+      var task = new Task(_newTask);
+      var db = new DatabaseHelper();
+      db.saveTask(task);
+      Navigator.pop(context);
+      print("Task saved!");
+      print("$_newTask");
+      _getTasks();
+    } else {
+      print("Empty field!");
+    }
+  }
+
+  String _newTask = "";
 
   void _newTaskModalBottomSheet() {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
           return new Column(
-            //height: 140.0,
-            //color: Colors.transparent,
-            children: <Widget>[
-              new Container(
-                decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0))),
-                child: new Padding(
-                  padding: EdgeInsets.only(
-                    left: 20.0,
-                    top: 20.0,
-                    right: 20.0,
-                    bottom: 22.0,
-                  ),
-                  child: new Column(
-                    children: <Widget>[
-                      new TextField(
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'New Task',
-                        ),
-                      ),
-                      new Container(
-                        height: 20.0,
-                      ),
-                      new Row(
-                        children: <Widget>[
-                          new IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: new Icon(
-                              Icons.add_circle,
-                            ),
-                            onPressed: () {},
-                            color: Theme.of(context).accentColor,
-                          ),
-                          new Container(
-                            width: 240.0,
-                          ),
-                          new FlatButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Save',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.teal,
-                              ),
-                            ),
-                            color: Colors.white,
-                            splashColor: Colors.blue,
-                            textColor: Theme.of(context).accentColor,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
-  }
-
-  void showSlideupView() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               new GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child:
-                new Container(
+                //onTapUp: (){void lol(){};},
+                child: new Container(
                   decoration: new BoxDecoration(
                       color: Colors.white,
                       borderRadius: new BorderRadius.only(
@@ -160,6 +279,13 @@ class _TasksHomePageState extends State<TasksHomePage> {
                     child: new Column(
                       children: <Widget>[
                         new TextField(
+                          onChanged: (newTask) {
+                            _newTask = newTask;
+                          },
+                          onSubmitted: (newTask) {
+                            onNewTaskSave();
+                          },
+                          //focusNode: FocusNode().unfocus(),
                           autofocus: true,
                           decoration: new InputDecoration(
                             border: InputBorder.none,
@@ -176,14 +302,18 @@ class _TasksHomePageState extends State<TasksHomePage> {
                               icon: new Icon(
                                 Icons.add_circle,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               color: Theme.of(context).accentColor,
                             ),
                             new Container(
                               width: 240.0,
                             ),
                             new FlatButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                onNewTaskSave();
+                              },
                               child: const Text(
                                 'Save',
                                 style: TextStyle(
@@ -207,6 +337,25 @@ class _TasksHomePageState extends State<TasksHomePage> {
         });
   }
 
+  final List<Task> taskList = new List();
+
+  void _getTasks() {
+    DatabaseHelper.get().getTasks().then((tasks) {
+      if (tasks == null) return;
+      setState(() {
+        taskList.clear();
+        taskList.addAll(tasks);
+        print(tasks.toString());
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    _getTasks();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -215,7 +364,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
         icon: const Icon(Icons.add),
         label: const Text('Add a new task'),
         onPressed: () {
-          showSlideupView();
+          _newTaskModalBottomSheet();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -264,58 +413,50 @@ class _TasksHomePageState extends State<TasksHomePage> {
                 ),
               ),
             ),
-            SliverFillRemaining(
-              child: new TaskList(
-                  kTask), /*Column(
-                children: <Widget>[
-
-                  new ListTile(
-                    leading: new Icon(Icons.radio_button_unchecked),
-                    title: new Text(
-                      'THrow My PC',
-                    ),
-                  ),
-                  new ListTile(
-                    leading: new Icon(Icons.radio_button_unchecked),
-                    title: new Text(
-                      'Buy new PC',
-                    ),
-                  ),
-                  new ListTile(
-                    leading: new Icon(Icons.radio_button_unchecked),
-                    title: new Text(
-                      'Get pissel sl',
-                    ),
-                  ),
-                ],
-              ),*/
-            )
-            /*SliverFixedExtentList(
-            itemExtent: 50.0,
-            delegate: SliverChildBuilderDelegate(
-                (context, int index) { return  Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(left: 25.0, top: 8.0,),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (bool value){
-                              _onChecked(value);
-                            },
-                            value: _isChecked,
+            SliverList(
+              delegate: SliverChildListDelegate(
+                List<Column>.generate(
+                  taskList.length,
+                  (int index) {
+                    return new Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 16.0,
+                            right: 16.0,
                           ),
-                          Text(
-                        "List Item $index",
-                        style: TextStyle(
-                          fontSize: 18.0,
+                          child: new ListTile(
+                            onTap: () {},
+                            leading: new Icon(Icons.radio_button_unchecked),
+                            title: new Text(taskList[index].task),
+                          ),
                         ),
-                      ),
-                        ],
-                      ),
-                );
-              }, childCount: 20,
+                        new Divider(
+                          height: 24.0,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
-          ),*/
+            SliverList(
+              delegate: new SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return new ExpansionTile(
+                      title: const Text('Completed'),
+                      backgroundColor: Colors.white,
+                      children: const <Widget>[
+                        const ListTile(title: const Text('One')),
+                        const ListTile(title: const Text('Two')),
+                        const ListTile(title: const Text('Three')),
+                        const ListTile(title: const Text('Four'))
+                      ]);
+                },
+                childCount: 1,
+              ),
+            ),
           ],
         ),
       ),
