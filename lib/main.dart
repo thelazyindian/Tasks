@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/data/database_helper.dart';
 import 'package:tasks/model/task.dart';
+import 'package:tasks/task_details.dart';
 
 void main() => runApp(new TasksApp());
 
@@ -13,9 +14,13 @@ class TasksApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.teal,
         canvasColor: Colors.transparent,
+        dialogBackgroundColor: Colors.white,
         fontFamily: 'Raleway',
       ),
       home: new TasksHomePage(),
+      routes: <String, WidgetBuilder>{
+        "/TaskDetailsPage": (BuildContext context) => new TaskDetailsPage(),
+      },
     );
   }
 }
@@ -25,21 +30,30 @@ class TasksHomePage extends StatefulWidget {
   _TasksHomePageState createState() => new _TasksHomePageState();
 }
 
+String _newTask = "";
+String _newTaskStatus = "PENDING";
+final List<Task> pendingTaskList = new List();
+final List<Task> completedTaskList = new List();
+
 class _TasksHomePageState extends State<TasksHomePage> {
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
           return new Container(
-            height: 530.0,
+            //height: 530.0,
             decoration: new BoxDecoration(
-                color: Colors.white,
-                borderRadius: new BorderRadius.only(
-                    topLeft: const Radius.circular(10.0),
-                    topRight: const Radius.circular(10.0))),
+              color: Colors.white,
+              borderRadius: new BorderRadius.only(
+                topLeft: const Radius.circular(10.0),
+                topRight: const Radius.circular(10.0),
+              ),
+            ),
             child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              //mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                UserAccountsDrawerHeader(
+                /*UserAccountsDrawerHeader(
                   currentAccountPicture: new DecoratedBox(
                     decoration: new BoxDecoration(
                       image: new DecorationImage(
@@ -63,17 +77,35 @@ class _TasksHomePageState extends State<TasksHomePage> {
                   decoration: new BoxDecoration(
                     color: Colors.white,
                   ),
-                ),
+                ),*/
                 new Divider(
                   height: 4.0,
                   indent: 2.0,
                 ),
-                new ListTile(
-                  title: new Text(
-                    "My Tasks",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                new Padding(
+                  child: new DecoratedBox(
+                    decoration: new BoxDecoration(
+                      color: Color(0x4D90CAF9),
+                      borderRadius: new BorderRadius.only(
+                        topLeft: new Radius.circular(30.0),
+                        bottomLeft: new Radius.circular(30.0),
+                      ),
                     ),
+                    child: new ListTile(
+                      selected: true,
+                      title: new Text(
+                        "My Tasks",
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  padding: EdgeInsets.only(
+                    left: 8.0,
+                    top: 8.0,
+                    bottom: 8.0,
                   ),
                 ),
                 new Divider(
@@ -118,28 +150,33 @@ class _TasksHomePageState extends State<TasksHomePage> {
                 new Divider(
                   height: 4.0,
                 ),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Text(
-                      "Privacy Policy",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                new Padding(
+                  padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Text(
+                        "Privacy Policy",
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ),
-                    new Container(
-                      width: 26.0,
-                    ),
-                    //new Icon(
-                    //Icons.,
-                    //),
-                    new Text(
-                      "Terms of service",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                      new Container(
+                        width: 26.0,
                       ),
-                    ),
-                  ],
+                      //new Icon(
+                      //Icons.,
+                      //),
+                      new Text(
+                        "Terms of service",
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -152,7 +189,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
       context: context,
       builder: (builder) {
         return new Container(
-          height: 370.0,
+          //height: 370.0,
           decoration: new BoxDecoration(
               color: Colors.white,
               borderRadius: new BorderRadius.only(
@@ -163,6 +200,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
               10.0,
             ),
             child: new Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new ListTile(
                   title: const Text(
@@ -239,7 +277,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
 
   void onNewTaskSave() {
     if (_newTask != null) {
-      var task = new Task(_newTask);
+      var task = new Task(_newTask, _newTaskStatus);
       var db = new DatabaseHelper();
       db.saveTask(task);
       Navigator.pop(context);
@@ -251,100 +289,101 @@ class _TasksHomePageState extends State<TasksHomePage> {
     }
   }
 
-  String _newTask = "";
+  void updateTaskStatus(String task) {
+    var db = new DatabaseHelper();
+    db.updateTask(task);
+    print('Update Task');
+  }
 
   void _newTaskModalBottomSheet() {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return new Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              new GestureDetector(
-                //onTapUp: (){void lol(){};},
-                child: new Container(
-                  decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(10.0),
-                          topRight: const Radius.circular(10.0))),
-                  child: new Padding(
-                    padding: EdgeInsets.only(
-                      left: 20.0,
-                      top: 20.0,
-                      right: 20.0,
-                      bottom: 22.0,
-                    ),
-                    child: new Column(
-                      children: <Widget>[
-                        new TextField(
-                          onChanged: (newTask) {
-                            _newTask = newTask;
-                          },
-                          onSubmitted: (newTask) {
-                            onNewTaskSave();
-                          },
-                          //focusNode: FocusNode().unfocus(),
-                          autofocus: true,
-                          decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'New Task',
-                          ),
-                        ),
-                        new Container(
-                          height: 20.0,
-                        ),
-                        new Row(
-                          children: <Widget>[
-                            new IconButton(
-                              padding: const EdgeInsets.all(0.0),
-                              icon: new Icon(
-                                Icons.add_circle,
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              color: Theme.of(context).accentColor,
-                            ),
-                            new Container(
-                              width: 240.0,
-                            ),
-                            new FlatButton(
-                              onPressed: () {
-                                onNewTaskSave();
-                              },
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.teal,
-                                ),
-                              ),
-                              color: Colors.white,
-                              splashColor: Colors.blue,
-                              textColor: Theme.of(context).accentColor,
-                            ),
-                          ],
-                        ),
-                      ],
+          return new Container(
+            decoration: new BoxDecoration(
+                color: Colors.white,
+                borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(10.0),
+                    topRight: const Radius.circular(10.0))),
+            child: new Padding(
+              padding: EdgeInsets.only(
+                left: 20.0,
+                top: 20.0,
+                right: 20.0,
+                bottom: 22.0,
+              ),
+              child: new Column(
+                children: <Widget>[
+                  new TextField(
+                    onChanged: (newTask) {
+                      _newTask = newTask;
+                    },
+                    onSubmitted: (newTask) {
+                      onNewTaskSave();
+                    },
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'New Task',
                     ),
                   ),
-                ),
+                  new Container(
+                    height: 20.0,
+                  ),
+                  new Row(
+                    children: <Widget>[
+                      new IconButton(
+                        padding: const EdgeInsets.all(0.0),
+                        icon: new Icon(
+                          Icons.add_circle,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        color: Theme.of(context).accentColor,
+                      ),
+                      new Container(
+                        width: 240.0,
+                      ),
+                      new FlatButton(
+                        onPressed: () {
+                          onNewTaskSave();
+                        },
+                        child: const Text(
+                          'Save',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.teal,
+                          ),
+                        ),
+                        color: Colors.white,
+                        splashColor: Colors.blue,
+                        textColor: Theme.of(context).accentColor,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         });
   }
 
-  final List<Task> taskList = new List();
-
   void _getTasks() {
-    DatabaseHelper.get().getTasks().then((tasks) {
+    DatabaseHelper.get().getTasks("PENDING").then((tasks) {
       if (tasks == null) return;
       setState(() {
-        taskList.clear();
-        taskList.addAll(tasks);
+        pendingTaskList.clear();
+        pendingTaskList.addAll(tasks);
+        print(tasks.toString());
+      });
+    });
+
+    DatabaseHelper.get().getTasks("COMPLETED").then((tasks) {
+      if (tasks == null) return;
+      setState(() {
+        completedTaskList.clear();
+        completedTaskList.addAll(tasks);
         print(tasks.toString());
       });
     });
@@ -415,51 +454,112 @@ class _TasksHomePageState extends State<TasksHomePage> {
             ),
             SliverList(
               delegate: SliverChildListDelegate(
-                List<Column>.generate(
-                  taskList.length,
+                List<Dismissible>.generate(
+                  pendingTaskList.length,
                   (int index) {
-                    return new Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 16.0,
-                            right: 16.0,
+                    final item = pendingTaskList[index].task;
+                    return new Dismissible(
+                      key: Key(item),
+                      onDismissed: (direction) {
+                        print(index);
+                        completedTaskList.add(pendingTaskList[index]);
+                        pendingTaskList.removeAt(index);
+                        /*Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    "${pendingTaskList.length} completed!"),
+                              ),
+                            );*/
+                        updateTaskStatus(item);
+                        _getTasks();
+                      },
+                      background: Container(
+                        color: Colors.blue,
+                      ),
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 16.0,
+                              right: 16.0,
+                            ),
+                            child: new ListTile(
+                              onTap: () {
+                                Navigator
+                                    .of(context)
+                                    .pushNamed("/TaskDetailsPage");
+                              },
+                              leading: new Icon(Icons.radio_button_unchecked),
+                              title: new Text(pendingTaskList[index].task),
+                            ),
                           ),
-                          child: new ListTile(
-                            onTap: () {},
-                            leading: new Icon(Icons.radio_button_unchecked),
-                            title: new Text(taskList[index].task),
+                          new Divider(
+                            height: 1.0,
                           ),
-                        ),
-                        new Divider(
-                          height: 24.0,
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                   },
                 ),
               ),
             ),
-            SliverList(
-              delegate: new SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return new ExpansionTile(
-                      title: const Text('Completed'),
-                      backgroundColor: Colors.white,
-                      children: const <Widget>[
-                        const ListTile(title: const Text('One')),
-                        const ListTile(title: const Text('Two')),
-                        const ListTile(title: const Text('Three')),
-                        const ListTile(title: const Text('Four'))
-                      ]);
-                },
-                childCount: 1,
-              ),
-            ),
+            completedList(),
           ],
         ),
       ),
     );
+  }
+
+  Widget completedList() {
+    if (completedTaskList.isNotEmpty) {
+      return new SliverToBoxAdapter(
+        child: new ExpansionTile(
+          title: new Text(
+            'Completed (${completedTaskList.length})',
+          ),
+          backgroundColor: Colors.white,
+          children: <Widget>[
+            new Container(
+              height: 68.0 * completedTaskList.length,
+              child: new ListView.builder(
+                itemCount: completedTaskList.length,
+                itemBuilder: (context, index) {
+                  return new Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 16.0,
+                          right: 16.0,
+                        ),
+                        child: new ListTile(
+                          onTap: () {},
+                          leading: new Icon(
+                            Icons.check,
+                            color: Colors.blue,
+                          ),
+                          title: new Text(
+                            completedTaskList[index].task,
+                            style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ),
+                      ),
+                      new Divider(
+                        height: 1.0,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return new SliverFillRemaining();
+    }
   }
 }
