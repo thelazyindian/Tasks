@@ -14,6 +14,13 @@ class DatabaseHelper {
   DatabaseHelper.internal();
 
   static Database _db;
+  String _dbFileName = "task.db";
+  String _tableName = "My Tasks";
+  String _columnId = "id";
+  String _columnTask = "task";
+  String _columnStatus = "status";
+  String _columnDetails = "details";
+  String _columnDate = "date";
 
   Future<Database> get db async {
     if (_db != null) {
@@ -28,8 +35,9 @@ class DatabaseHelper {
   }
 
   initDb() async {
+    print("Tasks: Running initDb");
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, "task.db");
+    String path = join(documentDirectory.path, _dbFileName);
     var ourDb = await openDatabase(
       path,
       version: 1,
@@ -40,42 +48,138 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE Task(id INTEGER PRIMARY KEY, task TEXT, status TEXT)");
-    print("Table is created");
+        "CREATE TABLE $_tableName($_columnId INTEGER PRIMARY KEY, $_columnTask TEXT, $_columnStatus TEXT, $_columnDetails TEXT, $_columnDate TEXT)");
+    print("Table $_tableName is created");
   }
 
-  Future<int> saveTask(Task task) async {
+  Future<List<String>> getTables() async {
     var dbClient = await db;
-    int res = await dbClient.insert("Task", task.toMap());
-    return res;
+    List<Map<String, dynamic>> tables = await dbClient
+        .rawQuery("SELECT * FROM sqlite_master WHERE type=\'table\';");
+
+    List<String> tableNames = new List();
+    if (tables != null) {
+      for (Map<String, dynamic> item in tables) {
+        if (item['name'] != "android_metadata") {
+          tableNames.add(item['name']);
+        }
+      }
+    }
+    return tableNames;
   }
 
-  Future<int> deleteTableTask(Task task) async {
+  Future createTable(String _newTableName) async {
     var dbClient = await db;
-    int res = await dbClient.delete("Task");
-    return res;
+    await dbClient.transaction((Transaction txn) {
+      txn.rawQuery(
+          "CREATE TABLE \'$_newTableName\'($_columnId INTEGER PRIMARY KEY,"
+          " $_columnTask TEXT, $_columnStatus TEXT,"
+          " $_columnDetails TEXT, $_columnDate TEXT)");
+    });
+    print("Created table with name: $_newTableName");
   }
 
-  Future deleteTask(int taskId) async {
+  Future renameTable(String _oldTableName, String _newTableName) async {
     var dbClient = await db;
-    await dbClient.transaction((Transaction txn) async {
-      await txn.rawDelete('DELETE FROM Task WHERE "id" = \'$taskId\'');
+    await dbClient.transaction((Transaction txn) {
+      txn.rawQuery(
+          "ALTER TABLE \'$_oldTableName\' RENAME TO \'$_newTableName\';");
     });
   }
 
-  Future updateTask(String task) async {
+  Future deleteTable(String tblName) async {
+    var dbClient = await db;
+    await dbClient.transaction((Transaction txn) {
+      txn.rawQuery("DROP TABLE \'$tblName\'");
+    });
+  }
+
+  Future saveTask(Task task, String tblName) async {
+    var dbClient = await db;
+    await dbClient.transaction((Transaction txn) async {
+      txn.insert("\'$tblName\'", task.toMap());
+    });
+  }
+
+  Future deleteTableTask(Task task, String tblName) async {
+    var dbClient = await db;
+    await dbClient.transaction((Transaction txn) async {
+      txn.delete(tblName);
+    });
+  }
+
+  Future deleteTask(int taskId, String tblName) async {
+    var dbClient = await db;
+    await dbClient.transaction((Transaction txn) async {
+      await txn
+          .rawDelete('DELETE FROM \'$tblName\' WHERE $_columnId = \'$taskId\'');
+    });
+  }
+
+  Future deleteCompletedTask(String tblName) async {
+    var dbClient = await db;
+    await dbClient.transaction((Transaction txn) async {
+      await txn.rawDelete(
+          'DELETE FROM \'$tblName\' WHERE $_columnStatus = \'COMPLETED\';');
+    });
+  }
+
+  Future updateTask(String task, String tblName) async {
     var dbClient = await db;
     await dbClient.transaction((Transaction txn) async {
       await txn.rawUpdate(
-          'UPDATE "Task" SET "status" = \'COMPLETED\' WHERE "task" = \'$task\';');
+          'UPDATE \'$tblName\' SET $_columnStatus = \'COMPLETED\' WHERE $_columnTask = \'$task\';');
     });
   }
 
-  Future<List<Task>> getTasks(String status) async {
+  Future updateDateByID(int taskId, String taskDate, String tblName) async {
     var dbClient = await db;
-    List<Map<String, dynamic>> result = await dbClient
-        .rawQuery('SELECT "task" from "Task" WHERE "status" = \'$status\'');
-    print('SELECT "task" from "Task" WHERE "status" = \'$status\'');
+    await dbClient.transaction((Transaction txn) async {
+      print("Date Update to: $taskDate for task id: $taskId");
+      await txn.rawUpdate(
+          'UPDATE \'$tblName\' SET $_columnDate = \'$taskDate\' WHERE $_columnId = \'$taskId\';');
+    });
+  }
+
+  Future updateDetailsByID(
+      int taskId, String task, String details, String tblName) async {
+    var dbClient = await db;
+
+    print("Id: $taskId Task: $task Details: $details");
+
+    if (details != null) {
+      await dbClient.transaction((Transaction txn) async {
+        print("Details Update to: $details for task id: $taskId");
+        await txn.rawUpdate(
+            'UPDATE \'$tblName\' SET $_columnDetails = \'$details\' WHERE $_columnId = \'$taskId\';');
+      });
+    } else if (details == null) {
+      await dbClient.transaction((Transaction txn) async {
+        print("Details Update to: $details for task id: $taskId");
+        await txn.rawUpdate(
+            'UPDATE \'$tblName\' SET $_columnDetails = null WHERE $_columnId = \'$taskId\';');
+      });
+    }
+
+    if (task != null) {
+      await dbClient.transaction((Transaction txn) async {
+        print("Task Update to: $task for task id: $taskId");
+        await txn.rawUpdate(
+            'UPDATE \'$tblName\' SET $_columnTask = \'$task\' WHERE $_columnId = \'$taskId\';');
+      });
+    } else if (task == null) {
+      await dbClient.transaction((Transaction txn) async {
+        print("Task Update to: $task for task id: $taskId");
+        await txn.rawUpdate(
+            'UPDATE \'$tblName\' SET $_columnTask = null WHERE $_columnId = \'$taskId\';');
+      });
+    }
+  }
+
+  Future<List<Task>> getTasksByStatus(String tblName, String status) async {
+    var dbClient = await db;
+    List<Map<String, dynamic>> result = await dbClient.rawQuery(
+        'SELECT * FROM \'$tblName\' WHERE $_columnStatus = \'$status\'');
 
     List<Task> tasks = new List();
     for (Map<String, dynamic> item in result) {
@@ -83,6 +187,20 @@ class DatabaseHelper {
       tasks.add(myTask);
     }
     return tasks;
+  }
+
+  Future<Task> getTaskById(String tblName, int id) async {
+    var dbClient = await db;
+    List<Map<String, dynamic>> result = await dbClient
+        .rawQuery('SELECT * FROM \'$tblName\' WHERE $_columnId = \'$id\'');
+
+    Task task;
+    for (Map<String, dynamic> item in result) {
+      task = new Task.fromMap(item);
+      print("DatabaseHelper: ${task.task}");
+    }
+
+    return task;
   }
 
   Future close() async => _db.close();
