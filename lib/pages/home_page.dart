@@ -81,7 +81,7 @@ class _TasksHomePageState extends State<TasksHomePage>
       floatingActionButton: FloatingActionButton.extended(
         elevation: 3.0,
         icon: const Icon(Icons.add),
-        label: const Text('Add a task'),
+        label: const Text('Add a new task', maxLines: 1,),
         onPressed: () {
           _newTaskModalBottomSheet();
         },
