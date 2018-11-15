@@ -70,7 +70,8 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
                 // ),
                 FancyFab(
                   icon: Icons.add,
-                  onPressed: () {},
+                  detailsPressed: () => setState(() => _showDetails = true),
+                  datePressed: () {},
                 ),
                 FlatButton(
                   child: Text(

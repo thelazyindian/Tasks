@@ -81,13 +81,16 @@ class _TasksHomePageState extends State<TasksHomePage>
         icon: const Icon(Icons.add),
         label: const Text('Add a new task', maxLines: 1),
         onPressed: () {
-          showModalBottomSheet<Task>( // TODO: Go To Definition of bottom_sheet.dart
+          showModalBottomSheet<Task>(
+              // TODO: Go To Definition of bottom_sheet.dart
               context: context,
-              resizeToAvoidBottomPadding: true, // Replace with contents to use: https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
+              resizeToAvoidBottomPadding:
+                  true, // Replace with contents to use: https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
               builder: (BuildContext context) {
                 return AddTaskWidget();
               }).then((newTask) {
-            if (newTask.task.isNotEmpty) onNewTaskSave(newTask);
+            if (newTask == null || newTask.task.isNotEmpty)
+              onNewTaskSave(newTask);
           });
         }, //_newTaskModalBottomSheet,
       ),

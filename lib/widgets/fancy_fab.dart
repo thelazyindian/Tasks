@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'animated_icon.dart';
 
 class FancyFab extends StatefulWidget {
-  final Function() onPressed;
+  final VoidCallback detailsPressed, datePressed;
   final String tooltip;
   final IconData icon;
 
-  FancyFab({this.onPressed, this.tooltip, this.icon});
+  FancyFab({this.detailsPressed, this.datePressed, this.tooltip, this.icon});
 
   @override
   _FancyFabState createState() => _FancyFabState();
@@ -16,8 +16,6 @@ class _FancyFabState extends State<FancyFab>
     with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController _animationController;
-  Animation<Color> _buttonColor;
-  Animation<double> _animateIcon;
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 45.0;
@@ -29,22 +27,9 @@ class _FancyFabState extends State<FancyFab>
           ..addListener(() {
             setState(() {});
           });
-    _animateIcon =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor = ColorTween(
-      begin: Colors.blue,
-      end: Colors.red,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Interval(
-        0.00,
-        1.00,
-        curve: Curves.linear,
-      ),
-    ));
     _translateButton = Tween<double>(
       begin: _fabHeight,
-      end: -14.0,
+      end: 0.0,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -71,6 +56,7 @@ class _FancyFabState extends State<FancyFab>
     isOpened = !isOpened;
   }
 
+  bool detailsPressed = false;
   Widget details() {
     return Container(
       child: FloatingActionButton(
@@ -78,9 +64,15 @@ class _FancyFabState extends State<FancyFab>
         backgroundColor: Colors.transparent,
         mini: true,
         heroTag: "Details",
-        onPressed: null,
+        onPressed: () {
+          if (!detailsPressed) {
+            widget.detailsPressed();
+            detailsPressed = true;
+          }
+        },
         tooltip: 'Details',
-        child: Icon(Icons.short_text, color: Colors.blue),
+        child: Icon(Icons.short_text,
+            color: detailsPressed ? Colors.grey : Colors.blue),
       ),
     );
   }
@@ -92,7 +84,7 @@ class _FancyFabState extends State<FancyFab>
         backgroundColor: Colors.transparent,
         mini: true,
         heroTag: "Calendar",
-        onPressed: null,
+        onPressed: widget.datePressed,
         tooltip: 'Add Date',
         child: Icon(
           Icons.event_available,
@@ -112,9 +104,7 @@ class _FancyFabState extends State<FancyFab>
         onPressed: animate,
         tooltip: 'Toggle',
         child: HighLightedIcon(
-          Icons.add_circle_outline,
-          color: _buttonColor.value,
-          secondIcon: Icons.close,
+          controller: _animationController,
         ),
       ),
     );
@@ -122,26 +112,27 @@ class _FancyFabState extends State<FancyFab>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        toggle(),
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 2.0,
-            0.0,
+            _translateButton.value,
+            -1.0,
           ),
-          child: calendar(),
+          child: details(),
         ),
         Transform(
           transform: Matrix4.translationValues(
             0.0,
             _translateButton.value,
-            0.0,
+            -1,
           ),
-          child: details(),
+          child: calendar(),
         ),
-        toggle(),
       ],
     );
   }
