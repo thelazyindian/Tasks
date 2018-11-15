@@ -7,7 +7,7 @@ class RenameListPage extends StatefulWidget {
   RenameListPage(this.listTitle);
 
   @override
-  _RenameListPageState createState() => new _RenameListPageState();
+  _RenameListPageState createState() => _RenameListPageState();
 }
 
 class _RenameListPageState extends State<RenameListPage> {
@@ -15,7 +15,7 @@ class _RenameListPageState extends State<RenameListPage> {
   final String _listTitleInputHint = "Enter list title";
   final String _snackInvalidTitleMsg = "Enter a valid list title first";
   final String _appBarDoneAction = "Done";
-  final key = new GlobalKey<ScaffoldState>();
+  final key = GlobalKey<ScaffoldState>();
   String newListTitle = "";
   TextEditingController _oldListTitleController;
 
@@ -27,22 +27,22 @@ class _RenameListPageState extends State<RenameListPage> {
   @override
   Widget build(BuildContext context) {
     String oldListTitle = widget.listTitle;
-    _oldListTitleController = new TextEditingController(text: oldListTitle);
-    return new Scaffold(
+    _oldListTitleController = TextEditingController(text: oldListTitle);
+    return Scaffold(
         key: key,
         backgroundColor: Colors.grey[300],
-        appBar: new AppBar(
+        appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.white,
-          leading: new IconButton(
-              icon: new Icon(
+          leading: IconButton(
+              icon: Icon(
                 Icons.close,
                 color: Colors.grey,
               ),
               onPressed: () {
                 Navigator.pop(context);
               }),
-          title: new Text(
+          title: Text(
             _scaffoldTitle,
             style: TextStyle(
               color: Colors.black,
@@ -51,7 +51,7 @@ class _RenameListPageState extends State<RenameListPage> {
             ),
           ),
           actions: <Widget>[
-            new FlatButton(
+            FlatButton(
                 onPressed: () async {
                   if (newListTitle != null &&
                       newListTitle != "" &&
@@ -65,10 +65,10 @@ class _RenameListPageState extends State<RenameListPage> {
                     });
                   } else {
                     key.currentState.showSnackBar(
-                        new SnackBar(content: new Text(_snackInvalidTitleMsg)));
+                        SnackBar(content: Text(_snackInvalidTitleMsg)));
                   }
                 },
-                child: new Text(
+                child: Text(
                   _appBarDoneAction,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
@@ -77,18 +77,18 @@ class _RenameListPageState extends State<RenameListPage> {
                 ))
           ],
         ),
-        body: new Column(
+        body: Column(
           children: <Widget>[
-            new Divider(
+            Divider(
               height: 1.0,
             ),
-            new Container(
+            Container(
               padding: EdgeInsets.only(
                   left: 16.0, right: 16.0, top: 10.0, bottom: 10.0),
               color: Colors.white,
-              child: new Wrap(
+              child: Wrap(
                 children: <Widget>[
-                  new TextField(
+                  TextField(
                     onChanged: (listTitle) {
                       newListTitle = listTitle;
                     },

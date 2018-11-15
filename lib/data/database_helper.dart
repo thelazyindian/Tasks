@@ -8,7 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import '../model/task.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper _instance = new DatabaseHelper.internal();
+  static final DatabaseHelper _instance = DatabaseHelper.internal();
 
   factory DatabaseHelper() => _instance;
 
@@ -58,7 +58,7 @@ class DatabaseHelper {
     List<Map<String, dynamic>> tables = await dbClient
         .rawQuery("SELECT * FROM sqlite_master WHERE type=\'table\';");
 
-    List<String> tableNames = new List();
+    List<String> tableNames = List();
     if (tables != null) {
       for (Map<String, dynamic> item in tables) {
         if (item['name'] != "android_metadata") {
@@ -182,9 +182,9 @@ class DatabaseHelper {
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'SELECT * FROM \'$tblName\' WHERE $_columnStatus = \'$status\'');
 
-    List<Task> tasks = new List();
+    List<Task> tasks = List();
     for (Map<String, dynamic> item in result) {
-      var myTask = new Task.fromMap(item);
+      var myTask = Task.fromMap(item);
       tasks.add(myTask);
     }
     return tasks;
@@ -197,7 +197,7 @@ class DatabaseHelper {
 
     Task task;
     for (Map<String, dynamic> item in result) {
-      task = new Task.fromMap(item);
+      task = Task.fromMap(item);
       print("DatabaseHelper: ${task.task}");
     }
 

@@ -11,7 +11,7 @@ class TaskDetailsPage extends StatefulWidget {
   TaskDetailsPage(this.listName, this.taskId);
 
   @override
-  State<StatefulWidget> createState() => new TaskDetailsPageState();
+  State<StatefulWidget> createState() => TaskDetailsPageState();
 }
 
 class TaskDetailsPageState extends State<TaskDetailsPage> {
@@ -37,13 +37,13 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
         _details = task.details;
 
         if (_taskName != null) {
-          _taskController = new TextEditingController(
+          _taskController = TextEditingController(
             text: _taskName,
           );
         }
 
         if (_details != null) {
-          _detailsController = new TextEditingController(
+          _detailsController = TextEditingController(
             text: _details,
           );
         }
@@ -55,7 +55,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
           _textFieldColor = Colors.grey;
           _textFieldEnable = false;
 
-          textInput = new TextField(
+          textInput = TextField(
             autofocus: _textFieldFocus,
             style: TextStyle(
               decoration: _textFieldDecoration,
@@ -75,7 +75,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
           _textFieldColor = Colors.black;
           _textFieldEnable = true;
 
-          textInput = new TextField(
+          textInput = TextField(
             onChanged: (value) {
               setState(() {
                 _taskName = value;
@@ -115,11 +115,11 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
   @override
   Widget build(BuildContext context) {
     print("Taskname: $_taskName");
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      appBar: new AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
           onPressed: () async {
             await DatabaseHelper.get().updateDetailsByID(
                 widget.taskId, _taskName, _details, widget.listName);
@@ -127,16 +127,16 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
           },
         ),
         actions: <Widget>[
-          new GestureDetector(
+          GestureDetector(
             onTap: () {
               DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
               Navigator.pop(context);
             },
-            child: new Padding(
+            child: Padding(
               padding: EdgeInsets.only(
                 right: 16.0,
               ),
-              child: new Icon(Icons.delete),
+              child: Icon(Icons.delete),
             ),
           ),
         ],
@@ -144,35 +144,35 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
-      body: new Container(
+      body: Container(
         color: Colors.white,
-        child: new Padding(
+        child: Padding(
           padding: EdgeInsets.only(
             left: 20.0,
           ),
-          child: new Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Row(
+              Row(
                 children: <Widget>[
-                  new Text(
+                  Text(
                     'My Tasks',
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.w700),
                   ),
-                  new IconButton(
+                  IconButton(
                     onPressed: () {},
-                    icon: new Icon(
+                    icon: Icon(
                       Icons.arrow_drop_down,
                       color: Colors.blue,
                     ),
                   ),
                 ],
               ),
-              _taskName == null ? new Container() : textInput,
-              new ListTile(
-                leading: new Icon(Icons.note),
-                title: new TextField(
+              _taskName == null ? Container() : textInput,
+              ListTile(
+                leading: Icon(Icons.note),
+                title: TextField(
                   controller: _detailsController,
                   onChanged: (details) {
                     setState(() {
@@ -186,16 +186,16 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
               ),
               // TODO: Theme DatePicker dialog properly
-              new ListTile(
-                leading: new Icon(Icons.date_range),
+              ListTile(
+                leading: Icon(Icons.date_range),
                 onTap: () {
                   showDatePicker(
                     context: context,
-                    initialDate: new DateTime.now(),
-                    firstDate: new DateTime.now().subtract(Duration(
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now().subtract(Duration(
                       days: 30,
                     )),
-                    lastDate: new DateTime.now().add(
+                    lastDate: DateTime.now().add(
                       Duration(
                         days: 30,
                       ),
@@ -210,31 +210,31 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                     print(error.toString());
                   });
                 },
-                title: new Text('Date'),
+                title: Text('Date'),
               ),
               _taskName != null && _textFieldEnable == true
-                  ? new Padding(
+                  ? Padding(
                       padding: EdgeInsets.only(
                         left: 16.0,
                       ),
-                      child: new Row(
+                      child: Row(
                         children: <Widget>[
-                          new Icon(Icons.subdirectory_arrow_right),
-                          new Container(
+                          Icon(Icons.subdirectory_arrow_right),
+                          Container(
                             width: 16.0,
                           ),
-                          new RaisedButton(
+                          RaisedButton(
                             highlightElevation: 0.0,
                             elevation: 0.0,
                             splashColor: Colors.blue,
                             color: Colors.white,
                             onPressed: () {},
-                            child: new Text('Add subtasks'),
+                            child: Text('Add subtasks'),
                           ),
                         ],
                       ),
                     )
-                  : new Container(),
+                  : Container(),
             ],
           ),
         ),

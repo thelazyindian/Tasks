@@ -20,7 +20,7 @@ class Task {
   String get details => _details;
 
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
+    var map = Map<String, dynamic>();
     map['task'] = _task;
     map['status'] = _status;
     return map;

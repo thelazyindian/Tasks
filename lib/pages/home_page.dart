@@ -8,7 +8,7 @@ import '../pages/task_details.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
-  _TasksHomePageState createState() => new _TasksHomePageState();
+  _TasksHomePageState createState() => _TasksHomePageState();
 }
 
 enum DetailsWidgetStatus { OPEN, CLOSE }
@@ -17,13 +17,13 @@ int taskDetailId;
 String _newTask = "";
 String _taskDetails = "";
 String _newTaskStatus = "PENDING";
-final List<Task> pendingTaskList = new List();
-final List<Task> completedTaskList = new List();
+final List<Task> pendingTaskList = List();
+final List<Task> completedTaskList = List();
 AnimationController detailsTapAnimationController;
-final _duration = new Duration(milliseconds: 300);
+final _duration = Duration(milliseconds: 300);
 DetailsWidgetStatus _detailsWidgetStatus = DetailsWidgetStatus.CLOSE;
 // Future _bottomSheet;
-List<String> tblNames = new List();
+List<String> tblNames = List();
 String listName = "";
 String activeList = "";
 String defaultListName = "";
@@ -33,13 +33,13 @@ bool details = false;
 
 class _TasksHomePageState extends State<TasksHomePage>
     with TickerProviderStateMixin {
-  final GlobalKey scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     detailsTapAnimationController =
-        new AnimationController(duration: _duration, vsync: this);
+        AnimationController(duration: _duration, vsync: this);
     detailsTapAnimationController.addListener(() {
       setSheetState(() {
         print("Animation: ${detailsTapAnimationController.value.toDouble()}");
@@ -59,7 +59,7 @@ class _TasksHomePageState extends State<TasksHomePage>
     completedTaskList.add(pendingTaskList[index]);
     pendingTaskList.removeAt(index);
     /*showSnackBar(
-        new SnackBar(
+        SnackBar(
           content:
               Text("${pendingTaskList.length} completed!"),
         ),
@@ -70,37 +70,37 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   @override
   Widget build(BuildContext context) {
-    // _builder = new StatefulBuilder(
+    // _builder = StatefulBuilder(
     //   builder: (BuildContext context, kek) {
     //     print(kek);
-    //     return new Text('');
+    //     return Text('');
     //   },
     // );
-    return new Scaffold(
+    return Scaffold(
       key: scaffoldKey,
-      floatingActionButton: new FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(
         elevation: 3.0,
         icon: const Icon(Icons.add),
-        label: const Text('Add a new task'),
+        label: const Text('Add a task'),
         onPressed: () {
           _newTaskModalBottomSheet();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: new BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         elevation: 3.0,
         // hasNotch: false,
-        child: new Row(
+        child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            new IconButton(
+            IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
                 _modalBottomSheetMenu();
               },
             ),
-            new IconButton(
+            IconButton(
               icon: const Icon(Icons.more_vert),
               onPressed: () {
                 _modalBottomSheetMore();
@@ -122,9 +122,9 @@ class _TasksHomePageState extends State<TasksHomePage>
               //title: Text ('My Tasks',
               //style: TextStyle(color: Colors.black,),),
               elevation: 0.0,
-              flexibleSpace: new FlexibleSpaceBar(
+              flexibleSpace: FlexibleSpaceBar(
                 title: (listName != "" && listName != null)
-                    ? new Text(
+                    ? Text(
                         listName,
                         style: TextStyle(
                           color: Colors.black,
@@ -132,7 +132,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                           fontWeight: FontWeight.w400,
                         ),
                       )
-                    : new Text(""),
+                    : Text(""),
               ),
             ),
             SliverList(
@@ -141,14 +141,14 @@ class _TasksHomePageState extends State<TasksHomePage>
                   pendingTaskList.length,
                   (int index) {
                     final item = pendingTaskList[index].task;
-                    return new Dismissible(
+                    return Dismissible(
                       direction: DismissDirection.startToEnd,
                       key: Key(item),
                       onDismissed: (direction) => _dismissTask(index, item),
                       background: Container(
                         color: Colors.blue,
                       ),
-                      child: new Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Padding(
@@ -156,12 +156,12 @@ class _TasksHomePageState extends State<TasksHomePage>
                               left: 16.0,
                               right: 16.0,
                             ),
-                            child: new ListTile(
+                            child: ListTile(
                               onTap: () async {
                                 taskDetailId = pendingTaskList[index].id;
-                                var route = new MaterialPageRoute(
+                                var route = MaterialPageRoute(
                                     builder: (BuildContext context) {
-                                  return new TaskDetailsPage(
+                                  return TaskDetailsPage(
                                       listName, taskDetailId);
                                 });
                                 var detailsPage =
@@ -171,18 +171,18 @@ class _TasksHomePageState extends State<TasksHomePage>
                                 }
                               },
                               leading: IconButton(
-                                icon: new Icon(Icons.radio_button_unchecked),
+                                icon: Icon(Icons.radio_button_unchecked),
                                 onPressed: () => _dismissTask(index, item),
                               ),
                               title: (pendingTaskList[index].task != null)
-                                  ? new Text(pendingTaskList[index].task)
-                                  : new Text(""),
+                                  ? Text(pendingTaskList[index].task)
+                                  : Text(""),
                               subtitle: (pendingTaskList[index].details != null)
-                                  ? new Text(pendingTaskList[index].details)
-                                  : new Text(""),
+                                  ? Text(pendingTaskList[index].details)
+                                  : Text(""),
                             ),
                           ),
-                          new Divider(
+                          Divider(
                             height: 1.0,
                           ),
                         ],
@@ -215,17 +215,17 @@ class _TasksHomePageState extends State<TasksHomePage>
   Widget dateButton() {
     var scorePosition = detailsTapAnimationController.value * 100;
     var scoreOpacity = detailsTapAnimationController.value;
-    return new Positioned(
-      child: new Opacity(
+    return Positioned(
+      child: Opacity(
         opacity: scoreOpacity,
-        child: new Container(
+        child: Container(
           height: 32.0,
           width: 32.0,
-          decoration: new ShapeDecoration(
-            shape: new RoundedRectangleBorder(side: BorderSide.none),
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(side: BorderSide.none),
           ),
-          child: new Center(
-            child: new Icon(
+          child: Center(
+            child: Icon(
               Icons.date_range,
               color: Colors.blue,
             ),
@@ -239,8 +239,8 @@ class _TasksHomePageState extends State<TasksHomePage>
   Widget detailsButton() {
     var scorePosition = detailsTapAnimationController.value * 50;
     var scoreOpacity = detailsTapAnimationController.value;
-    return new Positioned(
-      child: new GestureDetector(
+    return Positioned(
+      child: GestureDetector(
         onTapUp: (TapUpDetails tapUp) {
           print('Tapup');
           if (details == false) {
@@ -253,16 +253,16 @@ class _TasksHomePageState extends State<TasksHomePage>
             });
           }
         },
-        child: new Opacity(
+        child: Opacity(
           opacity: scoreOpacity,
-          child: new Container(
+          child: Container(
             height: 32.0,
             width: 32.0,
-            decoration: new ShapeDecoration(
-              shape: new RoundedRectangleBorder(side: BorderSide.none),
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(side: BorderSide.none),
             ),
-            child: new Center(
-              child: new Icon(
+            child: Center(
+              child: Icon(
                 Icons.format_list_numbered,
                 color: (details == false) ? Colors.blue : Colors.grey[400],
               ),
@@ -281,20 +281,20 @@ class _TasksHomePageState extends State<TasksHomePage>
     var mColor = detailsTapAnimationController.value == 0.0
         ? Colors.blue
         : Colors.blueGrey;
-    return new GestureDetector(
+    return GestureDetector(
       onTapUp: onTapUp,
-      child: new Transform.rotate(
+      child: Transform.rotate(
         angle: rotation,
-        child: new Container(
+        child: Container(
           height: 32.0,
           width: 32.0,
-          padding: new EdgeInsets.all(2.0),
-          decoration: new BoxDecoration(
+          padding: EdgeInsets.all(2.0),
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30.0),
             color: Colors.transparent,
           ),
-          child: new Center(
-            child: new Icon(
+          child: Center(
+            child: Icon(
               Icons.add_circle,
               color: mColor,
               size: 26.0,
@@ -312,39 +312,39 @@ class _TasksHomePageState extends State<TasksHomePage>
     showModalBottomSheet(
         context: context,
         builder: (BuildContext contextt) {
-          return new StatefulBuilder(
+          return StatefulBuilder(
               builder: (BuildContext ctxt, StateSetter stateSetter) {
             setSheetState = stateSetter;
-            return new AnimatedPadding(
+            return AnimatedPadding(
               padding: MediaQuery.of(context).viewInsets,
               duration: const Duration(milliseconds: 100),
               curve: Curves.decelerate,
-              child: new GestureDetector(
+              child: GestureDetector(
                 onTapUp: (TapUpDetails tap) {
                   print('Tapped');
                 },
-                child: new Container(
+                child: Container(
                   alignment: Alignment.bottomCenter,
                   child: Wrap(
                     children: <Widget>[
-                      new Container(
-                        decoration: new BoxDecoration(
+                      Container(
+                        decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: new BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: const Radius.circular(10.0),
                                 topRight: const Radius.circular(10.0))),
-                        child: new Wrap(
+                        child: Wrap(
                           children: <Widget>[
-                            new Padding(
+                            Padding(
                               padding: EdgeInsets.only(
                                 left: 20.0,
                                 top: 15.0,
                                 right: 20.0,
                                 bottom: 15.0,
                               ),
-                              child: new Column(
+                              child: Column(
                                 children: <Widget>[
-                                  new TextField(
+                                  TextField(
                                     onChanged: (newTask) {
                                       _newTask = newTask;
                                     },
@@ -352,7 +352,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                                       onNewTaskSave();
                                     },
                                     autofocus: true,
-                                    decoration: new InputDecoration(
+                                    decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'New Task',
                                     ),
@@ -360,7 +360,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                                     keyboardType: TextInputType.text,
                                   ),
                                   (details == true)
-                                      ? new TextField(
+                                      ? TextField(
                                           onChanged: (taskDetails) {
                                             _taskDetails = taskDetails;
                                           },
@@ -368,7 +368,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                                             onNewTaskSave();
                                           },
                                           autofocus: true,
-                                          decoration: new InputDecoration(
+                                          decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'Add details',
                                             hintStyle: TextStyle(
@@ -378,16 +378,16 @@ class _TasksHomePageState extends State<TasksHomePage>
                                           autocorrect: false,
                                           keyboardType: TextInputType.text,
                                         )
-                                      : new Container(),
-                                  new Container(
+                                      : Container(),
+                                  Container(
                                     height: 20.0,
                                   ),
-                                  new Row(
+                                  Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
-                                      new Stack(
+                                      Stack(
                                         //alignment: AlignmentDirectional.center,
                                         //overflow: Overflow.visible,
                                         children: <Widget>[
@@ -396,7 +396,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                                           kek(),
                                         ],
                                       ),
-                                      new FlatButton(
+                                      FlatButton(
                                         onPressed: () {
                                           onNewTaskSave();
                                         },
@@ -434,24 +434,24 @@ class _TasksHomePageState extends State<TasksHomePage>
     showModalBottomSheet(
         context: context,
         builder: (BuildContext contextt) {
-          // return new StatefulBuilder(
+          // return StatefulBuilder(
           //   builder: (BuildContext ctxt, StateSetter stateSetter) {
           // setSheetState = stateSetter;
-          return new Column(
+          return Column(
             children: <Widget>[
-              new Stack(
+              Stack(
                 children: <Widget>[
-                  new Container(
-                    decoration: new BoxDecoration(
+                  Container(
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: new BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(10.0),
                         topRight: const Radius.circular(10.0),
                       ),
                     ),
                     child: Wrap(
                       children: <Widget>[
-                        new TextField(
+                        TextField(
                           onChanged: (newTask) {
                             _newTask = newTask;
                           },
@@ -459,7 +459,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                             onNewTaskSave();
                           },
                           autofocus: true,
-                          decoration: new InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'New Task',
                           ),
@@ -467,7 +467,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                           keyboardType: TextInputType.text,
                         ),
                         (details == true)
-                            ? new TextField(
+                            ? TextField(
                                 onChanged: (taskDetails) {
                                   _taskDetails = taskDetails;
                                 },
@@ -475,7 +475,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                                   onNewTaskSave();
                                 },
                                 autofocus: true,
-                                decoration: new InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Add details',
                                   hintStyle: TextStyle(
@@ -485,15 +485,15 @@ class _TasksHomePageState extends State<TasksHomePage>
                                 autocorrect: false,
                                 keyboardType: TextInputType.text,
                               )
-                            : new Container(),
+                            : Container(),
                       ],
                     ),
                   ),
                 ],
               ),
-              new AnimatedContainer(
+              AnimatedContainer(
                 height: MediaQuery.of(context).size.height * 0.4,
-                duration: new Duration(
+                duration: Duration(
                   milliseconds: 300,
                 ),
               ),
@@ -507,54 +507,54 @@ class _TasksHomePageState extends State<TasksHomePage>
     showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return new Container(
+          return Container(
             //height: 530.0,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: new BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(10.0),
                 topRight: const Radius.circular(10.0),
               ),
             ),
             child: SafeArea(
-              child: new Column(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 //mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   /*UserAccountsDrawerHeader(
-                    currentAccountPicture: new DecoratedBox(
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/user/satya_profile.png"),
+                    currentAccountPicture: DecoratedBox(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/user/satya_profile.png"),
                         ),
                       ),
                     ),
                     margin: EdgeInsets.all(0.0),
-                    accountEmail: new Text(
+                    accountEmail: Text(
                       "satyabrat.me@gmail.com",
                       style: TextStyle(
                         color: Colors.black,
                       ),
                     ),
-                    accountName: new Text(
+                    accountName: Text(
                       "Satyabrat Sahoo",
                       style: TextStyle(
                         color: Colors.black,
                       ),
                     ),
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
                     ),
                   ),
-                  new Divider(
+                  Divider(
                     height: 4.0,
                     indent: 2.0,
                   ),*/
-                  new ListView.builder(
+                  ListView.builder(
                       shrinkWrap: true,
                       itemCount: tblNames.length,
                       itemBuilder: (context, index) {
-                        return new GestureDetector(
+                        return GestureDetector(
                           onTap: () {
                             listName = tblNames[index];
                             activeList = listName;
@@ -562,19 +562,19 @@ class _TasksHomePageState extends State<TasksHomePage>
                             Navigator.pop(context);
                           },
                           child: Padding(
-                            child: new DecoratedBox(
-                              decoration: new BoxDecoration(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
                                 color: (activeList == tblNames[index])
                                     ? Color(0x4D90CAF9)
                                     : Colors.white,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: new Radius.circular(30.0),
-                                  bottomLeft: new Radius.circular(30.0),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  bottomLeft: Radius.circular(30.0),
                                 ),
                               ),
-                              child: new ListTile(
+                              child: ListTile(
                                 selected: true,
-                                title: new Text(
+                                title: Text(
                                   tblNames[index],
                                   style: TextStyle(
                                     color: (activeList == tblNames[index])
@@ -593,74 +593,73 @@ class _TasksHomePageState extends State<TasksHomePage>
                           ),
                         );
                       }),
-                  new Divider(
+                  Divider(
                     height: 4.0,
                   ),
-                  new ListTile(
+                  ListTile(
                     onTap: () async {
                       Navigator.pop(context);
                       var newListPage = await Navigator.push(context,
-                          new MaterialPageRoute(
-                              builder: (BuildContext context) {
-                        return new NewListPage();
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return NewListPage();
                       }));
                       if (newListPage == null) {
                         _getTables();
                       }
                     },
-                    leading: new Icon(
+                    leading: Icon(
                       Icons.add,
                     ),
-                    title: new Text(
-                      "Create new list",
+                    title: Text(
+                      "Create list",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                  new Divider(
+                  Divider(
                     height: 4.0,
                   ),
-                  new ListTile(
-                    leading: new Icon(
+                  ListTile(
+                    leading: Icon(
                       Icons.feedback,
                     ),
-                    title: new Text(
+                    title: Text(
                       "Send feedback",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                  new Divider(
+                  Divider(
                     height: 4.0,
                   ),
-                  new ListTile(
-                    title: new Text(
+                  ListTile(
+                    title: Text(
                       "Open-source licenses",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                  new Divider(
+                  Divider(
                     height: 4.0,
                   ),
-                  new Padding(
+                  Padding(
                     padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-                    child: new Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Text(
+                        Text(
                           "Privacy Policy",
                           style: TextStyle(
                             fontSize: 13.0,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        new Container(
+                        Container(
                           width: 25.0,
-                          child: new Icon(
+                          child: Icon(
                             Icons.arrow_drop_down_circle,
                             size: 5.0,
                           ),
@@ -668,7 +667,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                         //new Icon(
                         //Icons.,
                         //),
-                        new Text(
+                        Text(
                           "Terms of service",
                           style: TextStyle(
                             fontSize: 13.0,
@@ -689,22 +688,22 @@ class _TasksHomePageState extends State<TasksHomePage>
     showModalBottomSheet(
       context: context,
       builder: (builder) {
-        return new Container(
+        return Container(
           padding: EdgeInsets.only(
             left: 5.0,
             right: 5.0,
             top: 5.0,
             bottom: 5.0,
           ),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: new BorderRadius.only(
+              borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(10.0),
                   topRight: const Radius.circular(10.0))),
           child: SafeArea(
-            child: new Wrap(
+            child: Wrap(
               children: <Widget>[
-                new ListTile(
+                ListTile(
                   title: const Text(
                     'Sort By',
                     style: TextStyle(
@@ -713,8 +712,8 @@ class _TasksHomePageState extends State<TasksHomePage>
                     ),
                   ),
                 ),
-                new ListTile(
-                  leading: new Container(
+                ListTile(
+                  leading: Container(
                     width: 4.0,
                   ),
                   title: const Text(
@@ -724,10 +723,10 @@ class _TasksHomePageState extends State<TasksHomePage>
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  trailing: new Icon(Icons.check),
+                  trailing: Icon(Icons.check),
                 ),
-                new ListTile(
-                  leading: new Container(
+                ListTile(
+                  leading: Container(
                     width: 4.0,
                   ),
                   title: const Text(
@@ -737,12 +736,12 @@ class _TasksHomePageState extends State<TasksHomePage>
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  trailing: new Icon(Icons.check),
+                  trailing: Icon(Icons.check),
                 ),
-                new Divider(
+                Divider(
                   height: 10.0,
                 ),
-                new ListTile(
+                ListTile(
                   title: const Text(
                     'Rename List',
                     style: TextStyle(
@@ -753,16 +752,16 @@ class _TasksHomePageState extends State<TasksHomePage>
                   onTap: () async {
                     Navigator.pop(context);
                     var renameListPage = await Navigator.push(context,
-                        new MaterialPageRoute(builder: (BuildContext context) {
-                      return new RenameListPage(activeList);
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return RenameListPage(activeList);
                     }));
                     if (renameListPage == null) {
                       _getTables();
                     }
                   },
                 ),
-                new ListTile(
-                  title: new Text(
+                ListTile(
+                  title: Text(
                     'Delete List',
                     style: TextStyle(
                       fontSize: 14.0,
@@ -784,7 +783,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                     }
                   },
                 ),
-                new ListTile(
+                ListTile(
                   title: const Text(
                     'Delete all completed tasks',
                     style: TextStyle(
@@ -808,8 +807,8 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void onNewTaskSave() {
     if (_newTask != null) {
-      var task = new Task(_newTask, _newTaskStatus, _taskDetails);
-      var db = new DatabaseHelper();
+      var task = Task(_newTask, _newTaskStatus, _taskDetails);
+      var db = DatabaseHelper();
       db.saveTask(task, activeList);
       Navigator.pop(context);
       print("Task saved!");
@@ -821,7 +820,7 @@ class _TasksHomePageState extends State<TasksHomePage>
   }
 
   void updateTaskStatus(String task) {
-    var db = new DatabaseHelper();
+    var db = DatabaseHelper();
     db.updateTask(task, activeList);
     print('Update Task');
   }
@@ -829,7 +828,7 @@ class _TasksHomePageState extends State<TasksHomePage>
   void _getTasks() {
     print("Running _getTasks()");
     if (listName != null && listName != "") {
-      var dbClient = new DatabaseHelper();
+      var dbClient = DatabaseHelper();
       dbClient.getTasksByStatus(listName, "PENDING").then((tasks) {
         if (tasks == null) return;
         setState(() {
@@ -873,19 +872,19 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   Widget completedList() {
     if (completedTaskList.isNotEmpty) {
-      return new SliverToBoxAdapter(
-        child: new ExpansionTile(
-          title: new Text(
+      return SliverToBoxAdapter(
+        child: ExpansionTile(
+          title: Text(
             'Completed (${completedTaskList.length})',
           ),
           backgroundColor: Colors.white,
           children: <Widget>[
-            new Container(
+            Container(
               height: 80.0 * completedTaskList.length,
-              child: new ListView.builder(
+              child: ListView.builder(
                 itemCount: completedTaskList.length,
                 itemBuilder: (context, index) {
-                  return new Column(
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
@@ -893,13 +892,12 @@ class _TasksHomePageState extends State<TasksHomePage>
                           left: 16.0,
                           right: 16.0,
                         ),
-                        child: new ListTile(
+                        child: ListTile(
                           onTap: () async {
                             taskDetailId = completedTaskList[index].id;
-                            var route = new MaterialPageRoute(
+                            var route = MaterialPageRoute(
                                 builder: (BuildContext context) {
-                              return new TaskDetailsPage(
-                                  listName, taskDetailId);
+                              return TaskDetailsPage(listName, taskDetailId);
                             });
                             var detailsPage =
                                 await Navigator.of(context).push(route);
@@ -907,11 +905,11 @@ class _TasksHomePageState extends State<TasksHomePage>
                               _getTasks();
                             }
                           },
-                          leading: new Icon(
+                          leading: Icon(
                             Icons.check,
                             color: Colors.blue,
                           ),
-                          title: new Text(
+                          title: Text(
                             completedTaskList[index].task,
                             style: TextStyle(
                               decoration: TextDecoration.lineThrough,
@@ -919,7 +917,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                           ),
                         ),
                       ),
-                      new Divider(
+                      Divider(
                         height: 1.0,
                       ),
                     ],
@@ -931,7 +929,7 @@ class _TasksHomePageState extends State<TasksHomePage>
         ),
       );
     } else {
-      return new SliverFillRemaining();
+      return SliverFillRemaining();
     }
   }
 }
