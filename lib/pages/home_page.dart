@@ -657,13 +657,14 @@ class _TasksHomePageState extends State<TasksHomePage>
   }
 
   void _getTasks() {
-    var pendingTasks = getTasksByStatus("PENDING", listName: listName);
+    var pendingTasks = getTasksByStatus("PENDING", listName: listName) ?? [];
     setState(() {
       pendingTaskList.clear();
       pendingTaskList.addAll(pendingTasks);
       //print(tasks.toString());
     });
-    var completedTasks = getTasksByStatus("COMPLETED", listName: listName);
+    var completedTasks =
+        getTasksByStatus("COMPLETED", listName: listName) ?? [];
     setState(() {
       completedTaskList.clear();
       completedTaskList.addAll(completedTasks);
