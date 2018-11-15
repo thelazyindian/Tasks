@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/pages/splash.dart';
+
+import 'pages/splash.dart';
 
 void main() => runApp(new TasksApp());
 

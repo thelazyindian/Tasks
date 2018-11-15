@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
-import 'package:tasks/pages/new_list_page.dart';
-import 'package:tasks/pages/rename_list_page.dart';
-import 'package:tasks/pages/task_details.dart';
+
+import '../data/database_helper.dart';
+import '../model/task.dart';
+import '../pages/new_list_page.dart';
+import '../pages/rename_list_page.dart';
+import '../pages/task_details.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
@@ -23,12 +22,12 @@ final List<Task> completedTaskList = new List();
 AnimationController detailsTapAnimationController;
 final _duration = new Duration(milliseconds: 300);
 DetailsWidgetStatus _detailsWidgetStatus = DetailsWidgetStatus.CLOSE;
-Future _bottomSheet;
+// Future _bottomSheet;
 List<String> tblNames = new List();
 String listName = "";
 String activeList = "";
 String defaultListName = "";
-StatefulBuilder _builder;
+// StatefulBuilder _builder;
 StateSetter setSheetState;
 bool details = false;
 
@@ -44,7 +43,7 @@ class _TasksHomePageState extends State<TasksHomePage>
     detailsTapAnimationController.addListener(() {
       setSheetState(() {
         print("Animation: ${detailsTapAnimationController.value.toDouble()}");
-        _bottomSheet;
+        // _bottomSheet;
       });
     });
     _getTables();
@@ -71,12 +70,12 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   @override
   Widget build(BuildContext context) {
-    _builder = new StatefulBuilder(
-      builder: (BuildContext context, kek) {
-        print(kek);
-        return new Text('');
-      },
-    );
+    // _builder = new StatefulBuilder(
+    //   builder: (BuildContext context, kek) {
+    //     print(kek);
+    //     return new Text('');
+    //   },
+    // );
     return new Scaffold(
       key: scaffoldKey,
       floatingActionButton: new FloatingActionButton.extended(

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
+
+import '../data/database_helper.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   final int taskId;
@@ -15,7 +15,7 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class TaskDetailsPageState extends State<TaskDetailsPage> {
-  Task _task;
+  // Task _task;
   String _taskName;
   TextDecoration _textFieldDecoration;
   Color _textFieldColor;
@@ -32,7 +32,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
         .then((task) {
       if (task == null) return;
       setState(() {
-        _task = task;
+        // _task = task;
         _taskName = task.task;
         _details = task.details;
 
