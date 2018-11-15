@@ -467,26 +467,58 @@ class _TasksHomePageState extends State<TasksHomePage>
                             keyboardType: TextInputType.text,
                           ),
                         ),
-                        // (details == true) ?
-                        TextField(
-                          onChanged: (taskDetails) {
-                            _taskDetails = taskDetails;
-                          },
-                          onSubmitted: (taskDetails) {
-                            onNewTaskSave();
-                          },
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Add details',
-                            hintStyle: TextStyle(
-                              fontSize: 8.0,
+                        // // (details == true) ?
+                        // TextField(
+                        //   onChanged: (taskDetails) {
+                        //     _taskDetails = taskDetails;
+                        //   },
+                        //   onSubmitted: (taskDetails) {
+                        //     onNewTaskSave();
+                        //   },
+                        //   autofocus: true,
+                        //   decoration: InputDecoration(
+                        //     border: InputBorder.none,
+                        //     hintText: 'Add details',
+                        //     hintStyle: TextStyle(
+                        //       fontSize: 8.0,
+                        //     ),
+                        //   ),
+                        //   autocorrect: false,
+                        //   keyboardType: TextInputType.text,
+                        // )
+                        // // : Container(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: Colors.blue,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  bool _showDetails = true;
+                                });
+                              },
                             ),
-                          ),
-                          autocorrect: false,
-                          keyboardType: TextInputType.text,
-                        )
-                        // : Container(),
+                            FlatButton(
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                // Navigator.pop(
+                                //     context,
+                                //     Task(
+                                //       title: _controller.text.toString(),
+                                //       subtitle: _controllerDetails.text.toString(),
+                                //     ));
+                              },
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
