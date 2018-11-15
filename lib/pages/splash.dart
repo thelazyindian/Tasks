@@ -14,7 +14,7 @@ class _TasksSplashPageState extends State<TasksSplashPage> {
     super.initState();
     Timer(Duration(seconds: 2), () {
       Navigator.pop(context);
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (BuildContext context) {
           return new TasksHomePage();
         }),
