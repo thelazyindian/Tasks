@@ -13,6 +13,7 @@ class AddTaskWidget extends StatefulWidget {
 class AddTaskWidgetState extends State<AddTaskWidget> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controllerDetails = TextEditingController();
+  final FocusNode _detailsFocus = FocusNode();
   bool _showDetails = false;
   DateTime _date;
 
@@ -22,6 +23,12 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
     _showDetails = false;
     _controller.clear();
     _controllerDetails.clear();
+  }
+
+  @override
+  void dispose() {
+    _detailsFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,7 +58,7 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
             _showDetails
                 ? TextField(
                     controller: _controllerDetails,
-                    autofocus: true,
+                    focusNode: _detailsFocus,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Add details',
@@ -80,7 +87,10 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
               children: <Widget>[
                 FancyFab(
                   icon: Icons.add,
-                  detailsPressed: () => setState(() => _showDetails = true),
+                  detailsPressed: () {
+                    setState(() => _showDetails = true);
+                    // FocusScope.of(context).requestFocus(_detailsFocus);
+                  },
                   datePressed: () {
                     showDatePicker(
                       context: context,
