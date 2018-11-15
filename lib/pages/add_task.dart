@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/fancy_fab.dart';
 import 'package:intl/intl.dart';
 import '../model/task.dart';
+import '../widgets/date_widget.dart';
 
 class AddTaskWidget extends StatefulWidget {
   @override
@@ -66,34 +67,13 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
                   ),
             _date == null
                 ? Container(height: 0.0)
-                : Container(
-                    decoration: new BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: new BorderRadius.all(
-                          const Radius.circular(5.0),
-                        )),
-                    child: Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Icon(
-                            Icons.event_available,
-                            color: Colors.blue,
-                          ),
-                          Container(width: 5.0),
-                          Text(DateFormat('MM-dd-yyyy').format(_date)),
-                          IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              setState(() {
-                                _date = null;
-                              });
-                            },
-                          )
-                        ],
-                      ),
-                    ),
+                : DateViewWidget(
+                    date: _date,
+                    onClose: () {
+                      setState(() {
+                        _date = null;
+                      });
+                    },
                   ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

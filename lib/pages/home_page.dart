@@ -6,6 +6,7 @@ import '../pages/new_list_page.dart';
 import '../pages/rename_list_page.dart';
 import '../pages/task_details.dart';
 import '../pages/add_task.dart';
+import '../widgets/date_widget.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
@@ -188,6 +189,11 @@ class _TasksHomePageState extends State<TasksHomePage>
                                   : Text(pendingTaskList[index].details),
                             ),
                           ),
+                          pendingTaskList[index].date != null
+                              ? DateViewWidget(
+                                  date: DateTime.parse(
+                                      pendingTaskList[index].date))
+                              : Container(height: 0.0),
                           Divider(
                             height: 1.0,
                           ),
