@@ -192,7 +192,8 @@ class _TasksHomePageState extends State<TasksHomePage>
                           pendingTaskList[index].date != null
                               ? DateViewWidget(
                                   date: DateTime.parse(
-                                      pendingTaskList[index].date))
+                                      pendingTaskList[index].date)
+                                )
                               : Container(height: 0.0),
                           Divider(
                             height: 1.0,
@@ -322,6 +323,8 @@ class _TasksHomePageState extends State<TasksHomePage>
   // TODO: Original one is this
   /*void _newTaskModalBottomSheet() {
     showModalBottomSheet(
+      resizeToAvoidBottomPadding:
+                  true,
         context: context,
         builder: (BuildContext contextt) {
           return StatefulBuilder(
@@ -444,6 +447,8 @@ class _TasksHomePageState extends State<TasksHomePage>
   // //TODO: This one is for debug
   // void _newTaskModalBottomSheet() {
   //   showModalBottomSheet(
+    // resizeToAvoidBottomPadding:
+    //               true,
   //       context: context,
   //       builder: (BuildContext contextt) {
   //         // return StatefulBuilder(
@@ -553,6 +558,8 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
+      resizeToAvoidBottomPadding:
+                  true,
         context: context,
         builder: (builder) {
           return Container(
@@ -734,6 +741,8 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void _modalBottomSheetMore() {
     showModalBottomSheet(
+      resizeToAvoidBottomPadding:
+                  true,
       context: context,
       builder: (builder) {
         return Container(
