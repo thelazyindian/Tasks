@@ -7,6 +7,43 @@ class DateViewWidget extends StatelessWidget {
 
   DateViewWidget({this.date, this.onClose});
 
+  String getDateLabel() {
+    if (date == null) return "";
+    if (DateTime.now().year == date.year) {
+      // -- Same Year --
+      if (DateTime.now().month == date.month) {
+        // -- Same Month --
+        if (DateTime.now().day == date.day) {
+          // -- Same Day --
+          return "Today";
+        }
+        if (DateTime.now().day == date.day - 1) {
+          // -- Same Day --
+          return "Tomorrow";
+        }
+        if (DateTime.now().day == date.day + 1) {
+          // -- Same Day --
+          return "Yesterday";
+        }
+        return DateFormat('MM-dd').format(date);
+      }
+      return DateFormat('MM-dd').format(date);
+    }
+    return DateFormat('MM-dd-yyyy').format(date);
+  }
+
+  Color getDateColor() {
+    // if (DateTime.now().year == date.year) {
+    //   if (DateTime.now().month == date.month) {
+    //     if (DateTime.now().day == date.day) {}
+    //   }
+    // }
+    if (DateTime.now().millisecondsSinceEpoch > date.millisecondsSinceEpoch) {
+      return Colors.red;
+    }
+    return Colors.blue;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,13 +59,10 @@ class DateViewWidget extends StatelessWidget {
           children: <Widget>[
             Icon(
               Icons.event_available,
-              color: date.millisecondsSinceEpoch <
-                      DateTime.now().millisecondsSinceEpoch
-                  ? Colors.red
-                  : Colors.blue,
+              color: getDateColor(),
             ),
             Container(width: 5.0),
-            Text(DateFormat('MM-dd-yyyy').format(date)),
+            Text(getDateLabel()),
             onClose == null
                 ? Container()
                 : IconButton(
