@@ -81,10 +81,11 @@ class _TasksHomePageState extends State<TasksHomePage>
       floatingActionButton: FloatingActionButton.extended(
         elevation: 3.0,
         icon: const Icon(Icons.add),
-        label: const Text('Add a new task', maxLines: 1,),
-        onPressed: () {
-          _newTaskModalBottomSheet();
-        },
+        label: const Text(
+          'Add a new task',
+          maxLines: 1,
+        ),
+        onPressed: _newTaskModalBottomSheet,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -96,15 +97,11 @@ class _TasksHomePageState extends State<TasksHomePage>
           children: <Widget>[
             IconButton(
               icon: const Icon(Icons.menu),
-              onPressed: () {
-                _modalBottomSheetMenu();
-              },
+              onPressed: _modalBottomSheetMenu,
             ),
             IconButton(
               icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                _modalBottomSheetMore();
-              },
+              onPressed: _modalBottomSheetMore,
             )
           ],
         ),
@@ -438,6 +435,7 @@ class _TasksHomePageState extends State<TasksHomePage>
           //   builder: (BuildContext ctxt, StateSetter stateSetter) {
           // setSheetState = stateSetter;
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Stack(
                 children: <Widget>[
@@ -451,41 +449,44 @@ class _TasksHomePageState extends State<TasksHomePage>
                     ),
                     child: Wrap(
                       children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(10.0),
+                          child: TextField(
+                            onChanged: (newTask) {
+                              _newTask = newTask;
+                            },
+                            onSubmitted: (newTask) {
+                              onNewTaskSave();
+                            },
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'New Task',
+                            ),
+                            autocorrect: false,
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                        // (details == true) ?
                         TextField(
-                          onChanged: (newTask) {
-                            _newTask = newTask;
+                          onChanged: (taskDetails) {
+                            _taskDetails = taskDetails;
                           },
-                          onSubmitted: (newTask) {
+                          onSubmitted: (taskDetails) {
                             onNewTaskSave();
                           },
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'New Task',
+                            hintText: 'Add details',
+                            hintStyle: TextStyle(
+                              fontSize: 8.0,
+                            ),
                           ),
                           autocorrect: false,
                           keyboardType: TextInputType.text,
-                        ),
-                        (details == true)
-                            ? TextField(
-                                onChanged: (taskDetails) {
-                                  _taskDetails = taskDetails;
-                                },
-                                onSubmitted: (taskDetails) {
-                                  onNewTaskSave();
-                                },
-                                autofocus: true,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Add details',
-                                  hintStyle: TextStyle(
-                                    fontSize: 8.0,
-                                  ),
-                                ),
-                                autocorrect: false,
-                                keyboardType: TextInputType.text,
-                              )
-                            : Container(),
+                        )
+                        // : Container(),
                       ],
                     ),
                   ),
