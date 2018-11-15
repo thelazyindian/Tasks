@@ -851,7 +851,7 @@ class _TasksHomePageState extends State<TasksHomePage>
     if (task != null) {
       var db = DatabaseHelper();
       db.saveTask(task, activeList);
-      Navigator.pop(context);
+      // Navigator.pop(context);
       print("Task saved!");
       print("$task");
       _getTasks();
