@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
+
+import '../data/database_helper.dart';
+import '../model/task.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   final int taskId;

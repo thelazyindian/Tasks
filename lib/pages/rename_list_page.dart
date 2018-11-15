@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
+
+import '../data/database_helper.dart';
 
 class RenameListPage extends StatefulWidget {
   final String listTitle;

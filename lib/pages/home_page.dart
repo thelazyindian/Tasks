@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
-import 'package:tasks/pages/new_list_page.dart';
-import 'package:tasks/pages/rename_list_page.dart';
-import 'package:tasks/pages/task_details.dart';
+
+import '../data/database_helper.dart';
+import '../model/task.dart';
+import '../pages/new_list_page.dart';
+import '../pages/rename_list_page.dart';
+import '../pages/task_details.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
