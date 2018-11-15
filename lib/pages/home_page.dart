@@ -183,9 +183,9 @@ class _TasksHomePageState extends State<TasksHomePage>
                               title: (pendingTaskList[index].task != null)
                                   ? Text(pendingTaskList[index].task)
                                   : Text(""),
-                              subtitle: (pendingTaskList[index].details != null)
-                                  ? Text(pendingTaskList[index].details)
-                                  : Text(""),
+                              subtitle: pendingTaskList[index].details == null
+                                  ? null
+                                  : Text(pendingTaskList[index].details),
                             ),
                           ),
                           Divider(
