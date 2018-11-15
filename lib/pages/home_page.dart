@@ -15,9 +15,6 @@ class TasksHomePage extends StatefulWidget {
 enum DetailsWidgetStatus { OPEN, CLOSE }
 
 int taskDetailId;
-String _newTask = "";
-String _taskDetails = "";
-String _newTaskStatus = "PENDING";
 final List<Task> pendingTaskList = List();
 final List<Task> completedTaskList = List();
 AnimationController detailsTapAnimationController;
@@ -78,16 +75,15 @@ class _TasksHomePageState extends State<TasksHomePage>
     //   },
     // );
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
       key: scaffoldKey,
       floatingActionButton: FloatingActionButton.extended(
         elevation: 4.0,
         icon: const Icon(Icons.add),
         label: const Text('Add a new task', maxLines: 1),
         onPressed: () {
-          showModalBottomSheet<Task>(
+          showModalBottomSheet<Task>( // TODO: Go To Definition of bottom_sheet.dart
               context: context,
-              // resizeToAvoidBottomPadding: true,
+              resizeToAvoidBottomPadding: true, // Replace with contents to use: https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
               builder: (BuildContext context) {
                 return AddTaskWidget();
               }).then((newTask) {
