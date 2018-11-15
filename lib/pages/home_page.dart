@@ -97,7 +97,7 @@ class _TasksHomePageState extends State<TasksHomePage>
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        elevation: 3.0,
+        elevation: 25.0,
         // hasNotch: false,
         // shape: CircularNotchedRectangle(),
         // notchMargin: 4.0,
@@ -192,8 +192,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                           pendingTaskList[index].date != null
                               ? DateViewWidget(
                                   date: DateTime.parse(
-                                      pendingTaskList[index].date)
-                                )
+                                      pendingTaskList[index].date))
                               : Container(height: 0.0),
                           Divider(
                             height: 1.0,
@@ -322,8 +321,7 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
-      resizeToAvoidBottomPadding:
-                  true,
+        resizeToAvoidBottomPadding: true,
         context: context,
         builder: (builder) {
           return Container(
@@ -505,8 +503,7 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void _modalBottomSheetMore() {
     showModalBottomSheet(
-      resizeToAvoidBottomPadding:
-                  true,
+      resizeToAvoidBottomPadding: true,
       context: context,
       builder: (builder) {
         return Container(
