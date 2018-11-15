@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../widgets/fancy_fab.dart';
 
 import '../model/task.dart';
 
@@ -56,16 +57,20 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.add_circle,
-                    color: Colors.blue,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _showDetails = true;
-                    });
-                  },
+                // IconButton(
+                //   icon: Icon(
+                //     Icons.add_circle,
+                //     color: Colors.blue,
+                //   ),
+                //   onPressed: () {
+                //     setState(() {
+                //       _showDetails = true;
+                //     });
+                //   },
+                // ),
+                FancyFab(
+                  icon: Icons.add,
+                  onPressed: () {},
                 ),
                 FlatButton(
                   child: Text(
