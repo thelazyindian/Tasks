@@ -8,6 +8,9 @@ import '../pages/task_details.dart';
 import '../pages/add_task.dart';
 import '../widgets/date_widget.dart';
 import '../data/data_handler.dart';
+import '../containers/bottom_sheet/more.dart';
+
+import '../containers/bottom_sheet/menu.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
@@ -330,179 +333,24 @@ class _TasksHomePageState extends State<TasksHomePage>
         // resizeToAvoidBottomPadding: true,
         context: context,
         builder: (builder) {
-          return Container(
-            //height: 530.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(10.0),
-                topRight: const Radius.circular(10.0),
-              ),
-            ),
-            child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                //mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  /*UserAccountsDrawerHeader(
-                    currentAccountPicture: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/user/satya_profile.png"),
-                        ),
-                      ),
-                    ),
-                    margin: EdgeInsets.all(0.0),
-                    accountEmail: Text(
-                      "satyabrat.me@gmail.com",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    accountName: Text(
-                      "Satyabrat Sahoo",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Divider(
-                    height: 4.0,
-                    indent: 2.0,
-                  ),*/
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: tblNames.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            listName = tblNames[index];
-                            activeList = listName;
-                            _getTasks();
-                            Navigator.pop(context);
-                          },
-                          child: Padding(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: (activeList == tblNames[index])
-                                    ? Color(0x4D90CAF9)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30.0),
-                                  bottomLeft: Radius.circular(30.0),
-                                ),
-                              ),
-                              child: ListTile(
-                                selected: true,
-                                title: Text(
-                                  tblNames[index],
-                                  style: TextStyle(
-                                    color: (activeList == tblNames[index])
-                                        ? Colors.blueAccent
-                                        : Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            padding: EdgeInsets.only(
-                              left: 8.0,
-                              top: 8.0,
-                              bottom: 8.0,
-                            ),
-                          ),
-                        );
-                      }),
-                  Divider(
-                    height: 4.0,
-                  ),
-                  ListTile(
-                    onTap: () async {
-                      Navigator.pop(context);
-                      var newListPage = await Navigator.push(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return NewListPage();
-                      }));
-                      if (newListPage == null) {
-                        _getTables();
-                      }
-                    },
-                    leading: Icon(
-                      Icons.add,
-                    ),
-                    title: Text(
-                      "Create list",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 4.0,
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.feedback,
-                    ),
-                    title: Text(
-                      "Send feedback",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 4.0,
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Open-source licenses",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 4.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Privacy Policy",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Container(
-                          width: 25.0,
-                          child: Icon(
-                            Icons.arrow_drop_down_circle,
-                            size: 5.0,
-                          ),
-                        ),
-                        //new Icon(
-                        //Icons.,
-                        //),
-                        Text(
-                          "Terms of service",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          return MenuWidget(
+            listNames: tblNames,
+            createList: () async {
+              Navigator.pop(context);
+              var newListPage = await Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return NewListPage();
+              }));
+              if (newListPage == null) {
+                _getTables();
+              }
+            },
+            activeList: activeList,
+            listChange: (String value) {
+              listName = value;
+              activeList = listName;
+              _getTasks();
+            },
           );
         });
   }
@@ -512,120 +360,34 @@ class _TasksHomePageState extends State<TasksHomePage>
       // resizeToAvoidBottomPadding: true,
       context: context,
       builder: (builder) {
-        return Container(
-          padding: EdgeInsets.only(
-            left: 5.0,
-            right: 5.0,
-            top: 5.0,
-            bottom: 5.0,
-          ),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(10.0),
-                  topRight: const Radius.circular(10.0))),
-          child: SafeArea(
-            child: Wrap(
-              children: <Widget>[
-                ListTile(
-                  title: const Text(
-                    'Sort By',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Container(
-                    width: 4.0,
-                  ),
-                  title: const Text(
-                    'My Order',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  trailing: Icon(Icons.check),
-                ),
-                ListTile(
-                  leading: Container(
-                    width: 4.0,
-                  ),
-                  title: const Text(
-                    'Date',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  trailing: Icon(Icons.check),
-                ),
-                Divider(
-                  height: 10.0,
-                ),
-                ListTile(
-                  title: const Text(
-                    'Rename List',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onTap: () async {
-                    Navigator.pop(context);
-                    var renameListPage = await Navigator.push(context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return RenameListPage(activeList);
-                    }));
-                    if (renameListPage == null) {
-                      _getTables();
-                    }
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'Delete List',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                      color:
-                          (tblNames.length > 1 && activeList != defaultListName)
-                              ? Colors.black
-                              : Colors.grey,
-                    ),
-                  ),
-                  enabled: true,
-                  onTap: () async {
-                    if (tblNames.length > 1 && activeList != defaultListName) {
-                      Navigator.pop(context);
-                      // await DatabaseHelper.get().deleteTable(activeList);
-                      removeList(activeList);
-                      activeList = defaultListName;
-                      listName = activeList;
-                      _getTables();
-                    }
-                  },
-                ),
-                ListTile(
-                  title: const Text(
-                    'Delete all completed tasks',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onTap: () async {
-                    // await DatabaseHelper.get().deleteCompletedTask(activeList);
-                    clearCompletedTasks(activeList);
-                    _getTasks();
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
+        return MoreWidget(
+          canDelete: activeList != tblNames[0],
+          renameList: () async {
+            Navigator.pop(context);
+            var renameListPage = await Navigator.push(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return RenameListPage(activeList);
+            }));
+            if (renameListPage == null) {
+              _getTables();
+            }
+          },
+          deleteList: () async {
+            if (tblNames.length > 1 && activeList != defaultListName) {
+              Navigator.pop(context);
+              // await DatabaseHelper.get().deleteTable(activeList);
+              removeList(activeList);
+              activeList = defaultListName;
+              listName = activeList;
+              _getTables();
+            }
+          },
+          deleteCompletedTasks: () async {
+            // await DatabaseHelper.get().deleteCompletedTask(activeList);
+            clearCompletedTasks(activeList);
+            _getTasks();
+            Navigator.pop(context);
+          },
         );
       },
     );

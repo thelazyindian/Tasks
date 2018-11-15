@@ -10,8 +10,15 @@ class Task {
   final int id;
   DateTime date;
   String title, subtitle, status;
+  List<SubTask> subtasks;
 
-  Task({this.id, this.date, this.title, this.subtitle, this.status});
+  Task(
+      {this.id,
+      this.date,
+      this.title,
+      this.subtitle,
+      this.status,
+      this.subtasks});
 
   // Task.map(dynamic obj) {
   //   this._task = obj['task'];
@@ -38,4 +45,11 @@ class Task {
   //   _status = map["status"];
   //   _details = map["details"];
   // }
+}
+
+class SubTask {
+  final int id;
+  DateTime date;
+  String title, subtitle, status;
+  SubTask({this.id, this.date, this.title, this.subtitle, this.status});
 }
