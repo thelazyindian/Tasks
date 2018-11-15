@@ -5,6 +5,7 @@ import '../model/task.dart';
 import '../pages/new_list_page.dart';
 import '../pages/rename_list_page.dart';
 import '../pages/task_details.dart';
+import '../pages/add_task.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
@@ -77,20 +78,29 @@ class _TasksHomePageState extends State<TasksHomePage>
     //   },
     // );
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       key: scaffoldKey,
       floatingActionButton: FloatingActionButton.extended(
-        elevation: 3.0,
+        elevation: 4.0,
         icon: const Icon(Icons.add),
-        label: const Text(
-          'Add a new task',
-          maxLines: 1,
-        ),
-        onPressed: _newTaskModalBottomSheet,
+        label: const Text('Add a new task', maxLines: 1),
+        onPressed: () {
+          showModalBottomSheet<Task>(
+              context: context,
+              // resizeToAvoidBottomPadding: true,
+              builder: (BuildContext context) {
+                return AddTaskWidget();
+              }).then((newTask) {
+            if (newTask.task.isNotEmpty) onNewTaskSave(newTask);
+          });
+        }, //_newTaskModalBottomSheet,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         elevation: 3.0,
         // hasNotch: false,
+        // shape: CircularNotchedRectangle(),
+        // notchMargin: 4.0,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -426,115 +436,115 @@ class _TasksHomePageState extends State<TasksHomePage>
         });
   }*/
 
-  //TODO: This one is for debug
-  void _newTaskModalBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext contextt) {
-          // return StatefulBuilder(
-          //   builder: (BuildContext ctxt, StateSetter stateSetter) {
-          // setSheetState = stateSetter;
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0),
-                      ),
-                    ),
-                    child: Wrap(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            onChanged: (newTask) {
-                              _newTask = newTask;
-                            },
-                            onSubmitted: (newTask) {
-                              onNewTaskSave();
-                            },
-                            autofocus: true,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'New Task',
-                            ),
-                            autocorrect: false,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        // // (details == true) ?
-                        // TextField(
-                        //   onChanged: (taskDetails) {
-                        //     _taskDetails = taskDetails;
-                        //   },
-                        //   onSubmitted: (taskDetails) {
-                        //     onNewTaskSave();
-                        //   },
-                        //   autofocus: true,
-                        //   decoration: InputDecoration(
-                        //     border: InputBorder.none,
-                        //     hintText: 'Add details',
-                        //     hintStyle: TextStyle(
-                        //       fontSize: 8.0,
-                        //     ),
-                        //   ),
-                        //   autocorrect: false,
-                        //   keyboardType: TextInputType.text,
-                        // )
-                        // // : Container(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_circle,
-                                color: Colors.blue,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  bool _showDetails = true;
-                                });
-                              },
-                            ),
-                            FlatButton(
-                              child: Text(
-                                'Save',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {
-                                // Navigator.pop(
-                                //     context,
-                                //     Task(
-                                //       title: _controller.text.toString(),
-                                //       subtitle: _controllerDetails.text.toString(),
-                                //     ));
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              AnimatedContainer(
-                height: MediaQuery.of(context).size.height * 0.4,
-                duration: Duration(
-                  milliseconds: 300,
-                ),
-              ),
-            ],
-          );
-          //});
-        });
-  }
+  // //TODO: This one is for debug
+  // void _newTaskModalBottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext contextt) {
+  //         // return StatefulBuilder(
+  //         //   builder: (BuildContext ctxt, StateSetter stateSetter) {
+  //         // setSheetState = stateSetter;
+  //         return Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: <Widget>[
+  //             Stack(
+  //               children: <Widget>[
+  //                 Container(
+  //                   decoration: BoxDecoration(
+  //                     color: Colors.white,
+  //                     borderRadius: BorderRadius.only(
+  //                       topLeft: const Radius.circular(10.0),
+  //                       topRight: const Radius.circular(10.0),
+  //                     ),
+  //                   ),
+  //                   child: Wrap(
+  //                     children: <Widget>[
+  //                       Container(
+  //                         padding: EdgeInsets.all(10.0),
+  //                         child: TextField(
+  //                           onChanged: (newTask) {
+  //                             _newTask = newTask;
+  //                           },
+  //                           onSubmitted: (newTask) {
+  //                             onNewTaskSave();
+  //                           },
+  //                           autofocus: true,
+  //                           decoration: InputDecoration(
+  //                             border: InputBorder.none,
+  //                             hintText: 'New Task',
+  //                           ),
+  //                           autocorrect: false,
+  //                           keyboardType: TextInputType.text,
+  //                         ),
+  //                       ),
+  //                       // // (details == true) ?
+  //                       // TextField(
+  //                       //   onChanged: (taskDetails) {
+  //                       //     _taskDetails = taskDetails;
+  //                       //   },
+  //                       //   onSubmitted: (taskDetails) {
+  //                       //     onNewTaskSave();
+  //                       //   },
+  //                       //   autofocus: true,
+  //                       //   decoration: InputDecoration(
+  //                       //     border: InputBorder.none,
+  //                       //     hintText: 'Add details',
+  //                       //     hintStyle: TextStyle(
+  //                       //       fontSize: 8.0,
+  //                       //     ),
+  //                       //   ),
+  //                       //   autocorrect: false,
+  //                       //   keyboardType: TextInputType.text,
+  //                       // )
+  //                       // // : Container(),
+  //                       Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: <Widget>[
+  //                           IconButton(
+  //                             icon: Icon(
+  //                               Icons.add_circle,
+  //                               color: Colors.blue,
+  //                             ),
+  //                             onPressed: () {
+  //                               setState(() {
+  //                                 bool _showDetails = true;
+  //                               });
+  //                             },
+  //                           ),
+  //                           FlatButton(
+  //                             child: Text(
+  //                               'Save',
+  //                               style: TextStyle(
+  //                                   color: Colors.blue,
+  //                                   fontWeight: FontWeight.bold),
+  //                             ),
+  //                             onPressed: () {
+  //                               // Navigator.pop(
+  //                               //     context,
+  //                               //     Task(
+  //                               //       title: _controller.text.toString(),
+  //                               //       subtitle: _controllerDetails.text.toString(),
+  //                               //     ));
+  //                             },
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             // AnimatedContainer(
+  //             //   height: MediaQuery.of(context).size.height * 0.4,
+  //             //   duration: Duration(
+  //             //     milliseconds: 300,
+  //             //   ),
+  //             // ),
+  //           ],
+  //         );
+  //         //});
+  //       });
+  // }
 
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
@@ -838,14 +848,13 @@ class _TasksHomePageState extends State<TasksHomePage>
     );
   }
 
-  void onNewTaskSave() {
-    if (_newTask != null) {
-      var task = Task(_newTask, _newTaskStatus, _taskDetails);
+  void onNewTaskSave(Task task) {
+    if (task != null) {
       var db = DatabaseHelper();
       db.saveTask(task, activeList);
       Navigator.pop(context);
       print("Task saved!");
-      print("$_newTask");
+      print("$task");
       _getTasks();
     } else {
       print("Empty field!");
