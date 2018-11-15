@@ -57,8 +57,7 @@ class _RenameListPageState extends State<RenameListPage> {
                       oldListTitle != null &&
                       oldListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper
-                        .get()
+                    await DatabaseHelper.get()
                         .renameTable(oldListTitle, newListTitle)
                         .then((_) {
                       Navigator.pop(context);

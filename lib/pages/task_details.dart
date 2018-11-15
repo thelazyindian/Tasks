@@ -27,8 +27,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
   TextEditingController _detailsController, _taskController;
 
   Future getTask() async {
-    DatabaseHelper
-        .get()
+    DatabaseHelper.get()
         .getTaskById(widget.listName, widget.taskId)
         .then((task) {
       if (task == null) return;
@@ -109,8 +108,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
   void updateDate(DateTime dt) {
     print("updateDate: ${dt.toString()}");
     _taskDate = dt.toString();
-    DatabaseHelper
-        .get()
+    DatabaseHelper.get()
         .updateDateByID(widget.taskId, _taskDate, widget.listName);
   }
 

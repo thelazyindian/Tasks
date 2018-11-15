@@ -48,8 +48,7 @@ class _NewListPageState extends State<NewListPage> {
                 onPressed: () async {
                   if (newListTitle != null && newListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper
-                        .get()
+                    await DatabaseHelper.get()
                         .createTable(newListTitle)
                         .then((_) {
                       Navigator.pop(context);
