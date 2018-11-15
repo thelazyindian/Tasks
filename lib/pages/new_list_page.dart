@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../data/database_helper.dart';
+// import '../data/database_helper.dart';
+import '../data/data_handler.dart';
 
 class NewListPage extends StatefulWidget {
   @override
@@ -49,11 +50,13 @@ class _NewListPageState extends State<NewListPage> {
                 onPressed: () async {
                   if (newListTitle != null && newListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper.get()
-                        .createTable(newListTitle)
-                        .then((_) {
-                      Navigator.pop(context);
-                    });
+                    // await DatabaseHelper.get()
+                    //     .createTable(newListTitle)
+                    //     .then((_) {
+                    //   Navigator.pop(context);
+                    // });
+                    addList(newListTitle);
+                    Navigator.pop(context);
                   } else {
                     key.currentState.showSnackBar(
                         SnackBar(content: Text(_snackInvalidTitleMsg)));

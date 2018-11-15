@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../data/data_handler.dart';
+import '../model/task.dart';
 
-import '../data/database_helper.dart';
+// import '../data/database_helper.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   final int taskId;
@@ -15,121 +17,124 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class TaskDetailsPageState extends State<TaskDetailsPage> {
-  // Task _task;
-  String _taskName;
+  Task task;
+  // String _taskName;
   TextDecoration _textFieldDecoration;
   Color _textFieldColor;
   bool _textFieldEnable;
   bool _textFieldFocus;
   TextField textInput;
-  String _taskDate;
-  String _details;
+  // String _taskDate;
+  // String _details;
   TextEditingController _detailsController, _taskController;
 
-  Future getTask() async {
-    DatabaseHelper.get()
-        .getTaskById(widget.listName, widget.taskId)
-        .then((task) {
-      if (task == null) return;
-      setState(() {
-        // _task = task;
-        _taskName = task.task;
-        _details = task.details;
+  Future _getTask() async {
+    task = getTask(widget.taskId, listName: widget.listName);
+    // DatabaseHelper.get()
+    //     .getTaskById(widget.listName, widget.taskId)
+    //     .then((task) {
+    if (task == null) return;
+    setState(() {
+      // _task = task;
+      // _taskName = task.title;
+      // _details = task.subtitle;
 
-        if (_taskName != null) {
-          _taskController = TextEditingController(
-            text: _taskName,
-          );
-        }
+      if (task.title != null) {
+        _taskController = TextEditingController(
+          text: task.title,
+        );
+      }
 
-        if (_details != null) {
-          _detailsController = TextEditingController(
-            text: _details,
-          );
-        }
-        print(task.status);
-        print(_taskName);
-        if (task.status == "COMPLETED") {
-          _textFieldFocus = false;
-          _textFieldDecoration = TextDecoration.lineThrough;
-          _textFieldColor = Colors.grey;
-          _textFieldEnable = false;
+      if (task.subtitle != null) {
+        _detailsController = TextEditingController(
+          text: task.subtitle,
+        );
+      }
+      print(task.status);
+      print(task.title);
+      if (task.status == "COMPLETED") {
+        _textFieldFocus = false;
+        _textFieldDecoration = TextDecoration.lineThrough;
+        _textFieldColor = Colors.grey;
+        _textFieldEnable = false;
 
-          textInput = TextField(
-            autofocus: _textFieldFocus,
-            style: TextStyle(
-              decoration: _textFieldDecoration,
-              fontSize: 35.0,
-              color: _textFieldColor,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-            enabled: _textFieldEnable,
-            controller: _taskController,
-          );
-        } else {
-          _textFieldFocus = true;
-          _textFieldDecoration = TextDecoration.none;
-          _textFieldColor = Colors.black;
-          _textFieldEnable = true;
+        textInput = TextField(
+          autofocus: _textFieldFocus,
+          style: TextStyle(
+            decoration: _textFieldDecoration,
+            fontSize: 35.0,
+            color: _textFieldColor,
+            fontWeight: FontWeight.w600,
+          ),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
+          enabled: _textFieldEnable,
+          controller: _taskController,
+        );
+      } else {
+        _textFieldFocus = true;
+        _textFieldDecoration = TextDecoration.none;
+        _textFieldColor = Colors.black;
+        _textFieldEnable = true;
 
-          textInput = TextField(
-            onChanged: (value) {
-              setState(() {
-                _taskName = value;
-              });
-            },
-            autofocus: _textFieldFocus,
-            style: TextStyle(
-              decoration: _textFieldDecoration,
-              fontSize: 35.0,
-              color: _textFieldColor,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-            enabled: _textFieldEnable,
-            controller: _taskController,
-          );
-        }
-      });
+        textInput = TextField(
+          onChanged: (value) {
+            setState(() {
+              task.title = value;
+            });
+          },
+          autofocus: _textFieldFocus,
+          style: TextStyle(
+            decoration: _textFieldDecoration,
+            fontSize: 35.0,
+            color: _textFieldColor,
+            fontWeight: FontWeight.w600,
+          ),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
+          enabled: _textFieldEnable,
+          controller: _taskController,
+        );
+      }
     });
+    // });
   }
 
   @override
   void initState() {
-    getTask();
+    _getTask();
     super.initState();
   }
 
-  void updateDate(DateTime dt) {
-    print("updateDate: ${dt.toString()}");
-    _taskDate = dt.toString();
-    DatabaseHelper.get()
-        .updateDateByID(widget.taskId, _taskDate, widget.listName);
-  }
+  // void updateDate(DateTime dt) {
+  //   print("updateDate: ${dt.toString()}");
+  //   _taskDate = dt.toString();
+  //   DatabaseHelper.get()
+  //       .updateDateByID(widget.taskId, _taskDate, widget.listName);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print("Taskname: $_taskName");
+    print("Taskname: " + task.title);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () async {
-            await DatabaseHelper.get().updateDetailsByID(
-                widget.taskId, _taskName, _details, widget.listName);
+            // await DatabaseHelper.get().updateDetailsByID(
+            //     widget.taskId, _taskName, _details, widget.listName);
+            updateTask(widget.taskId, task, listName: widget.listName);
             Navigator.pop(context);
           },
         ),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
+              // DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
+              removeTask(task, listName: widget.listName);
               Navigator.pop(context);
             },
             child: Padding(
@@ -169,14 +174,14 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                 ],
               ),
-              _taskName == null ? Container() : textInput,
+              task.title == null ? Container() : textInput,
               ListTile(
                 leading: Icon(Icons.note),
                 title: TextField(
                   controller: _detailsController,
                   onChanged: (details) {
                     setState(() {
-                      _details = details;
+                      task.subtitle = details;
                     });
                   },
                   maxLines: 1,
@@ -191,20 +196,18 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                 onTap: () {
                   showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now().subtract(Duration(
+                    initialDate: task?.date ?? DateTime.now(),
+                    firstDate: (task?.date ?? DateTime.now()).subtract(Duration(
                       days: 30,
                     )),
-                    lastDate: DateTime.now().add(
-                      Duration(
-                        days: 30,
-                      ),
-                    ),
+                    lastDate:
+                        (task?.date ?? DateTime.now()).add(Duration(days: 365)),
                   ).then((value) {
                     if (value == null) return;
                     print("Date: ${value.toIso8601String()}");
                     setState(() {
-                      updateDate(value);
+                      // updateDate(value);
+                      task.date = value;
                     });
                   }).catchError((error) {
                     print(error.toString());
@@ -212,7 +215,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                 },
                 title: Text('Date'),
               ),
-              _taskName != null && _textFieldEnable == true
+              task.title != null && _textFieldEnable == true
                   ? Padding(
                       padding: EdgeInsets.only(
                         left: 16.0,

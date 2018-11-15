@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../data/database_helper.dart';
+// import '../data/database_helper.dart';
 import '../model/task.dart';
 import '../pages/new_list_page.dart';
 import '../pages/rename_list_page.dart';
 import '../pages/task_details.dart';
 import '../pages/add_task.dart';
 import '../widgets/date_widget.dart';
+import '../data/data_handler.dart';
 
 class TasksHomePage extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class _TasksHomePageState extends State<TasksHomePage>
     detailsTapAnimationController.dispose();
   }
 
-  void _dismissTask(int index, String item) {
+  void _dismissTask(int index, Task item) {
     print(index);
     completedTaskList.add(pendingTaskList[index]);
     pendingTaskList.removeAt(index);
@@ -84,13 +85,13 @@ class _TasksHomePageState extends State<TasksHomePage>
         onPressed: () {
           showModalBottomSheet<Task>(
               // TODO: Go To Definition of bottom_sheet.dart
+              // Replace with contents to use: https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
               context: context,
-              resizeToAvoidBottomPadding:
-                  true, // Replace with contents to use: https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
+              // resizeToAvoidBottomPadding: true,
               builder: (BuildContext context) {
                 return AddTaskWidget();
               }).then((newTask) {
-            if (newTask == null || newTask.task.isNotEmpty)
+            if (newTask == null || newTask.title.isNotEmpty)
               onNewTaskSave(newTask);
           });
         }, //_newTaskModalBottomSheet,
@@ -147,29 +148,28 @@ class _TasksHomePageState extends State<TasksHomePage>
                 List<Dismissible>.generate(
                   pendingTaskList.length,
                   (int index) {
-                    final item = pendingTaskList[index].task;
+                    final item = pendingTaskList[index];
                     return Dismissible(
                       direction: DismissDirection.startToEnd,
-                      key: Key(item),
+                      key: Key(item.id.toString()),
                       onDismissed: (direction) => _dismissTask(index, item),
                       background: Container(
                         color: Colors.blue,
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 16.0,
-                              right: 16.0,
-                            ),
+                          Container(
+                            // padding: EdgeInsets.only(
+                            //   left: 5.0,
+                            //   right: 5.0,
+                            // ),
                             child: ListTile(
                               onTap: () async {
-                                taskDetailId = pendingTaskList[index].id;
                                 var route = MaterialPageRoute(
                                     builder: (BuildContext context) {
-                                  return TaskDetailsPage(
-                                      listName, taskDetailId);
+                                  return TaskDetailsPage(listName, item.id);
                                 });
                                 var detailsPage =
                                     await Navigator.of(context).push(route);
@@ -181,18 +181,24 @@ class _TasksHomePageState extends State<TasksHomePage>
                                 icon: Icon(Icons.radio_button_unchecked),
                                 onPressed: () => _dismissTask(index, item),
                               ),
-                              title: (pendingTaskList[index].task != null)
-                                  ? Text(pendingTaskList[index].task)
-                                  : Text(""),
-                              subtitle: pendingTaskList[index].details == null
+                              title: Text(item?.title ?? ""),
+                              subtitle: item?.subtitle == null ||
+                                      (item?.subtitle?.isEmpty ?? true)
                                   ? null
-                                  : Text(pendingTaskList[index].details),
+                                  : Text(item.subtitle),
                             ),
                           ),
                           pendingTaskList[index].date != null
-                              ? DateViewWidget(
-                                  date: DateTime.parse(
-                                      pendingTaskList[index].date))
+                              ? ListTile(
+                                  leading: Icon(Icons.info,
+                                      color: Colors.transparent),
+                                  title: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      DateViewWidget(date: item.date)
+                                    ],
+                                  ),
+                                )
                               : Container(height: 0.0),
                           Divider(
                             height: 1.0,
@@ -321,7 +327,7 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
-        resizeToAvoidBottomPadding: true,
+        // resizeToAvoidBottomPadding: true,
         context: context,
         builder: (builder) {
           return Container(
@@ -503,7 +509,7 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void _modalBottomSheetMore() {
     showModalBottomSheet(
-      resizeToAvoidBottomPadding: true,
+      // resizeToAvoidBottomPadding: true,
       context: context,
       builder: (builder) {
         return Container(
@@ -594,7 +600,8 @@ class _TasksHomePageState extends State<TasksHomePage>
                   onTap: () async {
                     if (tblNames.length > 1 && activeList != defaultListName) {
                       Navigator.pop(context);
-                      await DatabaseHelper.get().deleteTable(activeList);
+                      // await DatabaseHelper.get().deleteTable(activeList);
+                      removeList(activeList);
                       activeList = defaultListName;
                       listName = activeList;
                       _getTables();
@@ -610,7 +617,8 @@ class _TasksHomePageState extends State<TasksHomePage>
                     ),
                   ),
                   onTap: () async {
-                    await DatabaseHelper.get().deleteCompletedTask(activeList);
+                    // await DatabaseHelper.get().deleteCompletedTask(activeList);
+                    clearCompletedTasks(activeList);
                     _getTasks();
                     Navigator.pop(context);
                   },
@@ -625,9 +633,12 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void onNewTaskSave(Task task) {
     if (task != null) {
-      var db = DatabaseHelper();
-      db.saveTask(task, activeList);
-      // Navigator.pop(context);
+      // var db = DatabaseHelper();
+      // db.saveTask(task, activeList);
+      // //Navigator.pop(context);
+      var _task = task;
+      _task.status = "PENDING";
+      addTask(task, listName: activeList);
       print("Task saved!");
       print("$task");
       _getTasks();
@@ -636,55 +647,94 @@ class _TasksHomePageState extends State<TasksHomePage>
     }
   }
 
-  void updateTaskStatus(String task) {
-    var db = DatabaseHelper();
-    db.updateTask(task, activeList);
+  void updateTaskStatus(Task task) {
+    // var db = DatabaseHelper();
+    // db.updateTask(task, activeList);
+    var _task = task;
+    _task.status = "COMPLETED";
+    updateTask(task.id, _task, listName: activeList);
     print('Update Task');
   }
 
   void _getTasks() {
-    print("Running _getTasks()");
-    if (listName != null && listName != "") {
-      var dbClient = DatabaseHelper();
-      dbClient.getTasksByStatus(listName, "PENDING").then((tasks) {
-        if (tasks == null) return;
-        setState(() {
-          pendingTaskList.clear();
-          pendingTaskList.addAll(tasks);
-          //print(tasks.toString());
-        });
-      });
+    var pendingTasks = getTasksByStatus("PENDING", listName: listName);
+    setState(() {
+      pendingTaskList.clear();
+      pendingTaskList.addAll(pendingTasks);
+      //print(tasks.toString());
+    });
+    var completedTasks = getTasksByStatus("COMPLETED", listName: listName);
+    setState(() {
+      completedTaskList.clear();
+      completedTaskList.addAll(completedTasks);
+      //print(tasks.toString());
+    });
+    // print("Running _getTasks()");
+    // if (listName != null && listName != "") {
+    //   var dbClient = DatabaseHelper();
+    //   dbClient.getTasksByStatus(listName, "PENDING").then((tasks) {
+    //     if (tasks == null) return;
+    //     setState(() {
+    //       pendingTaskList.clear();
+    //       pendingTaskList.addAll(tasks);
+    //       //print(tasks.toString());
+    //     });
+    //   });
 
-      dbClient.getTasksByStatus(listName, "COMPLETED").then((tasks) {
-        if (tasks == null) return;
-        setState(() {
-          completedTaskList.clear();
-          completedTaskList.addAll(tasks);
-          //print(tasks.toString());
-        });
-      });
-    } else {
-      print("var listName is null");
-    }
+    //   dbClient.getTasksByStatus(listName, "COMPLETED").then((tasks) {
+    //     if (tasks == null) return;
+    //     setState(() {
+    //       completedTaskList.clear();
+    //       completedTaskList.addAll(tasks);
+    //       //print(tasks.toString());
+    //     });
+    //   });
+    // } else {
+    //   print("var listName is null");
+    // }
   }
 
   void _getTables() {
-    DatabaseHelper.get().getTables().then((tableNames) {
-      if (tableNames != null) {
-        tblNames.clear();
-        for (String item in tableNames) {
-          setState(() {
-            print(item);
-            tblNames.add(item);
-          });
-        }
-        activeList = tblNames[0];
-        listName = tblNames[0];
-        defaultListName = tblNames[0];
-        _getTasks();
-      } else
-        print("getTables returned null");
-    });
+    var tableNames = getLists();
+    if (tableNames != null) {
+      tblNames.clear();
+      for (var item in tableNames) {
+        setState(() {
+          print(item.name);
+          tblNames.add(item.name);
+        });
+      }
+      if (tableNames == null || tableNames.isEmpty) {
+        setState(() {
+          var item = "My Tasks";
+          print(item);
+          tblNames.add(item);
+        });
+      }
+      activeList = tblNames[0];
+      listName = tblNames[0];
+      defaultListName = tblNames[0];
+      _getTasks();
+    } else {
+      print("getTables returned null");
+    }
+    _getTasks();
+    // DatabaseHelper.get().getTables().then((tableNames) {
+    //   if (tableNames != null) {
+    //     tblNames.clear();
+    //     for (String item in tableNames) {
+    //       setState(() {
+    //         print(item);
+    //         tblNames.add(item);
+    //       });
+    //     }
+    //     activeList = tblNames[0];
+    //     listName = tblNames[0];
+    //     defaultListName = tblNames[0];
+    //     _getTasks();
+    //   } else
+    //     print("getTables returned null");
+    // });
   }
 
   Widget completedList() {
@@ -727,7 +777,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                             color: Colors.blue,
                           ),
                           title: Text(
-                            completedTaskList[index].task,
+                            completedTaskList[index].title,
                             style: TextStyle(
                               decoration: TextDecoration.lineThrough,
                             ),

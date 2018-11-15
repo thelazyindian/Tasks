@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../data/database_helper.dart';
+// import '../data/database_helper.dart';
+import '../data/data_handler.dart';
 
 class RenameListPage extends StatefulWidget {
   final String listTitle;
@@ -58,11 +59,13 @@ class _RenameListPageState extends State<RenameListPage> {
                       oldListTitle != null &&
                       oldListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper.get()
-                        .renameTable(oldListTitle, newListTitle)
-                        .then((_) {
-                      Navigator.pop(context);
-                    });
+                    // await DatabaseHelper.get()
+                    //     .renameTable(oldListTitle, newListTitle)
+                    //     .then((_) {
+                    //   Navigator.pop(context);
+                    // });
+                    updateListName(oldListTitle, newListTitle);
+                    Navigator.pop(context);
                   } else {
                     key.currentState.showSnackBar(
                         SnackBar(content: Text(_snackInvalidTitleMsg)));

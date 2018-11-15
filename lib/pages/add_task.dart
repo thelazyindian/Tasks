@@ -94,15 +94,11 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
                   datePressed: () {
                     showDatePicker(
                       context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now().subtract(Duration(
-                        days: 30,
-                      )),
-                      lastDate: DateTime.now().add(
-                        Duration(
-                          days: 30,
-                        ),
-                      ),
+                      initialDate: _date ?? DateTime.now(),
+                      firstDate: (_date ?? DateTime.now())
+                          .subtract(Duration(days: 30)),
+                      lastDate:
+                          (_date ?? DateTime.now()).add(Duration(days: 365)),
                     ).then((value) {
                       if (value == null) return;
                       print("Date: ${value.toIso8601String()}");
@@ -124,10 +120,9 @@ class AddTaskWidgetState extends State<AddTaskWidget> {
                     Navigator.pop(
                         context,
                         Task(
-                          _controller.text.toString(),
-                          "PENDING",
-                          _controllerDetails.text.toString(),
-                          _date.toString(),
+                          title: _controller.text.toString(),
+                          subtitle: _controllerDetails.text.toString(),
+                          date: _date,
                         ));
                   },
                 ),
