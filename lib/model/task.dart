@@ -5,7 +5,7 @@ class Task {
   String _date;
   String _details;
 
-  Task(this._task, this._status, this._details);
+  Task(this._task, this._status, this._details, this._date);
 
   Task.map(dynamic obj) {
     this._task = obj['task'];

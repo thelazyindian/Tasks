@@ -18,7 +18,7 @@ class _FancyFabState extends State<FancyFab>
   AnimationController _animationController;
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
-  double _fabHeight = 45.0;
+  double _fabHeight = 55.0;
 
   @override
   initState() {
@@ -121,7 +121,7 @@ class _FancyFabState extends State<FancyFab>
           transform: Matrix4.translationValues(
             0.0,
             _translateButton.value,
-            -1.0,
+            0.0,
           ),
           child: details(),
         ),
@@ -129,7 +129,7 @@ class _FancyFabState extends State<FancyFab>
           transform: Matrix4.translationValues(
             0.0,
             _translateButton.value,
-            -1,
+            0.0,
           ),
           child: calendar(),
         ),
