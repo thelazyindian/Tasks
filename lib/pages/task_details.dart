@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
+
+import '../data/database_helper.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   final int taskId;
@@ -15,7 +15,7 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class TaskDetailsPageState extends State<TaskDetailsPage> {
-  Task _task;
+  // Task _task;
   String _taskName;
   TextDecoration _textFieldDecoration;
   Color _textFieldColor;
@@ -27,13 +27,12 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
   TextEditingController _detailsController, _taskController;
 
   Future getTask() async {
-    DatabaseHelper
-        .get()
+    DatabaseHelper.get()
         .getTaskById(widget.listName, widget.taskId)
         .then((task) {
       if (task == null) return;
       setState(() {
-        _task = task;
+        // _task = task;
         _taskName = task.task;
         _details = task.details;
 
@@ -109,8 +108,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
   void updateDate(DateTime dt) {
     print("updateDate: ${dt.toString()}");
     _taskDate = dt.toString();
-    DatabaseHelper
-        .get()
+    DatabaseHelper.get()
         .updateDateByID(widget.taskId, _taskDate, widget.listName);
   }
 

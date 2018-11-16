@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
+
+import '../data/database_helper.dart';
 
 class NewListPage extends StatefulWidget {
   @override
@@ -48,8 +49,7 @@ class _NewListPageState extends State<NewListPage> {
                 onPressed: () async {
                   if (newListTitle != null && newListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper
-                        .get()
+                    await DatabaseHelper.get()
                         .createTable(newListTitle)
                         .then((_) {
                       Navigator.pop(context);

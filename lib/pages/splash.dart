@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/pages/home_page.dart';
+
+import '../pages/home_page.dart';
 
 class TasksSplashPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _TasksSplashPageState extends State<TasksSplashPage> {
     super.initState();
     Timer(Duration(seconds: 2), () {
       Navigator.pop(context);
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (BuildContext context) {
           return new TasksHomePage();
         }),

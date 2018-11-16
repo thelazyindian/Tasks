@@ -4,7 +4,8 @@ import 'dart:io' as io;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tasks/model/task.dart';
+
+import '../model/task.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
@@ -48,7 +49,7 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $_tableName($_columnId INTEGER PRIMARY KEY, $_columnTask TEXT, $_columnStatus TEXT, $_columnDetails TEXT, $_columnDate TEXT)");
+        "CREATE TABLE '$_tableName' ($_columnId INTEGER PRIMARY KEY, $_columnTask TEXT, $_columnStatus TEXT, $_columnDetails TEXT, $_columnDate TEXT)");
     print("Table $_tableName is created");
   }
 
@@ -72,7 +73,7 @@ class DatabaseHelper {
     var dbClient = await db;
     await dbClient.transaction((Transaction txn) {
       txn.rawQuery(
-          "CREATE TABLE \'$_newTableName\'($_columnId INTEGER PRIMARY KEY,"
+          "CREATE TABLE '$_newTableName' ($_columnId INTEGER PRIMARY KEY,"
           " $_columnTask TEXT, $_columnStatus TEXT,"
           " $_columnDetails TEXT, $_columnDate TEXT)");
     });
