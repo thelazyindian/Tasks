@@ -146,6 +146,9 @@ class _TasksHomePageState extends State<TasksHomePage>
           listRefresh: () {
             _getTasks();
           },
+          restoreTask: (Task task) {
+            updateTaskStatus(task, undo: true);
+          },
         );
       } else {
         showCompleted = false;
@@ -162,7 +165,7 @@ class _TasksHomePageState extends State<TasksHomePage>
       items: pendingTaskList,
       dismissedTask: (Task task) {
         updateTaskStatus(task);
-        showInSnackBar("1 Completed", task: task);
+        showInSnackBar("1 completed", task: task);
       },
       listRefresh: () {
         _getTasks();
@@ -186,6 +189,9 @@ class _TasksHomePageState extends State<TasksHomePage>
       listName: activeList,
       listRefresh: () {
         _getTasks();
+      },
+      restoreTask: (Task task) {
+        updateTaskStatus(task, undo: true);
       },
     );
   }

@@ -6,7 +6,9 @@ class CompletedList extends StatelessWidget {
   final List<Task> items;
   final String listName;
   final VoidCallback listRefresh;
-  CompletedList({this.items, this.listRefresh, this.listName});
+  final ValueChanged<Task> restoreTask;
+  CompletedList(
+      {this.items, this.listRefresh, this.listName, this.restoreTask});
   @override
   Widget build(BuildContext context) {
     if (items == null || items.isEmpty) return SliverFillRemaining();
@@ -16,7 +18,7 @@ class CompletedList extends StatelessWidget {
         backgroundColor: Colors.white,
         children: <Widget>[
           Container(
-            height: 40 + 60.0 * items.length,
+            height: 60.0 * items.length,
             child: ListView.builder(
               itemCount: items.length,
               shrinkWrap: true,
@@ -29,20 +31,26 @@ class CompletedList extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 16.0, right: 16.0),
                       child: ListTile(
-                        leading: Icon(Icons.check, color: Colors.blue),
+                        leading: IconButton(
+                          icon: Icon(Icons.check, color: Colors.blue),
+                          onPressed: () => restoreTask(item),
+                        ),
                         title: Text(
                           item.title,
                           style:
                               TextStyle(decoration: TextDecoration.lineThrough),
                         ),
+                        subtitle: item?.subtitle == null ||
+                                (item?.subtitle?.isEmpty ?? true)
+                            ? null
+                            : Text(item.subtitle),
                         onTap: () async {
                           var route = MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                return TaskDetailsPage(listName, item);
-                              });
-                              var value =
-                                  await Navigator.of(context).push(route);
-                              if (value != null) listRefresh();
+                              builder: (BuildContext context) {
+                            return TaskDetailsPage(listName, item);
+                          });
+                          var value = await Navigator.of(context).push(route);
+                          if (value != null) listRefresh();
                         },
                       ),
                     ),
