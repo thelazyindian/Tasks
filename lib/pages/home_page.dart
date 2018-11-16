@@ -366,6 +366,7 @@ class _TasksHomePageState extends State<TasksHomePage>
       context: context,
       builder: (builder) {
         return MoreWidget(
+          completedTasksCount: completedTaskList?.length,
           canDelete: activeList != tblNames[0],
           renameList: () async {
             Navigator.pop(context);

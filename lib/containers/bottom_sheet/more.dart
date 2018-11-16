@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class MoreWidget extends StatelessWidget {
   final VoidCallback renameList, deleteList, deleteCompletedTasks;
   final bool canDelete;
-  MoreWidget(
-      {this.renameList,
-      this.deleteList,
-      this.deleteCompletedTasks,
-      this.canDelete});
+  final int completedTasksCount;
+  MoreWidget({
+    this.renameList,
+    this.deleteList,
+    this.deleteCompletedTasks,
+    this.canDelete,
+    this.completedTasksCount,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,21 +82,26 @@ class MoreWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: canDelete ?? true ? Colors.black : Colors.grey,
                 ),
               ),
               enabled: canDelete ?? true,
               onTap: deleteList,
             ),
             ListTile(
-              title: const Text(
+              title: Text(
                 'Delete all completed tasks',
                 style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w700,
+                  color: completedTasksCount != null && completedTasksCount > 0
+                      ? Colors.black
+                      : Colors.grey,
                 ),
               ),
-              onTap: deleteCompletedTasks,
+              onTap: completedTasksCount != null && completedTasksCount > 0
+                  ? deleteCompletedTasks
+                  : null,
             ),
           ],
         ),
