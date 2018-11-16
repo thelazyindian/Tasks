@@ -9,6 +9,7 @@ import '../pages/add_task.dart';
 import '../widgets/date_widget.dart';
 import '../data/data_handler.dart';
 import '../containers/bottom_sheet/more.dart';
+import '../containers/lists/completed.dart';
 
 import '../containers/bottom_sheet/menu.dart';
 
@@ -213,7 +214,8 @@ class _TasksHomePageState extends State<TasksHomePage>
                 ),
               ),
             ),
-            completedList(),
+            // completedList(),
+            CompletedList(items: completedTaskList),
           ],
         ),
       ),
@@ -233,100 +235,100 @@ class _TasksHomePageState extends State<TasksHomePage>
     setState(() {});
   }
 
-  Widget dateButton() {
-    var scorePosition = detailsTapAnimationController.value * 100;
-    var scoreOpacity = detailsTapAnimationController.value;
-    return Positioned(
-      child: Opacity(
-        opacity: scoreOpacity,
-        child: Container(
-          height: 32.0,
-          width: 32.0,
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(side: BorderSide.none),
-          ),
-          child: Center(
-            child: Icon(
-              Icons.date_range,
-              color: Colors.blue,
-            ),
-          ),
-        ),
-      ),
-      left: scorePosition,
-    );
-  }
+  // Widget dateButton() {
+  //   var scorePosition = detailsTapAnimationController.value * 100;
+  //   var scoreOpacity = detailsTapAnimationController.value;
+  //   return Positioned(
+  //     child: Opacity(
+  //       opacity: scoreOpacity,
+  //       child: Container(
+  //         height: 32.0,
+  //         width: 32.0,
+  //         decoration: ShapeDecoration(
+  //           shape: RoundedRectangleBorder(side: BorderSide.none),
+  //         ),
+  //         child: Center(
+  //           child: Icon(
+  //             Icons.date_range,
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //     left: scorePosition,
+  //   );
+  // }
 
-  Widget detailsButton() {
-    var scorePosition = detailsTapAnimationController.value * 50;
-    var scoreOpacity = detailsTapAnimationController.value;
-    return Positioned(
-      child: GestureDetector(
-        onTapUp: (TapUpDetails tapUp) {
-          print('Tapup');
-          if (details == false) {
-            setSheetState(() {
-              details = true;
-            });
-          } else {
-            setSheetState(() {
-              details = false;
-            });
-          }
-        },
-        child: Opacity(
-          opacity: scoreOpacity,
-          child: Container(
-            height: 32.0,
-            width: 32.0,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(side: BorderSide.none),
-            ),
-            child: Center(
-              child: Icon(
-                Icons.format_list_numbered,
-                color: (details == false) ? Colors.blue : Colors.grey[400],
-              ),
-            ),
-          ),
-        ),
-      ),
-      left: scorePosition,
-    );
-  }
+  // Widget detailsButton() {
+  //   var scorePosition = detailsTapAnimationController.value * 50;
+  //   var scoreOpacity = detailsTapAnimationController.value;
+  //   return Positioned(
+  //     child: GestureDetector(
+  //       onTapUp: (TapUpDetails tapUp) {
+  //         print('Tapup');
+  //         if (details == false) {
+  //           setSheetState(() {
+  //             details = true;
+  //           });
+  //         } else {
+  //           setSheetState(() {
+  //             details = false;
+  //           });
+  //         }
+  //       },
+  //       child: Opacity(
+  //         opacity: scoreOpacity,
+  //         child: Container(
+  //           height: 32.0,
+  //           width: 32.0,
+  //           decoration: ShapeDecoration(
+  //             shape: RoundedRectangleBorder(side: BorderSide.none),
+  //           ),
+  //           child: Center(
+  //             child: Icon(
+  //               Icons.format_list_numbered,
+  //               color: (details == false) ? Colors.blue : Colors.grey[400],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //     left: scorePosition,
+  //   );
+  // }
 
-  Widget kek() {
-    var rotation = detailsTapAnimationController.value == 0.0
-        ? detailsTapAnimationController.value
-        : detailsTapAnimationController.value + 25;
-    var mColor = detailsTapAnimationController.value == 0.0
-        ? Colors.blue
-        : Colors.blueGrey;
-    return GestureDetector(
-      onTapUp: onTapUp,
-      child: Transform.rotate(
-        angle: rotation,
-        child: Container(
-          height: 32.0,
-          width: 32.0,
-          padding: EdgeInsets.all(2.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
-            color: Colors.transparent,
-          ),
-          child: Center(
-            child: Icon(
-              Icons.add_circle,
-              color: mColor,
-              size: 26.0,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget kek() {
+  //   var rotation = detailsTapAnimationController.value == 0.0
+  //       ? detailsTapAnimationController.value
+  //       : detailsTapAnimationController.value + 25;
+  //   var mColor = detailsTapAnimationController.value == 0.0
+  //       ? Colors.blue
+  //       : Colors.blueGrey;
+  //   return GestureDetector(
+  //     onTapUp: onTapUp,
+  //     child: Transform.rotate(
+  //       angle: rotation,
+  //       child: Container(
+  //         height: 32.0,
+  //         width: 32.0,
+  //         padding: EdgeInsets.all(2.0),
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.circular(30.0),
+  //           color: Colors.transparent,
+  //         ),
+  //         child: Center(
+  //           child: Icon(
+  //             Icons.add_circle,
+  //             color: mColor,
+  //             size: 26.0,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  BuildContext bottomSheetContext;
+  // BuildContext bottomSheetContext;
 
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
@@ -500,66 +502,66 @@ class _TasksHomePageState extends State<TasksHomePage>
     // });
   }
 
-  Widget completedList() {
-    if (completedTaskList.isNotEmpty) {
-      return SliverToBoxAdapter(
-        child: ExpansionTile(
-          title: Text(
-            'Completed (${completedTaskList.length})',
-          ),
-          backgroundColor: Colors.white,
-          children: <Widget>[
-            Container(
-              height: 80.0 * completedTaskList.length,
-              child: ListView.builder(
-                itemCount: completedTaskList.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 16.0,
-                          right: 16.0,
-                        ),
-                        child: ListTile(
-                          onTap: () async {
-                            taskDetailId = completedTaskList[index].id;
-                            var route = MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return TaskDetailsPage(listName, taskDetailId);
-                            });
-                            var detailsPage =
-                                await Navigator.of(context).push(route);
-                            if (detailsPage == null) {
-                              _getTasks();
-                            }
-                          },
-                          leading: Icon(
-                            Icons.check,
-                            color: Colors.blue,
-                          ),
-                          title: Text(
-                            completedTaskList[index].title,
-                            style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1.0,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return SliverFillRemaining();
-    }
-  }
+  // Widget completedList() {
+  //   if (completedTaskList.isNotEmpty) {
+  //     return SliverToBoxAdapter(
+  //       child: ExpansionTile(
+  //         title: Text(
+  //           'Completed (${completedTaskList.length})',
+  //         ),
+  //         backgroundColor: Colors.white,
+  //         children: <Widget>[
+  //           Container(
+  //             height: 80.0 * completedTaskList.length,
+  //             child: ListView.builder(
+  //               itemCount: completedTaskList.length,
+  //               itemBuilder: (context, index) {
+  //                 return Column(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: <Widget>[
+  //                     Padding(
+  //                       padding: EdgeInsets.only(
+  //                         left: 16.0,
+  //                         right: 16.0,
+  //                       ),
+  //                       child: ListTile(
+  //                         onTap: () async {
+  //                           taskDetailId = completedTaskList[index].id;
+  //                           var route = MaterialPageRoute(
+  //                               builder: (BuildContext context) {
+  //                             return TaskDetailsPage(listName, taskDetailId);
+  //                           });
+  //                           var detailsPage =
+  //                               await Navigator.of(context).push(route);
+  //                           if (detailsPage == null) {
+  //                             _getTasks();
+  //                           }
+  //                         },
+  //                         leading: Icon(
+  //                           Icons.check,
+  //                           color: Colors.blue,
+  //                         ),
+  //                         title: Text(
+  //                           completedTaskList[index].title,
+  //                           style: TextStyle(
+  //                             decoration: TextDecoration.lineThrough,
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Divider(
+  //                       height: 1.0,
+  //                     ),
+  //                   ],
+  //                 );
+  //               },
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } else {
+  //     return SliverFillRemaining();
+  //   }
+  // }
 }
