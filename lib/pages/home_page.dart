@@ -10,6 +10,8 @@ import '../widgets/date_widget.dart';
 import '../data/data_handler.dart';
 import '../containers/bottom_sheet/more.dart';
 import '../containers/lists/completed.dart';
+import '../containers/lists/pending.dart';
+import '../containers/app_bar/main_list.dart';
 
 import '../containers/bottom_sheet/menu.dart';
 
@@ -127,97 +129,26 @@ class _TasksHomePageState extends State<TasksHomePage>
       ),
       body: Container(
         color: Colors.white,
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Colors.white,
-              expandedHeight: 85.0,
-              floating: false,
-              snap: false,
-              elevation: 0.0,
-              flexibleSpace: FlexibleSpaceBar(
-                title: (listName != "" && listName != null)
-                    ? Text(
-                        listName,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      )
-                    : Text(""),
+        child: SafeArea(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              MainListAppBar(name: listName),
+              PendingList(
+                items: pendingTaskList,
+                dismissedTask: (Task task) {
+                  completedTaskList.add(task);
+                  pendingTaskList.remove(task);
+                  updateTaskStatus(task);
+                  _getTasks();
+                },
+                listRefresh: () {
+                  _getTasks();
+                },
+                listName: activeList,
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                List<Dismissible>.generate(
-                  pendingTaskList.length,
-                  (int index) {
-                    final item = pendingTaskList[index];
-                    return Dismissible(
-                      direction: DismissDirection.startToEnd,
-                      key: Key(item.id.toString()),
-                      onDismissed: (direction) => _dismissTask(index, item),
-                      background: Container(
-                        color: Colors.blue,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            // padding: EdgeInsets.only(
-                            //   left: 5.0,
-                            //   right: 5.0,
-                            // ),
-                            child: ListTile(
-                              onTap: () async {
-                                var route = MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                  return TaskDetailsPage(listName, item.id);
-                                });
-                                var detailsPage =
-                                    await Navigator.of(context).push(route);
-                                if (detailsPage == null) {
-                                  _getTasks();
-                                }
-                              },
-                              leading: IconButton(
-                                icon: Icon(Icons.radio_button_unchecked),
-                                onPressed: () => _dismissTask(index, item),
-                              ),
-                              title: Text(item?.title ?? ""),
-                              subtitle: item?.subtitle == null ||
-                                      (item?.subtitle?.isEmpty ?? true)
-                                  ? null
-                                  : Text(item.subtitle),
-                            ),
-                          ),
-                          pendingTaskList[index].date != null
-                              ? ListTile(
-                                  leading: Icon(Icons.info,
-                                      color: Colors.transparent),
-                                  title: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      DateViewWidget(date: item.date)
-                                    ],
-                                  ),
-                                )
-                              : Container(height: 0.0),
-                          Divider(
-                            height: 1.0,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            // completedList(),
-            CompletedList(items: completedTaskList),
-          ],
+              CompletedList(items: completedTaskList),
+            ],
+          ),
         ),
       ),
     );

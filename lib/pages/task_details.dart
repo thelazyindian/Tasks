@@ -127,7 +127,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
             // await DatabaseHelper.get().updateDetailsByID(
             //     widget.taskId, _taskName, _details, widget.listName);
             updateTask(widget.taskId, task, listName: widget.listName);
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           },
         ),
         actions: <Widget>[
@@ -135,7 +135,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
             onTap: () {
               // DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
               removeTask(task, listName: widget.listName);
-              Navigator.pop(context);
+              Navigator.pop(context, false);
             },
             child: Padding(
               padding: EdgeInsets.only(
