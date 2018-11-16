@@ -66,9 +66,7 @@ class PendingList extends StatelessWidget {
                           ),
                         )
                       : Container(height: 0.0),
-                  Divider(
-                    height: 1.0,
-                  ),
+                  Divider(height: 1.0),
                 ],
               ),
             );

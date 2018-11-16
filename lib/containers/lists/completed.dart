@@ -46,12 +46,12 @@ class CompletedList extends StatelessWidget {
                         },
                       ),
                     ),
-                    Divider(height: 1.0),
                   ],
                 );
               },
             ),
           ),
+          Divider(height: 1.0),
         ],
       ),
     );
