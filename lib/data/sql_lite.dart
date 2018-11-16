@@ -206,3 +206,61 @@
 
 //   Future close() async => _db.close();
 // }
+
+// -- Get Tasks --
+// print("Running _getTasks()");
+// if (listName != null && listName != "") {
+//   var dbClient = DatabaseHelper();
+//   dbClient.getTasksByStatus(listName, "PENDING").then((tasks) {
+//     if (tasks == null) return;
+//     setState(() {
+//       pendingTaskList.clear();
+//       pendingTaskList.addAll(tasks);
+//       //print(tasks.toString());
+//     });
+//   });
+
+//   dbClient.getTasksByStatus(listName, "COMPLETED").then((tasks) {
+//     if (tasks == null) return;
+//     setState(() {
+//       completedTaskList.clear();
+//       completedTaskList.addAll(tasks);
+//       //print(tasks.toString());
+//     });
+//   });
+// } else {
+//   print("var listName is null");
+// }
+
+// -- Get Tables --
+// DatabaseHelper.get().getTables().then((tableNames) {
+//   if (tableNames != null) {
+//     tblNames.clear();
+//     for (String item in tableNames) {
+//       setState(() {
+//         print(item);
+//         tblNames.add(item);
+//       });
+//     }
+//     activeList = tblNames[0];
+//     listName = tblNames[0];
+//     defaultListName = tblNames[0];
+//     _getTasks();
+//   } else
+//     print("getTables returned null");
+// });
+
+// -- Delete List --
+// await DatabaseHelper.get().deleteTable(activeList);
+
+// -- Delete COmpleted Tasks
+// await DatabaseHelper.get().deleteCompletedTask(activeList);
+
+// -- Task Save --
+// var db = DatabaseHelper();
+// db.saveTask(task, activeList);
+// //Navigator.pop(context);
+
+// -- Update Task --
+// var db = DatabaseHelper();
+// db.updateTask(task, activeList);

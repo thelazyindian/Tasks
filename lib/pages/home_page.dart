@@ -94,17 +94,17 @@ class _TasksHomePageState extends State<TasksHomePage>
         label: const Text('Add a new task', maxLines: 1),
         onPressed: () {
           showModalBottomSheet<Task>(
-              // TODO: Go To Definition of bottom_sheet.dart
-              // Replace with contents to use: https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
+              // ^^^ TODO: Go To Definition of showModalBottomSheet (bottom_sheet.dart)
+              // Replace with contents with => https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
               context: context,
-              // resizeToAvoidBottomPadding: true,
+              // resizeToAvoidBottomPadding: true, // <= Uncomment after rebuild and restart
               builder: (BuildContext context) {
                 return AddTaskWidget();
               }).then((newTask) {
             if (newTask == null || newTask.title.isNotEmpty)
               onNewTaskSave(newTask);
           });
-        }, //_newTaskModalBottomSheet,
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -215,26 +215,7 @@ class _TasksHomePageState extends State<TasksHomePage>
                 MaterialPageRoute(builder: (BuildContext context) {
               return RenameListPage(activeList);
             }));
-            // if (renameListPage == null) {
-            //   _getTables();
-            // } else {
-            //   // for (var name in tblNames) {
-            //   //   if (activeList.contains(name)) {
-            //   //     name = renameListPage;
-            //   //   }
-            //   // }
-            //   updateListName(activeList, renameListPage);
-            //   tblNames.remove(activeList);
-            //   tblNames.add(renameListPage);
-            //   print("Count: ${tblNames.length} Old: $activeList, New: $renameListPage");
-            //   setState(() {
-            //     activeList = renameListPage;
-            //     listName = activeList;
-            //   });
-            //   _getTasks();
-            // }
             if (renameListPage != null) {
-              // updateListName(activeList, renameListPage);
               tblNames.remove(activeList);
               tblNames.add(renameListPage);
               print(
@@ -249,8 +230,6 @@ class _TasksHomePageState extends State<TasksHomePage>
           deleteList: () async {
             if (tblNames.length > 1 && activeList != defaultListName) {
               Navigator.pop(context);
-              // await DatabaseHelper.get().deleteTable(activeList);
-
               removeList(listName);
               tblNames.remove(listName);
               setState(() {
@@ -261,7 +240,6 @@ class _TasksHomePageState extends State<TasksHomePage>
             }
           },
           deleteCompletedTasks: () async {
-            // await DatabaseHelper.get().deleteCompletedTask(activeList);
             clearCompletedTasks(activeList);
             _getTasks();
             Navigator.pop(context);
@@ -273,9 +251,6 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   void onNewTaskSave(Task task) {
     if (task != null) {
-      // var db = DatabaseHelper();
-      // db.saveTask(task, activeList);
-      // //Navigator.pop(context);
       var _task = task;
       _task.status = "PENDING";
       addTask(task, listName: activeList);
@@ -308,8 +283,6 @@ class _TasksHomePageState extends State<TasksHomePage>
   }
 
   void updateTaskStatus(Task task) {
-    // var db = DatabaseHelper();
-    // db.updateTask(task, activeList);
     var _task = task;
     _task.status = "COMPLETED";
     updateTask(task.id, _task, listName: activeList);
@@ -323,7 +296,6 @@ class _TasksHomePageState extends State<TasksHomePage>
     setState(() {
       pendingTaskList?.clear();
       pendingTaskList?.addAll(pendingTasks);
-      //print(tasks.toString());
     });
     var completedTasks =
         getTasksByStatus("COMPLETED", listName: listName) ?? [];
@@ -331,31 +303,7 @@ class _TasksHomePageState extends State<TasksHomePage>
     setState(() {
       completedTaskList?.clear();
       completedTaskList?.addAll(completedTasks);
-      //print(tasks.toString());
     });
-    // print("Running _getTasks()");
-    // if (listName != null && listName != "") {
-    //   var dbClient = DatabaseHelper();
-    //   dbClient.getTasksByStatus(listName, "PENDING").then((tasks) {
-    //     if (tasks == null) return;
-    //     setState(() {
-    //       pendingTaskList.clear();
-    //       pendingTaskList.addAll(tasks);
-    //       //print(tasks.toString());
-    //     });
-    //   });
-
-    //   dbClient.getTasksByStatus(listName, "COMPLETED").then((tasks) {
-    //     if (tasks == null) return;
-    //     setState(() {
-    //       completedTaskList.clear();
-    //       completedTaskList.addAll(tasks);
-    //       //print(tasks.toString());
-    //     });
-    //   });
-    // } else {
-    //   print("var listName is null");
-    // }
   }
 
   void _getTables() {
@@ -376,29 +324,10 @@ class _TasksHomePageState extends State<TasksHomePage>
           tblNames.add(item);
         });
       }
-      // activeList = tblNames[0];
-      // listName = tblNames[0];
-      // defaultListName = tblNames[0];
       _getTasks();
     } else {
       print("getTables returned null");
     }
     _getTasks();
-    // DatabaseHelper.get().getTables().then((tableNames) {
-    //   if (tableNames != null) {
-    //     tblNames.clear();
-    //     for (String item in tableNames) {
-    //       setState(() {
-    //         print(item);
-    //         tblNames.add(item);
-    //       });
-    //     }
-    //     activeList = tblNames[0];
-    //     listName = tblNames[0];
-    //     defaultListName = tblNames[0];
-    //     _getTasks();
-    //   } else
-    //     print("getTables returned null");
-    // });
   }
 }
