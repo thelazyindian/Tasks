@@ -21,13 +21,15 @@ class DateViewWidget extends StatelessWidget {
           // -- Same Day --
           return "Tomorrow";
         }
-        if (DateTime.now().day == date.day + 1) {
+        if (DateTime.now().day >= date.day + 1) {
           // -- Same Day --
-          return "Yesterday";
+          final count = DateTime.now().day - date.day;
+          if (count == 1) return "$count Day Ago";
+          return "$count Days Ago";
         }
-        return DateFormat('MM-dd').format(date);
+        // return DateFormat('MM-dd').format(date);
       }
-      return DateFormat('MM-dd').format(date);
+      return DateFormat('EEE, MMM d').format(date);
     }
     return DateFormat('MM-dd-yyyy').format(date);
   }
