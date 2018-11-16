@@ -3,7 +3,6 @@ import '../model/list.dart';
 import 'package:flutter/material.dart';
 
 // -- Lists --
-
 List<TaskList> _lists = [];
 
 List<TaskList> getLists() {
@@ -129,3 +128,7 @@ void clearCompletedTasks(String listName) {
   }
   _tasks.remove(_remove);
 }
+
+// -- Storage --
+enum StorageProvider { sqlLite, memory, firebase }
+StorageProvider storage = StorageProvider.memory; // Default Storage
