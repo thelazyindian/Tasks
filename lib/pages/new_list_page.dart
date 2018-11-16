@@ -86,10 +86,10 @@ class _NewListPageState extends State<NewListPage> {
                     onChanged: (listTitle) {
                       newListTitle = listTitle;
                     },
+                    autofocus: true,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: _listTitleInputHint),
-                    //autofocus: true,
                     enabled: true,
                   )
                 ],

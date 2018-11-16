@@ -381,11 +381,13 @@ class _TasksHomePageState extends State<TasksHomePage>
             if (tblNames.length > 1 && activeList != defaultListName) {
               Navigator.pop(context);
               // await DatabaseHelper.get().deleteTable(activeList);
-              removeList(activeList);
+
+              removeList(listName);
+              tblNames.remove(listName);
               setState(() {
                 activeList = defaultListName;
                 listName = activeList;
-                _getTables();
+                _getTasks();
               });
             }
           },

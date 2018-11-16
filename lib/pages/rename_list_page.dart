@@ -98,7 +98,7 @@ class _RenameListPageState extends State<RenameListPage> {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: _listTitleInputHint),
-                    //autofocus: true,
+                    autofocus: true,
                     enabled: true,
                     controller: _oldListTitleController,
                   )

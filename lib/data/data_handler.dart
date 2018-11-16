@@ -45,9 +45,12 @@ void updateListName(String oldName, String name) {
 }
 
 void removeList(String name) {
+  print("Lists: " + _lists?.length.toString() + " List: $name");
+  TaskList _toRemove;
   for (var _list in _lists) {
-    if (name == _list.name) _lists.remove(_list);
+    if (name == _list.name) _toRemove = _list;
   }
+  _lists.remove(_toRemove);
 }
 
 void updateList(String name, TaskList list) {
@@ -118,9 +121,11 @@ void updateTask(int id, Task task, {@required String listName}) {
 
 void clearCompletedTasks(String listName) {
   var _tasks = getList(listName)?.tasks ?? [];
+  Task _remove;
   for (var _task in _tasks) {
     if (_task.status == "COMPLETED") {
-      _tasks.remove(_task);
+      _remove = _task;
     }
   }
+  _tasks.remove(_remove);
 }
