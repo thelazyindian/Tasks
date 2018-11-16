@@ -1,6 +1,6 @@
-# tasks
+# flutter_tasks
 
-A clone of Google Tasks app.
+A clone of Google Tasks app built with Flutter for iOS and Android. Material Design and 100% Dart.
 
 ## Getting Started
 
