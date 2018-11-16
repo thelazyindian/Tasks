@@ -146,7 +146,33 @@ class _TasksHomePageState extends State<TasksHomePage>
                 },
                 listName: activeList,
               ),
-              CompletedList(items: completedTaskList),
+              (pendingTaskList == null || pendingTaskList.isEmpty) &&
+                      (completedTaskList == null || completedTaskList.isEmpty)
+                  ? SliverFillRemaining(
+                      child: SizedBox(
+                        height: 100.0,
+                        width: 75.0,
+                        child: Image.asset(
+                          "assets/images/new_list.png",
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    )
+                  : CompletedList(items: completedTaskList),
+              completedTaskList != null ||
+                      completedTaskList.isNotEmpty &&
+                          (pendingTaskList?.isEmpty ?? false)
+                  ? SliverFillRemaining(
+                      child: SizedBox(
+                        height: 100.0,
+                        width: 75.0,
+                        child: Image.asset(
+                          "assets/images/completed.png",
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),

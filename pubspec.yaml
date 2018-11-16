@@ -42,6 +42,8 @@ flutter:
   assets:
     - assets/user/satya_profile.png
     - assets/images/icon.png
+    - assets/images/completed.png
+    - assets/images/new_list.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
