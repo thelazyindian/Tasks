@@ -18,7 +18,7 @@ class CompletedList extends StatelessWidget {
         backgroundColor: Colors.white,
         children: <Widget>[
           Container(
-            height: 60.0 * items.length,
+            height: 70.0 * items.length,
             child: ListView.builder(
               itemCount: items.length,
               shrinkWrap: true,
