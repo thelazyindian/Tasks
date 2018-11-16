@@ -15,9 +15,10 @@ class CompletedList extends StatelessWidget {
         backgroundColor: Colors.white,
         children: <Widget>[
           Container(
-            height: 60.0 * items.length,
+            height: 40 + 60.0 * items.length,
             child: ListView.builder(
               itemCount: items.length,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
                 final item = items[index];
                 return Column(
@@ -27,15 +28,11 @@ class CompletedList extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 16.0, right: 16.0),
                       child: ListTile(
-                        leading: Icon(
-                          Icons.check,
-                          color: Colors.blue,
-                        ),
+                        leading: Icon(Icons.check, color: Colors.blue),
                         title: Text(
                           item.title,
-                          style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                          ),
+                          style:
+                              TextStyle(decoration: TextDecoration.lineThrough),
                         ),
                         onTap: () async {
                           var route = MaterialPageRoute(
@@ -47,9 +44,7 @@ class CompletedList extends StatelessWidget {
                         },
                       ),
                     ),
-                    Divider(
-                      height: 1.0,
-                    ),
+                    Divider(height: 1.0),
                   ],
                 );
               },

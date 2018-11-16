@@ -30,7 +30,7 @@ DetailsWidgetStatus _detailsWidgetStatus = DetailsWidgetStatus.CLOSE;
 List<String> tblNames = List();
 String listName = "";
 String activeList = "";
-String defaultListName = "";
+String defaultListName = "My Tasks";
 // StatefulBuilder _builder;
 StateSetter setSheetState;
 bool details = false;
@@ -42,6 +42,9 @@ class _TasksHomePageState extends State<TasksHomePage>
   @override
   void initState() {
     super.initState();
+    activeList = "My Tasks"; // Default List
+    listName = activeList;
+    defaultListName = activeList;
     detailsTapAnimationController =
         AnimationController(duration: _duration, vsync: this);
     detailsTapAnimationController.addListener(() {
@@ -379,9 +382,11 @@ class _TasksHomePageState extends State<TasksHomePage>
               Navigator.pop(context);
               // await DatabaseHelper.get().deleteTable(activeList);
               removeList(activeList);
-              activeList = defaultListName;
-              listName = activeList;
-              _getTables();
+              setState(() {
+                activeList = defaultListName;
+                listName = activeList;
+                _getTables();
+              });
             }
           },
           deleteCompletedTasks: () async {
@@ -404,7 +409,7 @@ class _TasksHomePageState extends State<TasksHomePage>
       _task.status = "PENDING";
       addTask(task, listName: activeList);
       print("Task saved!");
-      print("$task");
+      print("${task.title}");
       _getTasks();
     } else {
       print("Empty field!");
@@ -421,17 +426,20 @@ class _TasksHomePageState extends State<TasksHomePage>
   }
 
   void _getTasks() {
+    print("Getting Tasks for: $listName");
     var pendingTasks = getTasksByStatus("PENDING", listName: listName) ?? [];
+    print("Pending Tasks: " + pendingTasks?.length.toString());
     setState(() {
-      pendingTaskList.clear();
-      pendingTaskList.addAll(pendingTasks);
+      pendingTaskList?.clear();
+      pendingTaskList?.addAll(pendingTasks);
       //print(tasks.toString());
     });
     var completedTasks =
         getTasksByStatus("COMPLETED", listName: listName) ?? [];
+    print("Completed Tasks: " + completedTasks?.length.toString());
     setState(() {
-      completedTaskList.clear();
-      completedTaskList.addAll(completedTasks);
+      completedTaskList?.clear();
+      completedTaskList?.addAll(completedTasks);
       //print(tasks.toString());
     });
     // print("Running _getTasks()");
@@ -460,6 +468,7 @@ class _TasksHomePageState extends State<TasksHomePage>
   }
 
   void _getTables() {
+    print("Getting tables...");
     var tableNames = getLists();
     if (tableNames != null) {
       tblNames.clear();
@@ -476,9 +485,9 @@ class _TasksHomePageState extends State<TasksHomePage>
           tblNames.add(item);
         });
       }
-      activeList = tblNames[0];
-      listName = tblNames[0];
-      defaultListName = tblNames[0];
+      // activeList = tblNames[0];
+      // listName = tblNames[0];
+      // defaultListName = tblNames[0];
       _getTasks();
     } else {
       print("getTables returned null");
@@ -501,67 +510,4 @@ class _TasksHomePageState extends State<TasksHomePage>
     //     print("getTables returned null");
     // });
   }
-
-  // Widget completedList() {
-  //   if (completedTaskList.isNotEmpty) {
-  //     return SliverToBoxAdapter(
-  //       child: ExpansionTile(
-  //         title: Text(
-  //           'Completed (${completedTaskList.length})',
-  //         ),
-  //         backgroundColor: Colors.white,
-  //         children: <Widget>[
-  //           Container(
-  //             height: 80.0 * completedTaskList.length,
-  //             child: ListView.builder(
-  //               itemCount: completedTaskList.length,
-  //               itemBuilder: (context, index) {
-  //                 return Column(
-  //                   mainAxisAlignment: MainAxisAlignment.start,
-  //                   children: <Widget>[
-  //                     Padding(
-  //                       padding: EdgeInsets.only(
-  //                         left: 16.0,
-  //                         right: 16.0,
-  //                       ),
-  //                       child: ListTile(
-  //                         onTap: () async {
-  //                           taskDetailId = completedTaskList[index].id;
-  //                           var route = MaterialPageRoute(
-  //                               builder: (BuildContext context) {
-  //                             return TaskDetailsPage(listName, taskDetailId);
-  //                           });
-  //                           var detailsPage =
-  //                               await Navigator.of(context).push(route);
-  //                           if (detailsPage == null) {
-  //                             _getTasks();
-  //                           }
-  //                         },
-  //                         leading: Icon(
-  //                           Icons.check,
-  //                           color: Colors.blue,
-  //                         ),
-  //                         title: Text(
-  //                           completedTaskList[index].title,
-  //                           style: TextStyle(
-  //                             decoration: TextDecoration.lineThrough,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Divider(
-  //                       height: 1.0,
-  //                     ),
-  //                   ],
-  //                 );
-  //               },
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     );
-  //   } else {
-  //     return SliverFillRemaining();
-  //   }
-  // }
 }

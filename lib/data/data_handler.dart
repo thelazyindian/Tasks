@@ -32,7 +32,7 @@ TaskList getList(String name) {
 }
 
 void addList(String name) {
-  var _list = TaskList(name: name);
+  var _list = TaskList(name: name, tasks: []);
   _lists.add(_list);
 }
 
@@ -65,22 +65,23 @@ void clearLists() {
 // -- Tasks --
 
 void addTask(Task task, {@required String listName}) {
-  var _tasks = getList(listName).tasks ?? [];
+  print("Adding Task: " + task?.title + " for: $listName");
+  var _tasks = getList(listName)?.tasks ?? [];
   if (task != null) _tasks.add(task);
 }
 
 void removeTask(Task task, {@required String listName}) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   if (task != null) _tasks.remove(task);
 }
 
 List<Task> getTasks(String listName) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   return _tasks;
 }
 
 List<Task> getTasksByStatus(String status, {@required String listName}) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   List<Task> _list = [];
   for (var _task in _tasks) {
     if (_task.status
@@ -94,12 +95,12 @@ List<Task> getTasksByStatus(String status, {@required String listName}) {
 }
 
 void clearTasks(String listName) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   _tasks.clear();
 }
 
 Task getTask(int id, {@required String listName}) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   for (var _task in _tasks) {
     if (id == _task.id) return _task;
   }
@@ -107,7 +108,7 @@ Task getTask(int id, {@required String listName}) {
 }
 
 void updateTask(int id, Task task, {@required String listName}) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   for (var _task in _tasks) {
     if (id == _task.id) {
       _task = task;
@@ -116,7 +117,7 @@ void updateTask(int id, Task task, {@required String listName}) {
 }
 
 void clearCompletedTasks(String listName) {
-  var _tasks = getList(listName).tasks ?? [];
+  var _tasks = getList(listName)?.tasks ?? [];
   for (var _task in _tasks) {
     if (_task.status == "COMPLETED") {
       _tasks.remove(_task);
