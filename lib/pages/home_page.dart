@@ -37,7 +37,7 @@ bool details = false;
 
 class _TasksHomePageState extends State<TasksHomePage>
     with TickerProviderStateMixin {
-  final GlobalKey scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -152,10 +152,8 @@ class _TasksHomePageState extends State<TasksHomePage>
     return PendingList(
       items: pendingTaskList,
       dismissedTask: (Task task) {
-        completedTaskList.add(task);
-        pendingTaskList.remove(task);
         updateTaskStatus(task);
-        _getTasks();
+        showInSnackBar("1 Completed", task: task);
       },
       listRefresh: () {
         _getTasks();
@@ -278,6 +276,26 @@ class _TasksHomePageState extends State<TasksHomePage>
     );
   }
 
+  void showInSnackBar(String value, {Task task}) {
+    scaffoldKey.currentState.showSnackBar(new SnackBar(
+        content: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        new Text(value),
+        FlatButton(
+          child: Text(
+            "Undo",
+            style: TextStyle(color: Colors.blue),
+          ),
+          onPressed: () {
+            updateTaskStatus(task, undo: true);
+            scaffoldKey.currentState?.hideCurrentSnackBar();
+          },
+        )
+      ],
+    )));
+  }
+
   void onNewTaskSave(Task task) {
     if (task != null) {
       var _task = task;
@@ -311,11 +329,20 @@ class _TasksHomePageState extends State<TasksHomePage>
     });
   }
 
-  void updateTaskStatus(Task task) {
+  void updateTaskStatus(Task task, {bool undo = false}) {
     var _task = task;
-    _task.status = "COMPLETED";
+    if (undo) {
+      _task.status = "PENDING";
+      completedTaskList.remove(task);
+      pendingTaskList.add(task);
+    } else {
+      _task.status = "COMPLETED";
+      pendingTaskList.remove(task);
+      completedTaskList.add(task);
+    }
     updateTask(task.id, _task, listName: activeList);
     print('Update Task');
+    _getTasks();
   }
 
   void _getTasks() {

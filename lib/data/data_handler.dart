@@ -134,4 +134,6 @@ void clearCompletedTasks(String listName) {
 
 // -- Storage --
 enum StorageProvider { sqlLite, memory, firebase }
-StorageProvider storage = StorageProvider.memory; // Default Storage
+
+// Default Storage
+StorageProvider storage = StorageProvider.memory;
