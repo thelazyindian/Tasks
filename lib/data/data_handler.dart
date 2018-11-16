@@ -120,13 +120,16 @@ void updateTask(int id, Task task, {@required String listName}) {
 
 void clearCompletedTasks(String listName) {
   var _tasks = getList(listName)?.tasks ?? [];
-  Task _remove;
+  List<Task> removeTasks = [];
+
   for (var _task in _tasks) {
     if (_task.status == "COMPLETED") {
-      _remove = _task;
+      removeTasks.add(_task);
     }
   }
-  _tasks.remove(_remove);
+  for (var _task in removeTasks) {
+    _tasks.remove(_task);
+  }
 }
 
 // -- Storage --

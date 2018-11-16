@@ -117,49 +117,69 @@ class _TasksHomePageState extends State<TasksHomePage>
           child: CustomScrollView(
             slivers: <Widget>[
               MainListAppBar(name: listName),
-              PendingList(
-                items: pendingTaskList,
-                dismissedTask: (Task task) {
-                  completedTaskList.add(task);
-                  pendingTaskList.remove(task);
-                  updateTaskStatus(task);
-                  _getTasks();
-                },
-                listRefresh: () {
-                  _getTasks();
-                },
-                listName: activeList,
-              ),
-              (pendingTaskList == null || pendingTaskList.isEmpty) &&
-                      (completedTaskList == null || completedTaskList.isEmpty)
-                  ? SliverFillRemaining(
-                      child: ImageWidget(
-                      image: "assets/images/new_list.png",
-                      title: 'A fresh start',
-                      subtitle: 'Anything to Add?',
-                    ))
-                  : CompletedList(
-                      items: completedTaskList,
-                      listName: activeList,
-                      listRefresh: () {
-                        _getTasks();
-                      },
-                    ),
-              completedTaskList != null ||
-                      completedTaskList.isNotEmpty &&
-                          (pendingTaskList?.isEmpty ?? false)
-                  ? SliverFillRemaining(
-                      child: ImageWidget(
-                      image: "assets/images/completed.png",
-                      title: 'Nicely Done!',
-                      subtitle:
-                          "You've finished all your tasks.\nTake a second to recharge.",
-                    ))
-                  : Container(),
+              buildList(context),
+              buildCompletedImage(context),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  bool showCompleted = false;
+  Widget buildList(BuildContext context) {
+    if (pendingTaskList == null || pendingTaskList.isEmpty) {
+      if (completedTaskList != null && completedTaskList.isNotEmpty) {
+        showCompleted = true;
+        return CompletedList(
+          items: completedTaskList,
+          listName: activeList,
+          listRefresh: () {
+            _getTasks();
+          },
+        );
+      } else {
+        showCompleted = false;
+        return SliverFillRemaining(
+            child: ImageWidget(
+          image: "assets/images/new_list.png",
+          title: 'A fresh start',
+          subtitle: 'Anything to Add?',
+        ));
+      }
+    }
+    showCompleted = false;
+    return PendingList(
+      items: pendingTaskList,
+      dismissedTask: (Task task) {
+        completedTaskList.add(task);
+        pendingTaskList.remove(task);
+        updateTaskStatus(task);
+        _getTasks();
+      },
+      listRefresh: () {
+        _getTasks();
+      },
+      listName: activeList,
+    );
+  }
+
+  Widget buildCompletedImage(BuildContext context) {
+    if (showCompleted) {
+      return SliverFillRemaining(
+          child: ImageWidget(
+        image: "assets/images/completed.png",
+        title: 'Nicely Done!',
+        subtitle: "You've finished all your tasks.\nTake a second to recharge.",
+      ));
+    }
+
+    return CompletedList(
+      items: completedTaskList,
+      listName: activeList,
+      listRefresh: () {
+        _getTasks();
+      },
     );
   }
 
