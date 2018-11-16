@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../data/data_handler.dart';
 import '../model/task.dart';
+import '../widgets/date_widget.dart';
 
 // import '../data/database_helper.dart';
 
@@ -177,7 +178,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               task.title == null ? Container() : textInput,
               ListTile(
-                leading: Icon(Icons.note),
+                leading: Icon(Icons.short_text),
                 title: TextField(
                   controller: _detailsController,
                   onChanged: (details) {
@@ -193,7 +194,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               // TODO: Theme DatePicker dialog properly
               ListTile(
-                leading: Icon(Icons.date_range),
+                leading: Icon(Icons.event_available),
                 onTap: () {
                   showDatePicker(
                     context: context,
@@ -214,7 +215,21 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                     print(error.toString());
                   });
                 },
-                title: Text('Date'),
+                title: task?.date != null
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          DateViewWidget(
+                            date: task.date,
+                            onClose: () {
+                              setState(() {
+                                task.date = null;
+                              });
+                            },
+                          ),
+                        ],
+                      )
+                    : Text('Add Date'),
               ),
               task.title != null && _textFieldEnable == true
                   ? Padding(
