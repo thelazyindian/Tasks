@@ -32,6 +32,7 @@ String listName = "";
 String activeList = "";
 String defaultListName = "My Tasks";
 // StatefulBuilder _builder;
+SortBy _sort = SortBy.custom;
 StateSetter setSheetState;
 bool details = false;
 
@@ -133,9 +134,6 @@ class _TasksHomePageState extends State<TasksHomePage>
               expandedHeight: 85.0,
               floating: false,
               snap: false,
-              //centerTitle: true,
-              //title: Text ('My Tasks',
-              //style: TextStyle(color: Colors.black,),),
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
                 title: (listName != "" && listName != null)
@@ -238,101 +236,6 @@ class _TasksHomePageState extends State<TasksHomePage>
     setState(() {});
   }
 
-  // Widget dateButton() {
-  //   var scorePosition = detailsTapAnimationController.value * 100;
-  //   var scoreOpacity = detailsTapAnimationController.value;
-  //   return Positioned(
-  //     child: Opacity(
-  //       opacity: scoreOpacity,
-  //       child: Container(
-  //         height: 32.0,
-  //         width: 32.0,
-  //         decoration: ShapeDecoration(
-  //           shape: RoundedRectangleBorder(side: BorderSide.none),
-  //         ),
-  //         child: Center(
-  //           child: Icon(
-  //             Icons.date_range,
-  //             color: Colors.blue,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //     left: scorePosition,
-  //   );
-  // }
-
-  // Widget detailsButton() {
-  //   var scorePosition = detailsTapAnimationController.value * 50;
-  //   var scoreOpacity = detailsTapAnimationController.value;
-  //   return Positioned(
-  //     child: GestureDetector(
-  //       onTapUp: (TapUpDetails tapUp) {
-  //         print('Tapup');
-  //         if (details == false) {
-  //           setSheetState(() {
-  //             details = true;
-  //           });
-  //         } else {
-  //           setSheetState(() {
-  //             details = false;
-  //           });
-  //         }
-  //       },
-  //       child: Opacity(
-  //         opacity: scoreOpacity,
-  //         child: Container(
-  //           height: 32.0,
-  //           width: 32.0,
-  //           decoration: ShapeDecoration(
-  //             shape: RoundedRectangleBorder(side: BorderSide.none),
-  //           ),
-  //           child: Center(
-  //             child: Icon(
-  //               Icons.format_list_numbered,
-  //               color: (details == false) ? Colors.blue : Colors.grey[400],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //     left: scorePosition,
-  //   );
-  // }
-
-  // Widget kek() {
-  //   var rotation = detailsTapAnimationController.value == 0.0
-  //       ? detailsTapAnimationController.value
-  //       : detailsTapAnimationController.value + 25;
-  //   var mColor = detailsTapAnimationController.value == 0.0
-  //       ? Colors.blue
-  //       : Colors.blueGrey;
-  //   return GestureDetector(
-  //     onTapUp: onTapUp,
-  //     child: Transform.rotate(
-  //       angle: rotation,
-  //       child: Container(
-  //         height: 32.0,
-  //         width: 32.0,
-  //         padding: EdgeInsets.all(2.0),
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(30.0),
-  //           color: Colors.transparent,
-  //         ),
-  //         child: Center(
-  //           child: Icon(
-  //             Icons.add_circle,
-  //             color: mColor,
-  //             size: 26.0,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // BuildContext bottomSheetContext;
-
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
         // resizeToAvoidBottomPadding: true,
@@ -360,7 +263,6 @@ class _TasksHomePageState extends State<TasksHomePage>
         });
   }
 
-  SortBy _sort = SortBy.date;
   void _modalBottomSheetMore() {
     showModalBottomSheet(
       // resizeToAvoidBottomPadding: true,
@@ -372,6 +274,7 @@ class _TasksHomePageState extends State<TasksHomePage>
             setState(() {
               _sort = value;
             });
+            _sortList(_sort);
           },
           completedTasksCount: completedTaskList?.length,
           canDelete: activeList != tblNames[0],
@@ -424,6 +327,26 @@ class _TasksHomePageState extends State<TasksHomePage>
     } else {
       print("Empty field!");
     }
+  }
+
+  void _sortList(SortBy sort) {
+    pendingTaskList.sort((Task a, Task b) {
+      if (sort == SortBy.date) {
+        return a.date.millisecondsSinceEpoch
+            .compareTo(b.date.millisecondsSinceEpoch);
+      }
+      return a.title.compareTo(b.title);
+    });
+    completedTaskList.sort((Task a, Task b) {
+      if (sort == SortBy.date) {
+        return a.date.millisecondsSinceEpoch
+            .compareTo(b.date.millisecondsSinceEpoch);
+      }
+      return a.title.compareTo(b.title);
+    });
+    setState(() {
+      print("List Sorted!");
+    });
   }
 
   void updateTaskStatus(Task task) {
