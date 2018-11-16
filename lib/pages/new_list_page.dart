@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
+
+// import '../data/database_helper.dart';
+import '../data/data_handler.dart';
 
 class NewListPage extends StatefulWidget {
   @override
-  _NewListPageState createState() => new _NewListPageState();
+  _NewListPageState createState() => _NewListPageState();
 }
 
 class _NewListPageState extends State<NewListPage> {
-  final String _scaffoldTitle = "Create new list";
+  final String _scaffoldTitle = "Create New list";
   final String _listTitleInputHint = "Enter list title";
   final String _snackInvalidTitleMsg = "Enter a valid list title first";
   final String _appBarDoneAction = "Done";
-  final key = new GlobalKey<ScaffoldState>();
+  final key = GlobalKey<ScaffoldState>();
   String newListTitle = "";
 
   @override
@@ -21,21 +23,21 @@ class _NewListPageState extends State<NewListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         key: key,
         backgroundColor: Colors.grey[300],
-        appBar: new AppBar(
+        appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.white,
-          leading: new IconButton(
-              icon: new Icon(
+          leading: IconButton(
+              icon: Icon(
                 Icons.close,
                 color: Colors.grey,
               ),
               onPressed: () {
                 Navigator.pop(context);
               }),
-          title: new Text(
+          title: Text(
             _scaffoldTitle,
             style: TextStyle(
               color: Colors.black,
@@ -44,22 +46,18 @@ class _NewListPageState extends State<NewListPage> {
             ),
           ),
           actions: <Widget>[
-            new FlatButton(
+            FlatButton(
                 onPressed: () async {
                   if (newListTitle != null && newListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper
-                        .get()
-                        .createTable(newListTitle)
-                        .then((_) {
-                      Navigator.pop(context);
-                    });
+                    addList(newListTitle);
+                    Navigator.pop(context);
                   } else {
                     key.currentState.showSnackBar(
-                        new SnackBar(content: new Text(_snackInvalidTitleMsg)));
+                        SnackBar(content: Text(_snackInvalidTitleMsg)));
                   }
                 },
-                child: new Text(
+                child: Text(
                   _appBarDoneAction,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
@@ -68,25 +66,25 @@ class _NewListPageState extends State<NewListPage> {
                 ))
           ],
         ),
-        body: new Column(
+        body: Column(
           children: <Widget>[
-            new Divider(
+            Divider(
               height: 1.0,
             ),
-            new Container(
+            Container(
               padding: EdgeInsets.only(
                   left: 16.0, right: 16.0, top: 10.0, bottom: 10.0),
               color: Colors.white,
-              child: new Wrap(
+              child: Wrap(
                 children: <Widget>[
-                  new TextField(
+                  TextField(
                     onChanged: (listTitle) {
                       newListTitle = listTitle;
                     },
+                    autofocus: true,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: _listTitleInputHint),
-                    //autofocus: true,
                     enabled: true,
                   )
                 ],

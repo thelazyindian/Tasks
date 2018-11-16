@@ -1,144 +1,149 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
+import '../data/data_handler.dart';
+import '../model/task.dart';
+import '../widgets/date_widget.dart';
+
+// import '../data/database_helper.dart';
 
 class TaskDetailsPage extends StatefulWidget {
-  final int taskId;
   final String listName;
+  final Task task;
 
-  TaskDetailsPage(this.listName, this.taskId);
+  TaskDetailsPage(this.listName, this.task);
 
   @override
-  State<StatefulWidget> createState() => new TaskDetailsPageState();
+  State<StatefulWidget> createState() => TaskDetailsPageState();
 }
 
 class TaskDetailsPageState extends State<TaskDetailsPage> {
-  Task _task;
-  String _taskName;
+  Task task;
+  // String _taskName;
   TextDecoration _textFieldDecoration;
   Color _textFieldColor;
   bool _textFieldEnable;
   bool _textFieldFocus;
   TextField textInput;
-  String _taskDate;
-  String _details;
+  // String _taskDate;
+  // String _details;
   TextEditingController _detailsController, _taskController;
 
-  Future getTask() async {
-    DatabaseHelper
-        .get()
-        .getTaskById(widget.listName, widget.taskId)
-        .then((task) {
-      if (task == null) return;
-      setState(() {
-        _task = task;
-        _taskName = task.task;
-        _details = task.details;
+  Future _getTask() async {
+    // task = getTask(widget.task.id, listName: widget.listName);
+    task = widget.task;
+    // DatabaseHelper.get()
+    //     .getTaskById(widget.listName, widget.taskId)
+    //     .then((task) {
+    if (task == null) return;
+    setState(() {
+      // _task = task;
+      // _taskName = task.title;
+      // _details = task.subtitle;
 
-        if (_taskName != null) {
-          _taskController = new TextEditingController(
-            text: _taskName,
-          );
-        }
+      if (task.title != null) {
+        _taskController = TextEditingController(
+          text: task.title,
+        );
+      }
 
-        if (_details != null) {
-          _detailsController = new TextEditingController(
-            text: _details,
-          );
-        }
-        print(task.status);
-        print(_taskName);
-        if (task.status == "COMPLETED") {
-          _textFieldFocus = false;
-          _textFieldDecoration = TextDecoration.lineThrough;
-          _textFieldColor = Colors.grey;
-          _textFieldEnable = false;
+      if (task.subtitle != null) {
+        _detailsController = TextEditingController(
+          text: task.subtitle,
+        );
+      }
+      print(task.status);
+      print(task.title);
+      if (task.status == "COMPLETED") {
+        _textFieldFocus = false;
+        _textFieldDecoration = TextDecoration.lineThrough;
+        _textFieldColor = Colors.grey;
+        _textFieldEnable = false;
 
-          textInput = new TextField(
-            autofocus: _textFieldFocus,
-            style: TextStyle(
-              decoration: _textFieldDecoration,
-              fontSize: 35.0,
-              color: _textFieldColor,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-            enabled: _textFieldEnable,
-            controller: _taskController,
-          );
-        } else {
-          _textFieldFocus = true;
-          _textFieldDecoration = TextDecoration.none;
-          _textFieldColor = Colors.black;
-          _textFieldEnable = true;
+        textInput = TextField(
+          autofocus: _textFieldFocus,
+          style: TextStyle(
+            decoration: _textFieldDecoration,
+            fontSize: 35.0,
+            color: _textFieldColor,
+            fontWeight: FontWeight.w600,
+          ),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
+          enabled: _textFieldEnable,
+          controller: _taskController,
+        );
+      } else {
+        _textFieldFocus = true;
+        _textFieldDecoration = TextDecoration.none;
+        _textFieldColor = Colors.black;
+        _textFieldEnable = true;
 
-          textInput = new TextField(
-            onChanged: (value) {
-              setState(() {
-                _taskName = value;
-              });
-            },
-            autofocus: _textFieldFocus,
-            style: TextStyle(
-              decoration: _textFieldDecoration,
-              fontSize: 35.0,
-              color: _textFieldColor,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-            enabled: _textFieldEnable,
-            controller: _taskController,
-          );
-        }
-      });
+        textInput = TextField(
+          onChanged: (value) {
+            setState(() {
+              task.title = value;
+            });
+          },
+          autofocus: _textFieldFocus,
+          style: TextStyle(
+            decoration: _textFieldDecoration,
+            fontSize: 35.0,
+            color: _textFieldColor,
+            fontWeight: FontWeight.w600,
+          ),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
+          enabled: _textFieldEnable,
+          controller: _taskController,
+        );
+      }
     });
+    // });
   }
 
   @override
   void initState() {
-    getTask();
+    _getTask();
     super.initState();
   }
 
-  void updateDate(DateTime dt) {
-    print("updateDate: ${dt.toString()}");
-    _taskDate = dt.toString();
-    DatabaseHelper
-        .get()
-        .updateDateByID(widget.taskId, _taskDate, widget.listName);
-  }
+  // void updateDate(DateTime dt) {
+  //   print("updateDate: ${dt.toString()}");
+  //   _taskDate = dt.toString();
+  //   DatabaseHelper.get()
+  //       .updateDateByID(widget.taskId, _taskDate, widget.listName);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print("Taskname: $_taskName");
-    return new Scaffold(
+    print("Taskname: " + task.title);
+    return Scaffold(
       backgroundColor: Colors.white,
-      appBar: new AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
           onPressed: () async {
-            await DatabaseHelper.get().updateDetailsByID(
-                widget.taskId, _taskName, _details, widget.listName);
-            Navigator.pop(context);
+            // await DatabaseHelper.get().updateDetailsByID(
+            //     widget.taskId, _taskName, _details, widget.listName);
+            updateTask(widget.task.id, task, listName: widget.listName);
+            Navigator.pop(context, true);
           },
         ),
         actions: <Widget>[
-          new GestureDetector(
+          GestureDetector(
             onTap: () {
-              DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
-              Navigator.pop(context);
+              // DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
+              removeTask(task, listName: widget.listName);
+              Navigator.pop(context, false);
             },
-            child: new Padding(
+            child: Padding(
               padding: EdgeInsets.only(
                 right: 16.0,
               ),
-              child: new Icon(Icons.delete),
+              child: Icon(Icons.delete),
             ),
           ),
         ],
@@ -146,39 +151,39 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
-      body: new Container(
+      body: Container(
         color: Colors.white,
-        child: new Padding(
+        child: Padding(
           padding: EdgeInsets.only(
             left: 20.0,
           ),
-          child: new Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Row(
+              Row(
                 children: <Widget>[
-                  new Text(
+                  Text(
                     'My Tasks',
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.w700),
                   ),
-                  new IconButton(
+                  IconButton(
                     onPressed: () {},
-                    icon: new Icon(
+                    icon: Icon(
                       Icons.arrow_drop_down,
                       color: Colors.blue,
                     ),
                   ),
                 ],
               ),
-              _taskName == null ? new Container() : textInput,
-              new ListTile(
-                leading: new Icon(Icons.note),
-                title: new TextField(
+              task.title == null ? Container() : textInput,
+              ListTile(
+                leading: Icon(Icons.short_text),
+                title: TextField(
                   controller: _detailsController,
                   onChanged: (details) {
                     setState(() {
-                      _details = details;
+                      task.subtitle = details;
                     });
                   },
                   maxLines: 1,
@@ -188,55 +193,67 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
               ),
               // TODO: Theme DatePicker dialog properly
-              new ListTile(
-                leading: new Icon(Icons.date_range),
+              ListTile(
+                leading: Icon(Icons.event_available),
                 onTap: () {
                   showDatePicker(
                     context: context,
-                    initialDate: new DateTime.now(),
-                    firstDate: new DateTime.now().subtract(Duration(
+                    initialDate: task?.date ?? DateTime.now(),
+                    firstDate: (task?.date ?? DateTime.now()).subtract(Duration(
                       days: 30,
                     )),
-                    lastDate: new DateTime.now().add(
-                      Duration(
-                        days: 30,
-                      ),
-                    ),
+                    lastDate:
+                        (task?.date ?? DateTime.now()).add(Duration(days: 365)),
                   ).then((value) {
                     if (value == null) return;
                     print("Date: ${value.toIso8601String()}");
                     setState(() {
-                      updateDate(value);
+                      // updateDate(value);
+                      task.date = value;
                     });
                   }).catchError((error) {
                     print(error.toString());
                   });
                 },
-                title: new Text('Date'),
+                title: task?.date != null
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          DateViewWidget(
+                            date: task.date,
+                            onClose: () {
+                              setState(() {
+                                task.date = null;
+                              });
+                            },
+                          ),
+                        ],
+                      )
+                    : Text('Add Date'),
               ),
-              _taskName != null && _textFieldEnable == true
-                  ? new Padding(
+              task.title != null && _textFieldEnable == true
+                  ? Padding(
                       padding: EdgeInsets.only(
                         left: 16.0,
                       ),
-                      child: new Row(
+                      child: Row(
                         children: <Widget>[
-                          new Icon(Icons.subdirectory_arrow_right),
-                          new Container(
+                          Icon(Icons.subdirectory_arrow_right),
+                          Container(
                             width: 16.0,
                           ),
-                          new RaisedButton(
+                          RaisedButton(
                             highlightElevation: 0.0,
                             elevation: 0.0,
                             splashColor: Colors.blue,
                             color: Colors.white,
                             onPressed: () {},
-                            child: new Text('Add subtasks'),
+                            child: Text('Add subtasks'),
                           ),
                         ],
                       ),
                     )
-                  : new Container(),
+                  : Container(),
             ],
           ),
         ),
