@@ -23,35 +23,35 @@ class MenuWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           //mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            /*UserAccountsDrawerHeader(
-                    currentAccountPicture: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/user/satya_profile.png"),
-                        ),
-                      ),
-                    ),
-                    margin: EdgeInsets.all(0.0),
-                    accountEmail: Text(
-                      "satyabrat.me@gmail.com",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    accountName: Text(
-                      "Satyabrat Sahoo",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Divider(
-                    height: 4.0,
-                    indent: 2.0,
-                  ),*/
+            // UserAccountsDrawerHeader(
+            //   currentAccountPicture: DecoratedBox(
+            //     decoration: BoxDecoration(
+            //       image: DecorationImage(
+            //         image: AssetImage("assets/user/satya_profile.png"),
+            //       ),
+            //     ),
+            //   ),
+            //   margin: EdgeInsets.all(0.0),
+            //   accountEmail: Text(
+            //     "satyabrat.me@gmail.com",
+            //     style: TextStyle(
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            //   accountName: Text(
+            //     "Satyabrat Sahoo",
+            //     style: TextStyle(
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //   ),
+            // ),
+            Divider(
+              height: 4.0,
+              indent: 2.0,
+            ),
             SizedBox(
               height: 200.0,
               child: ListView.builder(
