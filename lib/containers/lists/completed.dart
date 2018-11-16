@@ -4,8 +4,9 @@ import '../../pages/task_details.dart';
 
 class CompletedList extends StatelessWidget {
   final List<Task> items;
+  final String listName;
   final VoidCallback listRefresh;
-  CompletedList({this.items, this.listRefresh});
+  CompletedList({this.items, this.listRefresh, this.listName});
   @override
   Widget build(BuildContext context) {
     if (items == null || items.isEmpty) return SliverFillRemaining();
@@ -36,11 +37,12 @@ class CompletedList extends StatelessWidget {
                         ),
                         onTap: () async {
                           var route = MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return TaskDetailsPage(item.title, item.id);
-                          });
-                          var value = await Navigator.of(context).push(route);
-                          if (value == null) listRefresh();
+                                  builder: (BuildContext context) {
+                                return TaskDetailsPage(listName, item);
+                              });
+                              var value =
+                                  await Navigator.of(context).push(route);
+                              if (value != null) listRefresh();
                         },
                       ),
                     ),

@@ -59,11 +59,6 @@ class _RenameListPageState extends State<RenameListPage> {
                       oldListTitle != null &&
                       oldListTitle != "") {
                     print('Saving list title');
-                    // await DatabaseHelper.get()
-                    //     .renameTable(oldListTitle, newListTitle)
-                    //     .then((_) {
-                    //   Navigator.pop(context);
-                    // });
                     updateListName(oldListTitle, newListTitle);
                     Navigator.pop(context, newListTitle);
                   } else {

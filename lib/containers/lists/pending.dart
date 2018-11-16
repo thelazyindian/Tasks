@@ -38,7 +38,7 @@ class PendingList extends StatelessWidget {
                       onTap: () async {
                         var route =
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return TaskDetailsPage(listName, item.id);
+                          return TaskDetailsPage(listName, item);
                         });
                         var detailsPage =
                             await Navigator.of(context).push(route);

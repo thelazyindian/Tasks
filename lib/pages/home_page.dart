@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 
-// import '../data/database_helper.dart';
 import '../model/task.dart';
 import '../pages/new_list_page.dart';
 import '../pages/rename_list_page.dart';
-import '../pages/task_details.dart';
 import '../pages/add_task.dart';
-import '../widgets/date_widget.dart';
 import '../data/data_handler.dart';
 import '../containers/bottom_sheet/more.dart';
 import '../containers/lists/completed.dart';
 import '../containers/lists/pending.dart';
 import '../containers/app_bar/main_list.dart';
 import '../widgets/image_widget.dart';
-
 import '../containers/bottom_sheet/menu.dart';
 
 class TasksHomePage extends StatefulWidget {
@@ -60,23 +56,10 @@ class _TasksHomePageState extends State<TasksHomePage>
     _getTables();
   }
 
+  @override
   dispose() {
     super.dispose();
     detailsTapAnimationController.dispose();
-  }
-
-  void _dismissTask(int index, Task item) {
-    print(index);
-    completedTaskList.add(pendingTaskList[index]);
-    pendingTaskList.removeAt(index);
-    /*showSnackBar(
-        SnackBar(
-          content:
-              Text("${pendingTaskList.length} completed!"),
-        ),
-    );*/
-    updateTaskStatus(item);
-    _getTasks();
   }
 
   @override
@@ -155,7 +138,13 @@ class _TasksHomePageState extends State<TasksHomePage>
                       title: 'A fresh start',
                       subtitle: 'Anything to Add?',
                     ))
-                  : CompletedList(items: completedTaskList),
+                  : CompletedList(
+                      items: completedTaskList,
+                      listName: activeList,
+                      listRefresh: () {
+                        _getTasks();
+                      },
+                    ),
               completedTaskList != null ||
                       completedTaskList.isNotEmpty &&
                           (pendingTaskList?.isEmpty ?? false)

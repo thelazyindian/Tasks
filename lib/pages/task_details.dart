@@ -7,10 +7,10 @@ import '../model/task.dart';
 // import '../data/database_helper.dart';
 
 class TaskDetailsPage extends StatefulWidget {
-  final int taskId;
   final String listName;
+  final Task task;
 
-  TaskDetailsPage(this.listName, this.taskId);
+  TaskDetailsPage(this.listName, this.task);
 
   @override
   State<StatefulWidget> createState() => TaskDetailsPageState();
@@ -29,7 +29,8 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
   TextEditingController _detailsController, _taskController;
 
   Future _getTask() async {
-    task = getTask(widget.taskId, listName: widget.listName);
+    // task = getTask(widget.task.id, listName: widget.listName);
+    task = widget.task;
     // DatabaseHelper.get()
     //     .getTaskById(widget.listName, widget.taskId)
     //     .then((task) {
@@ -126,7 +127,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
           onPressed: () async {
             // await DatabaseHelper.get().updateDetailsByID(
             //     widget.taskId, _taskName, _details, widget.listName);
-            updateTask(widget.taskId, task, listName: widget.listName);
+            updateTask(widget.task.id, task, listName: widget.listName);
             Navigator.pop(context, true);
           },
         ),

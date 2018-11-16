@@ -264,3 +264,17 @@
 // -- Update Task --
 // var db = DatabaseHelper();
 // db.updateTask(task, activeList);
+
+// -- Add List --
+// await DatabaseHelper.get()
+//     .createTable(newListTitle)
+//     .then((_) {
+//   Navigator.pop(context);
+// });
+
+// -- Rename List --
+// await DatabaseHelper.get()
+//     .renameTable(oldListTitle, newListTitle)
+//     .then((_) {
+//   Navigator.pop(context);
+// });
