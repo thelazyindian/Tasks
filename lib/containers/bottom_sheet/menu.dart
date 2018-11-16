@@ -53,49 +53,51 @@ class MenuWidget extends StatelessWidget {
               indent: 2.0,
             ),
             SizedBox(
-              height: 200.0,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: listNames.length,
-                  itemBuilder: (context, index) {
-                    final _listItem = listNames[index];
-                    return GestureDetector(
-                      onTap: () {
-                        listChange(_listItem);
-                        Navigator.pop(context);
-                      },
-                      child: Padding(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: (activeList == _listItem)
-                                ? Color(0x4D90CAF9)
-                                : Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(30.0),
-                              bottomRight: Radius.circular(30.0),
+              height: listNames.length > 3 ? 200.0 : null,
+              child: Scrollbar(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: listNames.length,
+                    itemBuilder: (context, index) {
+                      final _listItem = listNames[index];
+                      return GestureDetector(
+                        onTap: () {
+                          listChange(_listItem);
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: (activeList == _listItem)
+                                  ? Color(0x4D90CAF9)
+                                  : Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(30.0),
+                                bottomRight: Radius.circular(30.0),
+                              ),
                             ),
-                          ),
-                          child: ListTile(
-                            selected: true,
-                            title: Text(
-                              _listItem,
-                              style: TextStyle(
-                                color: (activeList == _listItem)
-                                    ? Colors.blueAccent
-                                    : Colors.black,
-                                fontWeight: FontWeight.w700,
+                            child: ListTile(
+                              selected: true,
+                              title: Text(
+                                _listItem,
+                                style: TextStyle(
+                                  color: (activeList == _listItem)
+                                      ? Colors.blueAccent
+                                      : Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                           ),
+                          padding: EdgeInsets.only(
+                              // left: 8.0,
+                              top: 8.0,
+                              bottom: 8.0,
+                              right: 10.0),
                         ),
-                        padding: EdgeInsets.only(
-                            // left: 8.0,
-                            top: 8.0,
-                            bottom: 8.0,
-                            right: 10.0),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
             Divider(
               height: 4.0,
