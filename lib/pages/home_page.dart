@@ -360,12 +360,19 @@ class _TasksHomePageState extends State<TasksHomePage>
         });
   }
 
+  SortBy _sort = SortBy.date;
   void _modalBottomSheetMore() {
     showModalBottomSheet(
       // resizeToAvoidBottomPadding: true,
       context: context,
       builder: (builder) {
         return MoreWidget(
+          sort: _sort,
+          sortChanged: (SortBy value) {
+            setState(() {
+              _sort = value;
+            });
+          },
           completedTasksCount: completedTaskList?.length,
           canDelete: activeList != tblNames[0],
           renameList: () async {

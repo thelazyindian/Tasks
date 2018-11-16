@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 
+enum SortBy { custom, date }
+
 class MoreWidget extends StatelessWidget {
   final VoidCallback renameList, deleteList, deleteCompletedTasks;
   final bool canDelete;
   final int completedTasksCount;
+  final SortBy sort;
+  final ValueChanged<SortBy> sortChanged;
   MoreWidget({
     this.renameList,
     this.deleteList,
     this.deleteCompletedTasks,
     this.canDelete,
     this.completedTasksCount,
+    this.sort,
+    this.sortChanged,
   });
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,13 @@ class MoreWidget extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              trailing: Icon(Icons.check),
+              onTap: () {
+                sortChanged(SortBy.custom);
+                Navigator.pop(context);
+              },
+              trailing: sort != null && sort == SortBy.custom
+                  ? Icon(Icons.check)
+                  : Icon(Icons.info, color: Colors.transparent),
             ),
             ListTile(
               leading: Container(
@@ -61,7 +73,13 @@ class MoreWidget extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              trailing: Icon(Icons.check),
+              onTap: () {
+                sortChanged(SortBy.date);
+                Navigator.pop(context);
+              },
+              trailing: sort != null && sort == SortBy.date
+                  ? Icon(Icons.check)
+                  : Icon(Icons.info, color: Colors.transparent),
             ),
             Divider(
               height: 10.0,
