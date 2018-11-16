@@ -78,12 +78,21 @@ class _TasksHomePageState extends State<TasksHomePage>
         label: const Text('Add a new task', maxLines: 1),
         onPressed: () {
           showModalBottomSheet<Task>(
-              // ^^^ TODO: Go To Definition of showModalBottomSheet (bottom_sheet.dart)
-              // Replace with contents with => https://gist.github.com/slightfoot/5af4c5dfa52194a3f8577bf83af2e391
               context: context,
-              // resizeToAvoidBottomPadding: true, // <= Uncomment after rebuild and restart
               builder: (BuildContext context) {
-                return AddTaskWidget();
+                return new AnimatedPadding(
+                  padding: MediaQuery.of(context).viewInsets,
+                  duration: const Duration(milliseconds: 100),
+                  curve: Curves.decelerate,
+                  child: new Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Wrap(
+                      children: <Widget>[
+                        AddTaskWidget(),
+                      ],
+                    ),
+                  ),
+                );
               }).then((newTask) {
             if (newTask == null || newTask.title.isNotEmpty)
               onNewTaskSave(newTask);
