@@ -12,6 +12,7 @@ import '../containers/bottom_sheet/more.dart';
 import '../containers/lists/completed.dart';
 import '../containers/lists/pending.dart';
 import '../containers/app_bar/main_list.dart';
+import '../widgets/image_widget.dart';
 
 import '../containers/bottom_sheet/menu.dart';
 
@@ -149,29 +150,22 @@ class _TasksHomePageState extends State<TasksHomePage>
               (pendingTaskList == null || pendingTaskList.isEmpty) &&
                       (completedTaskList == null || completedTaskList.isEmpty)
                   ? SliverFillRemaining(
-                      child: SizedBox(
-                        height: 100.0,
-                        width: 75.0,
-                        child: Image.asset(
-                          "assets/images/new_list.png",
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                    )
+                      child: ImageWidget(
+                      image: "assets/images/new_list.png",
+                      title: 'A fresh start',
+                      subtitle: 'Anything to Add?',
+                    ))
                   : CompletedList(items: completedTaskList),
               completedTaskList != null ||
                       completedTaskList.isNotEmpty &&
                           (pendingTaskList?.isEmpty ?? false)
                   ? SliverFillRemaining(
-                      child: SizedBox(
-                        height: 100.0,
-                        width: 75.0,
-                        child: Image.asset(
-                          "assets/images/completed.png",
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                    )
+                      child: ImageWidget(
+                      image: "assets/images/completed.png",
+                      title: 'Nicely Done!',
+                      subtitle:
+                          "You've finished all your tasks.\nTake a second to recharge.",
+                    ))
                   : Container(),
             ],
           ),
