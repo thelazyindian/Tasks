@@ -65,7 +65,7 @@ class _RenameListPageState extends State<RenameListPage> {
                     //   Navigator.pop(context);
                     // });
                     updateListName(oldListTitle, newListTitle);
-                    Navigator.pop(context);
+                    Navigator.pop(context, newListTitle);
                   } else {
                     key.currentState.showSnackBar(
                         SnackBar(content: Text(_snackInvalidTitleMsg)));

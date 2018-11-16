@@ -284,8 +284,35 @@ class _TasksHomePageState extends State<TasksHomePage>
                 MaterialPageRoute(builder: (BuildContext context) {
               return RenameListPage(activeList);
             }));
-            if (renameListPage == null) {
-              _getTables();
+            // if (renameListPage == null) {
+            //   _getTables();
+            // } else {
+            //   // for (var name in tblNames) {
+            //   //   if (activeList.contains(name)) {
+            //   //     name = renameListPage;
+            //   //   }
+            //   // }
+            //   updateListName(activeList, renameListPage);
+            //   tblNames.remove(activeList);
+            //   tblNames.add(renameListPage);
+            //   print("Count: ${tblNames.length} Old: $activeList, New: $renameListPage");
+            //   setState(() {
+            //     activeList = renameListPage;
+            //     listName = activeList;
+            //   });
+            //   _getTasks();
+            // }
+            if (renameListPage != null) {
+              // updateListName(activeList, renameListPage);
+              tblNames.remove(activeList);
+              tblNames.add(renameListPage);
+              print(
+                  "Count: ${tblNames.length} Old: $activeList, New: $renameListPage");
+              setState(() {
+                activeList = renameListPage;
+                listName = activeList;
+              });
+              _getTasks();
             }
           },
           deleteList: () async {
