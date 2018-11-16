@@ -6,7 +6,7 @@ import '../pages/home_page.dart';
 
 class TasksSplashPage extends StatefulWidget {
   @override
-  _TasksSplashPageState createState() => new _TasksSplashPageState();
+  _TasksSplashPageState createState() => _TasksSplashPageState();
 }
 
 class _TasksSplashPageState extends State<TasksSplashPage> {
@@ -16,8 +16,8 @@ class _TasksSplashPageState extends State<TasksSplashPage> {
     Timer(Duration(seconds: 2), () {
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (BuildContext context) {
-          return new TasksHomePage();
+        MaterialPageRoute(builder: (BuildContext context) {
+          return TasksHomePage();
         }),
       );
     });
@@ -25,29 +25,29 @@ class _TasksSplashPageState extends State<TasksSplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          new Container(
+          Container(
             color: Colors.white,
           ),
-          new Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Image(
+              Image(
                 width: 150.0,
                 height: 150.0,
-                image: new AssetImage("assets/images/icon.png"),
+                image: AssetImage("assets/images/icon.png"),
               ),
             ],
           ),
-          new Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              new Padding(
+              Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
-                child: new Text(
+                child: Text(
                   "#TeamCardinal",
                   style: TextStyle(
                     color: Colors.grey,
