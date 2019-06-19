@@ -6,13 +6,11 @@ bool _ready = false;
 void init() {
   if (!_ready) {
     fb.initializeApp(
-      apiKey: "AIzaSyB4rArs-tvcj9edB9x-T8E2frYbQ-3fxDM",
-      authDomain: "tasky-49dc9.firebaseapp.com",
-      databaseURL: "https://tasky-49dc9.firebaseio.com",
-      projectId: "tasky-49dc9",
-      storageBucket: "tasky-49dc9.appspot.com",
-      messagingSenderId: "946617205378",
-      // appId: "1:946617205378:web:a513c83dfc0698b2"
+      authDomain: "AUTH_DOMAIN",
+      databaseURL: "DATABASE_URL",
+      projectId: "PROJECT_ID",
+      storageBucket: "STORAGE_BUCKET",
+      messagingSenderId: "MESSAGE_SENDER_ID",
     );
     _ready = true;
   }

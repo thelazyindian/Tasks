@@ -8,7 +8,7 @@ import 'src/ui/index.dart';
 
 void main() {
   _setTargetPlatformForDesktop();
-  init();
+  init(); // TODO: Update Firebase Config in `init()` method
   runApp(MyApp());
 }
 
