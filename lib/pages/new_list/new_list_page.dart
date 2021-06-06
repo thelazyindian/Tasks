@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
 
-class RenameListPage extends StatefulWidget {
-  final String listTitle;
-  RenameListPage(this.listTitle);
-
+class NewListPage extends StatefulWidget {
   @override
-  _RenameListPageState createState() => new _RenameListPageState();
+  _NewListPageState createState() => new _NewListPageState();
 }
 
-class _RenameListPageState extends State<RenameListPage> {
-  final String _scaffoldTitle = "Rename list";
+class _NewListPageState extends State<NewListPage> {
+  final String _scaffoldTitle = "Create new list";
   final String _listTitleInputHint = "Enter list title";
   final String _snackInvalidTitleMsg = "Enter a valid list title first";
   final String _appBarDoneAction = "Done";
   final key = new GlobalKey<ScaffoldState>();
   String newListTitle = "";
-  TextEditingController _oldListTitleController;
 
   @override
   void initState() {
@@ -25,8 +20,6 @@ class _RenameListPageState extends State<RenameListPage> {
 
   @override
   Widget build(BuildContext context) {
-    String oldListTitle = widget.listTitle;
-    _oldListTitleController = new TextEditingController(text: oldListTitle);
     return new Scaffold(
         key: key,
         backgroundColor: Colors.grey[300],
@@ -52,20 +45,11 @@ class _RenameListPageState extends State<RenameListPage> {
           actions: <Widget>[
             new FlatButton(
                 onPressed: () async {
-                  if (newListTitle != null &&
-                      newListTitle != "" &&
-                      oldListTitle != null &&
-                      oldListTitle != "") {
+                  if (newListTitle != null && newListTitle != "") {
                     print('Saving list title');
-                    await DatabaseHelper
-                        .get()
-                        .renameTable(oldListTitle, newListTitle)
-                        .then((_) {
-                      Navigator.pop(context);
-                    });
                   } else {
-                    key.currentState.showSnackBar(
-                        new SnackBar(content: new Text(_snackInvalidTitleMsg)));
+                    // key.currentState.showSnackBar(
+                    //     new SnackBar(content: new Text(_snackInvalidTitleMsg)));
                   }
                 },
                 child: new Text(
@@ -97,7 +81,6 @@ class _RenameListPageState extends State<RenameListPage> {
                         hintText: _listTitleInputHint),
                     //autofocus: true,
                     enabled: true,
-                    controller: _oldListTitleController,
                   )
                 ],
               ),

@@ -4,46 +4,34 @@ description: A clone of Google Tasks UI.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.8.0-dev <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0
-  path_provider: ^2.0.0
-  sqflite: ^1.3.2+1
+  cupertino_icons: ^1.0.3
+  path_provider: ^2.0.2
+  google_fonts: ^2.1.0
+  hive: ^2.0.4
+  hive_flutter: ^1.0.0
+  flutter_bloc: ^7.0.1
+  freezed_annotation:
+  json_annotation: ^4.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  freezed:
+  hive_generator: ^1.1.0
+  build_runner: ^2.0.4
+  json_serializable: ^4.1.3
 
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
-# The following section is specific to Flutter.
 flutter:
-  fonts:
-    - family: Raleway
-      fonts:
-        - asset: fonts/Raleway-Regular.ttf
-        - asset: fonts/Raleway-Medium.ttf
-        - asset: fonts/Raleway-SemiBold.ttf
-          weight: 700
-        - asset: fonts/Raleway-Thin.ttf
-        - asset: fonts/Raleway-Black.ttf
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/user/satya_profile.png
     - assets/images/icon.png
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.io/assets-and-images/#resolution-aware.
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.io/assets-and-images/#from-packages
 
 module:
   androidX: true

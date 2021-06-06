@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/pages/splash.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tasks/pages/splash/splash_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,12 +11,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tasks',
       theme: ThemeData(
-        dividerColor: Colors.grey[300],
+        dividerColor: Colors.grey.shade300,
         primarySwatch: Colors.blue,
         canvasColor: Colors.transparent,
         backgroundColor: Colors.white,
         dialogBackgroundColor: Colors.white,
-        fontFamily: 'Raleway',
+        fontFamily: GoogleFonts.roboto().fontFamily,
       ),
       home: SplashPage(),
     );

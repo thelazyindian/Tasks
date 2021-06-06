@@ -1,117 +1,25 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:tasks/data/database_helper.dart';
-import 'package:tasks/model/task.dart';
 
-class TaskDetailsPage extends StatefulWidget {
+class DetailsPage extends StatefulWidget {
   final int taskId;
   final String listName;
 
-  TaskDetailsPage(this.listName, this.taskId);
+  DetailsPage(this.listName, this.taskId);
 
   @override
-  State<StatefulWidget> createState() => new TaskDetailsPageState();
+  State<StatefulWidget> createState() => new DetailsPageState();
 }
 
-class TaskDetailsPageState extends State<TaskDetailsPage> {
-  Task _task;
-  String _taskName;
-  TextDecoration _textFieldDecoration;
-  Color _textFieldColor;
-  bool _textFieldEnable;
-  bool _textFieldFocus;
-  TextField textInput;
-  String _taskDate;
-  String _details;
-  TextEditingController _detailsController, _taskController;
-
-  Future getTask() async {
-    DatabaseHelper
-        .get()
-        .getTaskById(widget.listName, widget.taskId)
-        .then((task) {
-      if (task == null) return;
-      setState(() {
-        _task = task;
-        _taskName = task.task;
-        _details = task.details;
-
-        if (_taskName != null) {
-          _taskController = new TextEditingController(
-            text: _taskName,
-          );
-        }
-
-        if (_details != null) {
-          _detailsController = new TextEditingController(
-            text: _details,
-          );
-        }
-        print(task.status);
-        print(_taskName);
-        if (task.status == "COMPLETED") {
-          _textFieldFocus = false;
-          _textFieldDecoration = TextDecoration.lineThrough;
-          _textFieldColor = Colors.grey;
-          _textFieldEnable = false;
-
-          textInput = new TextField(
-            autofocus: _textFieldFocus,
-            style: TextStyle(
-              decoration: _textFieldDecoration,
-              fontSize: 35.0,
-              color: _textFieldColor,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-            enabled: _textFieldEnable,
-            controller: _taskController,
-          );
-        } else {
-          _textFieldFocus = true;
-          _textFieldDecoration = TextDecoration.none;
-          _textFieldColor = Colors.black;
-          _textFieldEnable = true;
-
-          textInput = new TextField(
-            onChanged: (value) {
-              setState(() {
-                _taskName = value;
-              });
-            },
-            autofocus: _textFieldFocus,
-            style: TextStyle(
-              decoration: _textFieldDecoration,
-              fontSize: 35.0,
-              color: _textFieldColor,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-            enabled: _textFieldEnable,
-            controller: _taskController,
-          );
-        }
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    getTask();
-    super.initState();
-  }
+class DetailsPageState extends State<DetailsPage> {
+  String? _taskName;
+  bool _textFieldEnable = true;
+  String? _taskDate;
+  String? _details;
+  TextEditingController _detailsController = TextEditingController();
 
   void updateDate(DateTime dt) {
     print("updateDate: ${dt.toString()}");
     _taskDate = dt.toString();
-    DatabaseHelper
-        .get()
-        .updateDateByID(widget.taskId, _taskDate, widget.listName);
   }
 
   @override
@@ -123,15 +31,12 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back),
           onPressed: () async {
-            await DatabaseHelper.get().updateDetailsByID(
-                widget.taskId, _taskName, _details, widget.listName);
             Navigator.pop(context);
           },
         ),
         actions: <Widget>[
           new GestureDetector(
             onTap: () {
-              DatabaseHelper.get().deleteTask(widget.taskId, widget.listName);
               Navigator.pop(context);
             },
             child: new Padding(
@@ -171,7 +76,7 @@ class TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                 ],
               ),
-              _taskName == null ? new Container() : textInput,
+              _taskName == null ? new Container() : TextField(),
               new ListTile(
                 leading: new Icon(Icons.note),
                 title: new TextField(

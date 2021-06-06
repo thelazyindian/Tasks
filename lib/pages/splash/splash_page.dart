@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tasks/pages/home_page.dart';
+import 'package:tasks/pages/home/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
