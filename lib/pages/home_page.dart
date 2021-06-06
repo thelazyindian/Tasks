@@ -23,13 +23,10 @@ final List<Task> completedTaskList = new List();
 AnimationController detailsTapAnimationController;
 final _duration = new Duration(milliseconds: 300);
 DetailsWidgetStatus _detailsWidgetStatus = DetailsWidgetStatus.CLOSE;
-Future _bottomSheet;
 List<String> tblNames = new List();
 String listName = "";
 String activeList = "";
 String defaultListName = "";
-StatefulBuilder _builder;
-StateSetter setSheetState;
 bool details = false;
 
 class _TasksHomePageState extends State<TasksHomePage>
@@ -41,12 +38,7 @@ class _TasksHomePageState extends State<TasksHomePage>
     super.initState();
     detailsTapAnimationController =
         new AnimationController(duration: _duration, vsync: this);
-    detailsTapAnimationController.addListener(() {
-      setSheetState(() {
-        print("Animation: ${detailsTapAnimationController.value.toDouble()}");
-        _bottomSheet;
-      });
-    });
+    detailsTapAnimationController.addListener(() {});
     _getTables();
   }
 
@@ -57,12 +49,6 @@ class _TasksHomePageState extends State<TasksHomePage>
 
   @override
   Widget build(BuildContext context) {
-    _builder = new StatefulBuilder(
-      builder: (BuildContext context, kek) {
-        print(kek);
-        return new Text('');
-      },
-    );
     return new Scaffold(
       key: scaffoldKey,
       floatingActionButton: new FloatingActionButton.extended(
@@ -76,7 +62,6 @@ class _TasksHomePageState extends State<TasksHomePage>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: new BottomAppBar(
         elevation: 3.0,
-        hasNotch: false,
         child: new Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,16 +223,16 @@ class _TasksHomePageState extends State<TasksHomePage>
     return new Positioned(
       child: new GestureDetector(
         onTapUp: (TapUpDetails tapUp) {
-          print('Tapup');
-          if (details == false) {
-            setSheetState(() {
-              details = true;
-            });
-          } else {
-            setSheetState(() {
-              details = false;
-            });
-          }
+          // print('Tapup');
+          // if (details == false) {
+          //   setSheetState(() {
+          //     details = true;
+          //   });
+          // } else {
+          //   setSheetState(() {
+          //     details = false;
+          //   });
+          // }
         },
         child: new Opacity(
           opacity: scoreOpacity,
@@ -301,117 +286,100 @@ class _TasksHomePageState extends State<TasksHomePage>
     );
   }
 
-  BuildContext bottomSheetContext;
-
   // TODO: Original one is this
-  /*void _newTaskModalBottomSheet() {
+  void _newTaskModalBottomSheet() {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (BuildContext contextt) {
-          return new StatefulBuilder(
-              builder: (BuildContext ctxt, StateSetter stateSetter) {
-            setSheetState = stateSetter;
-            return new AnimatedPadding(
-              padding: MediaQuery.of(context).viewInsets,
-              duration: const Duration(milliseconds: 100),
-              curve: Curves.decelerate,
-              child: new GestureDetector(
-                onTapUp: (TapUpDetails tap) {
-                  print('Tapped');
-                },
-                child: new Container(
-                  alignment: Alignment.bottomCenter,
-                  child: Wrap(
+          return new Container(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Wrap(
+              children: <Widget>[
+                new Container(
+                  decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(10.0),
+                          topRight: const Radius.circular(10.0))),
+                  child: new Wrap(
                     children: <Widget>[
-                      new Container(
-                        decoration: new BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(10.0),
-                                topRight: const Radius.circular(10.0))),
-                        child: new Wrap(
+                      new Padding(
+                        padding: EdgeInsets.only(
+                          left: 20.0,
+                          top: 15.0,
+                          right: 20.0,
+                          bottom: 15.0,
+                        ),
+                        child: new Column(
                           children: <Widget>[
-                            new Padding(
-                              padding: EdgeInsets.only(
-                                left: 20.0,
-                                top: 15.0,
-                                right: 20.0,
-                                bottom: 15.0,
+                            new TextField(
+                              onChanged: (newTask) {
+                                _newTask = newTask;
+                              },
+                              onSubmitted: (newTask) {
+                                onNewTaskSave();
+                              },
+                              autofocus: true,
+                              decoration: new InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'New Task',
                               ),
-                              child: new Column(
-                                children: <Widget>[
-                                  new TextField(
-                                    onChanged: (newTask) {
-                                      _newTask = newTask;
+                              autocorrect: false,
+                              keyboardType: TextInputType.text,
+                            ),
+                            (details == true)
+                                ? new TextField(
+                                    onChanged: (taskDetails) {
+                                      _taskDetails = taskDetails;
                                     },
-                                    onSubmitted: (newTask) {
+                                    onSubmitted: (taskDetails) {
                                       onNewTaskSave();
                                     },
                                     autofocus: true,
                                     decoration: new InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: 'New Task',
+                                      hintText: 'Add details',
+                                      hintStyle: TextStyle(
+                                        fontSize: 8.0,
+                                      ),
                                     ),
                                     autocorrect: false,
                                     keyboardType: TextInputType.text,
+                                  )
+                                : new Container(),
+                            new Container(
+                              height: 20.0,
+                            ),
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                new Stack(
+                                  //alignment: AlignmentDirectional.center,
+                                  //overflow: Overflow.visible,
+                                  children: <Widget>[
+                                    detailsButton(),
+                                    dateButton(),
+                                    kek(),
+                                  ],
+                                ),
+                                new FlatButton(
+                                  onPressed: () {
+                                    onNewTaskSave();
+                                  },
+                                  child: const Text(
+                                    'Save',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.blue,
+                                    ),
                                   ),
-                                  (details == true)
-                                      ? new TextField(
-                                          onChanged: (taskDetails) {
-                                            _taskDetails = taskDetails;
-                                          },
-                                          onSubmitted: (taskDetails) {
-                                            onNewTaskSave();
-                                          },
-                                          autofocus: true,
-                                          decoration: new InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Add details',
-                                            hintStyle: TextStyle(
-                                              fontSize: 8.0,
-                                            ),
-                                          ),
-                                          autocorrect: false,
-                                          keyboardType: TextInputType.text,
-                                        )
-                                      : new Container(),
-                                  new Container(
-                                    height: 20.0,
-                                  ),
-                                  new Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      new Stack(
-                                        //alignment: AlignmentDirectional.center,
-                                        //overflow: Overflow.visible,
-                                        children: <Widget>[
-                                          detailsButton(),
-                                          dateButton(),
-                                          kek(),
-                                        ],
-                                      ),
-                                      new FlatButton(
-                                        onPressed: () {
-                                          onNewTaskSave();
-                                        },
-                                        child: const Text(
-                                          'Save',
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                        color: Colors.white,
-                                        splashColor: Colors.blue,
-                                        textColor:
-                                            Theme.of(context).accentColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                  color: Colors.white,
+                                  splashColor: Colors.blue,
+                                  textColor: Theme.of(context).accentColor,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -419,83 +387,9 @@ class _TasksHomePageState extends State<TasksHomePage>
                     ],
                   ),
                 ),
-              ),
-            );
-          });
-        });
-  }*/
-
-  //TODO: This one is for debug
-  void _newTaskModalBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext contextt) {
-          // return new StatefulBuilder(
-          //   builder: (BuildContext ctxt, StateSetter stateSetter) {
-          // setSheetState = stateSetter;
-          return new Column(
-            children: <Widget>[
-              new Stack(
-                children: <Widget>[
-                  new Container(
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0),
-                      ),
-                    ),
-                    child: Wrap(
-                      children: <Widget>[
-                        new TextField(
-                          onChanged: (newTask) {
-                            _newTask = newTask;
-                          },
-                          onSubmitted: (newTask) {
-                            onNewTaskSave();
-                          },
-                          autofocus: true,
-                          decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'New Task',
-                          ),
-                          autocorrect: false,
-                          keyboardType: TextInputType.text,
-                        ),
-                        (details == true)
-                            ? new TextField(
-                                onChanged: (taskDetails) {
-                                  _taskDetails = taskDetails;
-                                },
-                                onSubmitted: (taskDetails) {
-                                  onNewTaskSave();
-                                },
-                                autofocus: true,
-                                decoration: new InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Add details',
-                                  hintStyle: TextStyle(
-                                    fontSize: 8.0,
-                                  ),
-                                ),
-                                autocorrect: false,
-                                keyboardType: TextInputType.text,
-                              )
-                            : new Container(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              new AnimatedContainer(
-                height: MediaQuery.of(context).size.height * 0.4,
-                duration: new Duration(
-                  milliseconds: 300,
-                ),
-              ),
-            ],
+              ],
+            ),
           );
-          //});
         });
   }
 

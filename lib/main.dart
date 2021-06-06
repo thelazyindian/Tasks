@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/pages/splash.dart';
 
-void main() => runApp(new TasksApp());
+void main() => runApp(MyApp());
 
-class TasksApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tasks',
-      theme: new ThemeData(
+      theme: ThemeData(
         dividerColor: Colors.grey[300],
         primarySwatch: Colors.blue,
         canvasColor: Colors.transparent,
+        backgroundColor: Colors.white,
         dialogBackgroundColor: Colors.white,
         fontFamily: 'Raleway',
       ),
-      home: new TasksSplashPage(),
+      home: SplashPage(),
     );
   }
 }
