@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task.dart';
+import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/details/details_page.dart';
+import 'package:tasks/pages/home/widgets/completed_section.dart';
 
 class HomeView extends StatelessWidget {
-  final String listTitle;
-  final List<Task> pendingTaskList;
-  final List<Task> completedTaskList;
+  final Tlist taskList;
 
   const HomeView({
     Key? key,
-    required this.listTitle,
-    required this.pendingTaskList,
-    required this.completedTaskList,
+    required this.taskList,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<Task> pendingTaskList =
+        taskList.tasks.where((element) => !element.completed).toList();
+    final List<Task> completedTaskList =
+        taskList.tasks.where((element) => element.completed).toList();
+
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
@@ -26,7 +29,7 @@ class HomeView extends StatelessWidget {
           elevation: 0.0,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
-              listTitle,
+              taskList.name,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 25.0,
@@ -44,13 +47,7 @@ class HomeView extends StatelessWidget {
                 return Dismissible(
                   direction: DismissDirection.startToEnd,
                   key: Key(item),
-                  onDismissed: (direction) {
-                    // print(index);
-                    // completedTaskList.add(pendingTaskList[index]);
-                    // pendingTaskList.removeAt(index);
-                    // updateTaskStatus(item);
-                    // _getTasks();
-                  },
+                  onDismissed: (direction) {},
                   background: Container(
                     color: Colors.blue,
                   ),
@@ -66,7 +63,7 @@ class HomeView extends StatelessWidget {
                           onTap: () async {
                             var route = MaterialPageRoute(
                                 builder: (BuildContext context) {
-                              return DetailsPage(listTitle, 0);
+                              return DetailsPage(taskList.name, 0);
                             });
                             var detailsPage =
                                 await Navigator.of(context).push(route);
@@ -89,7 +86,10 @@ class HomeView extends StatelessWidget {
             ),
           ),
         ),
-        // completedList(),
+        CompletedSection(
+          taskList: taskList,
+          tasks: completedTaskList,
+        ),
       ],
     );
   }

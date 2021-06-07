@@ -21,12 +21,12 @@ class _$TaskTearOff {
   const _$TaskTearOff();
 
   _Task call(
-      {required String id,
-      required String name,
-      String? details,
-      DateTime? dateTime,
-      bool completed = false,
-      List<String> subtasks = const []}) {
+      {@HiveField(0) required String id,
+      @HiveField(1) required String name,
+      @HiveField(2) String? details,
+      @HiveField(3) DateTime? dateTime,
+      @HiveField(4) bool completed = false,
+      @HiveField(5) List<String> subtasks = const []}) {
     return _Task(
       id: id,
       name: name,
@@ -47,11 +47,17 @@ const $Task = _$TaskTearOff();
 
 /// @nodoc
 mixin _$Task {
+  @HiveField(0)
   String get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   String? get details => throw _privateConstructorUsedError;
+  @HiveField(3)
   DateTime? get dateTime => throw _privateConstructorUsedError;
+  @HiveField(4)
   bool get completed => throw _privateConstructorUsedError;
+  @HiveField(5)
   List<String> get subtasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -64,12 +70,12 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String name,
-      String? details,
-      DateTime? dateTime,
-      bool completed,
-      List<String> subtasks});
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2) String? details,
+      @HiveField(3) DateTime? dateTime,
+      @HiveField(4) bool completed,
+      @HiveField(5) List<String> subtasks});
 }
 
 /// @nodoc
@@ -124,12 +130,12 @@ abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       __$TaskCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String name,
-      String? details,
-      DateTime? dateTime,
-      bool completed,
-      List<String> subtasks});
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2) String? details,
+      @HiveField(3) DateTime? dateTime,
+      @HiveField(4) bool completed,
+      @HiveField(5) List<String> subtasks});
 }
 
 /// @nodoc
@@ -183,29 +189,35 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Task implements _Task {
   const _$_Task(
-      {required this.id,
-      required this.name,
-      this.details,
-      this.dateTime,
-      this.completed = false,
-      this.subtasks = const []});
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) this.details,
+      @HiveField(3) this.dateTime,
+      @HiveField(4) this.completed = false,
+      @HiveField(5) this.subtasks = const []});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) =>
       _$_$_TaskFromJson(json);
 
   @override
+  @HiveField(0)
   final String id;
   @override
+  @HiveField(1)
   final String name;
   @override
+  @HiveField(2)
   final String? details;
   @override
+  @HiveField(3)
   final DateTime? dateTime;
   @JsonKey(defaultValue: false)
   @override
+  @HiveField(4)
   final bool completed;
   @JsonKey(defaultValue: const [])
   @override
+  @HiveField(5)
   final List<String> subtasks;
 
   @override
@@ -258,26 +270,32 @@ class _$_Task implements _Task {
 
 abstract class _Task implements Task {
   const factory _Task(
-      {required String id,
-      required String name,
-      String? details,
-      DateTime? dateTime,
-      bool completed,
-      List<String> subtasks}) = _$_Task;
+      {@HiveField(0) required String id,
+      @HiveField(1) required String name,
+      @HiveField(2) String? details,
+      @HiveField(3) DateTime? dateTime,
+      @HiveField(4) bool completed,
+      @HiveField(5) List<String> subtasks}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
   @override
+  @HiveField(0)
   String get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   String? get details => throw _privateConstructorUsedError;
   @override
+  @HiveField(3)
   DateTime? get dateTime => throw _privateConstructorUsedError;
   @override
+  @HiveField(4)
   bool get completed => throw _privateConstructorUsedError;
   @override
+  @HiveField(5)
   List<String> get subtasks => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
