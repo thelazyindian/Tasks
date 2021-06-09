@@ -52,10 +52,16 @@ class _DetailsViewState extends State<DetailsView> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: TextFormField(
           initialValue: widget.task.name,
+          enabled: !widget.task.completed,
           decoration: InputDecoration(
             border: InputBorder.none,
           ),
-          style: TextStyle(fontSize: 20.0),
+          style: TextStyle(
+            fontSize: 20.0,
+            decoration: widget.task.completed
+                ? TextDecoration.lineThrough
+                : TextDecoration.none,
+          ),
         ),
       );
 
@@ -71,6 +77,7 @@ class _DetailsViewState extends State<DetailsView> {
             Expanded(
               child: TextFormField(
                 initialValue: widget.task.details,
+                enabled: !widget.task.completed,
                 decoration: const InputDecoration(
                   hintText: 'Add details',
                   border: InputBorder.none,
@@ -102,7 +109,9 @@ class _DetailsViewState extends State<DetailsView> {
                     Text(e.name),
                     Icon(
                       Icons.arrow_drop_down,
-                      color: Colors.blue,
+                      color: widget.task.completed
+                          ? Colors.grey.shade500
+                          : Colors.blue,
                     ),
                   ],
                 ))
@@ -117,11 +126,11 @@ class _DetailsViewState extends State<DetailsView> {
           color: Colors.blue,
           fontWeight: FontWeight.w700,
         ),
-        onChanged: (x) {},
+        onChanged: widget.task.completed ? null : (x) {},
       );
 
   Widget _dateTimePicker() => InkWell(
-        onTap: dateTime != null
+        onTap: dateTime != null || widget.task.completed
             ? null
             : () => showDateTimePicker(
                   context: context,
@@ -167,7 +176,9 @@ class _DetailsViewState extends State<DetailsView> {
       );
 
   Widget _subtasksList() => InkWell(
-        onTap: subtaskFields.isNotEmpty ? null : _addSubtask,
+        onTap: subtaskFields.isNotEmpty || widget.task.completed
+            ? null
+            : _addSubtask,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,

@@ -19,7 +19,9 @@ class TaskItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(task.id),
-      direction: DismissDirection.startToEnd,
+      direction: task.completed
+          ? DismissDirection.endToStart
+          : DismissDirection.startToEnd,
       onDismissed: (_) => _toggleComplete(context),
       background: Container(color: Colors.blue),
       child: InkWell(
@@ -63,7 +65,7 @@ class TaskItem extends StatelessWidget {
                             : TextDecoration.none,
                       ),
                     ),
-                    if (task.details != null)
+                    if (task.details?.isNotEmpty ?? false)
                       Text(
                         task.details!,
                         style: TextStyle(

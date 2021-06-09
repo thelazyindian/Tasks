@@ -1,8 +1,10 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/details/widgets/details_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailsPage extends StatelessWidget {
   final Tlist activeTaskList;
@@ -29,7 +31,10 @@ class DetailsPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<HomeBloc>().add(HomeEvent.deleteTask(task));
+                Navigator.pop(context);
+              },
               icon: Icon(CommunityMaterialIcons.delete_outline),
               color: Colors.grey.shade700,
             ),
