@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/models/task.dart';
-import 'package:date_time_format/date_time_format.dart';
+import 'package:tasks/pages/core/selected_date_view.dart';
+import 'package:tasks/utils/methods.dart';
 
 class NewTask extends StatefulWidget {
   const NewTask({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   late TextEditingController _taskEditingController, _detailsEditingController;
   bool viewDetailsField = false;
-  DateTime? date;
+  DateTime? dateTime;
 
   @override
   void initState() {
@@ -64,7 +65,15 @@ class _NewTaskState extends State<NewTask> {
                           autocorrect: false,
                           keyboardType: TextInputType.text,
                         ),
-                      if (date != null) _selectedDateView(),
+                      if (dateTime != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: SelectedDateView(
+                            dateTime: dateTime!,
+                            onSelected: (value) =>
+                                setState(() => dateTime = value),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -87,52 +96,17 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget _selectedDateView() => Container(
-        margin: EdgeInsets.only(top: 16.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(color: Colors.grey.shade300),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InkWell(
-              onTap: () => _showDatePicker(date!),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 6.0, .0, 8.0),
-                child: Text(
-                  date!.format('D, M j'),
-                  style: TextStyle(
-                    fontSize: 13.5,
-                    color: Colors.grey.shade500,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () => setState(() => date = null),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-                child: Icon(
-                  Icons.close,
-                  size: 20.0,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-
   Widget dateButton() => Material(
         color: Colors.transparent,
         child: InkWell(
           highlightColor: Theme.of(context).accentColor.withOpacity(0.3),
           customBorder:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-          onTap: () => _showDatePicker(DateTime.now()),
+          onTap: () => showDateTimePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            onSelected: (value) => setState(() => dateTime = value),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: Icon(
@@ -142,15 +116,6 @@ class _NewTaskState extends State<NewTask> {
           ),
         ),
       );
-
-  void _showDatePicker(DateTime initialDate) {
-    showDatePicker(
-      context: context,
-      initialDate: initialDate,
-      firstDate: DateTime(DateTime.now().year - 30),
-      lastDate: DateTime(DateTime.now().year + 30),
-    ).then((value) => setState(() => date = value));
-  }
 
   Widget detailsButton() => Material(
         color: Colors.transparent,
@@ -178,6 +143,7 @@ class _NewTaskState extends State<NewTask> {
                       id: DateTime.now().toIso8601String(),
                       name: _taskEditingController.text,
                       details: _detailsEditingController.text,
+                      dateTime: dateTime,
                     ),
                   ),
                 );

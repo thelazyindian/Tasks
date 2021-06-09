@@ -42,7 +42,7 @@ class HomeView extends StatelessWidget {
           delegate: SliverChildListDelegate(
             List<Dismissible>.generate(
               pendingTaskList.length,
-              (int index) {
+              (index) {
                 final item = pendingTaskList[index].name;
                 return Dismissible(
                   direction: DismissDirection.startToEnd,
@@ -60,22 +60,19 @@ class HomeView extends StatelessWidget {
                           right: 16.0,
                         ),
                         child: ListTile(
-                          onTap: () async {
-                            var route = MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return DetailsPage(taskList.name, 0);
-                            });
-                            var detailsPage =
-                                await Navigator.of(context).push(route);
-                            if (detailsPage == null) {
-                              // _getTasks();
-                            }
+                          onTap: () {
+                            final route = MaterialPageRoute(
+                                builder: (_) => DetailsPage(
+                                      activeTaskList: taskList,
+                                      task: pendingTaskList[index],
+                                    ));
+                            Navigator.of(context).push(route);
                           },
                           leading: Icon(Icons.radio_button_unchecked),
-                          title: (pendingTaskList[index].name != null)
-                              ? Text(pendingTaskList[index].name)
-                              : Text(""),
-                          subtitle: Text(pendingTaskList[index].details ?? ''),
+                          title: Text(pendingTaskList[index].name),
+                          subtitle: pendingTaskList[index].details == null
+                              ? null
+                              : Text(pendingTaskList[index].details!),
                         ),
                       ),
                       const Divider(height: 1.0),

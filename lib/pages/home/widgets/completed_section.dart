@@ -35,10 +35,13 @@ class CompletedSection extends StatelessWidget {
                         ),
                         child: ListTile(
                           onTap: () async {
-                            var route = MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return DetailsPage(taskList.name, 0);
-                            });
+                            final route = MaterialPageRoute(
+                                builder: (_) => DetailsPage(
+                                      activeTaskList: taskList,
+                                      task: tasks[index],
+                                    ));
+                            final detailsPage =
+                                await Navigator.of(context).push(route);
                           },
                           leading: Icon(
                             Icons.check,
