@@ -1,70 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
-import 'package:tasks/pages/details/details_page.dart';
+import 'package:tasks/pages/home/widgets/task_item.dart';
 
 class CompletedSection extends StatelessWidget {
   final Tlist taskList;
   final List<Task> tasks;
-  const CompletedSection(
-      {Key? key, required this.tasks, required this.taskList})
-      : super(key: key);
+  const CompletedSection({
+    Key? key,
+    required this.tasks,
+    required this.taskList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (tasks.isNotEmpty) {
-      return SliverToBoxAdapter(
-        child: ExpansionTile(
-          title: Text(
-            'Completed (${tasks.length})',
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Divider(
+          height: .0,
+          thickness: 1.0,
+        ),
+        ExpansionTile(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Text(
+              'Completed (${tasks.length})',
+              style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
           backgroundColor: Colors.white,
+          iconColor: Colors.grey.shade700,
+          textColor: Colors.grey.shade700,
+          collapsedTextColor: Colors.grey.shade700,
+          collapsedIconColor: Colors.grey.shade700,
           children: <Widget>[
-            Container(
-              height: 68.0 * tasks.length,
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16.0,
-                          right: 16.0,
-                        ),
-                        child: ListTile(
-                          onTap: () async {
-                            final route = MaterialPageRoute(
-                                builder: (_) => DetailsPage(
-                                      activeTaskList: taskList,
-                                      task: tasks[index],
-                                    ));
-                            final detailsPage =
-                                await Navigator.of(context).push(route);
-                          },
-                          leading: Icon(
-                            Icons.check,
-                            color: Colors.blue,
-                          ),
-                          title: Text(
-                            tasks[index].name,
-                            style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Divider(height: 1.0),
-                    ],
-                  );
-                },
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: tasks.length,
+              padding: EdgeInsets.zero,
+              itemBuilder: (_, index) => TaskItem(
+                key: Key(tasks[index].id),
+                taskList: taskList,
+                task: tasks[index],
               ),
             ),
           ],
         ),
-      );
-    }
-    return SliverFillRemaining();
+      ],
+    );
   }
 }

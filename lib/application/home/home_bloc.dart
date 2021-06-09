@@ -75,7 +75,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         tasksBox.put(activeTaskList.id, tasks);
       },
       updateTask: (e) async* {},
-      deleteTask: (e) async* {},
+      deleteTask: (e) async* {
+        final tasksBox = Hive.box('tasks');
+        final activeTaskList = state.activeTaskList!;
+        final tasks = List<Task>.from(activeTaskList.tasks);
+        final idx = tasks.indexWhere((element) => element.id == e.task.id);
+        if (idx >= 0) {
+          tasks.removeAt(idx);
+          tasksBox.put(activeTaskList.id, tasks);
+        }
+      },
+      completedTask: (e) async* {
+        final tasksBox = Hive.box('tasks');
+        final activeTaskList = state.activeTaskList!;
+        final tasks = List<Task>.from(activeTaskList.tasks);
+        final idx = tasks.indexWhere((element) => element.id == e.task.id);
+        if (idx >= 0) {
+          tasks[idx] = e.task.copyWith(completed: true);
+          tasksBox.put(activeTaskList.id, tasks);
+        }
+      },
+      incompletedTask: (e) async* {
+        final tasksBox = Hive.box('tasks');
+        final activeTaskList = state.activeTaskList!;
+        final tasks = List<Task>.from(activeTaskList.tasks);
+        final idx = tasks.indexWhere((element) => element.id == e.task.id);
+        if (idx >= 0) {
+          tasks[idx] = e.task.copyWith(completed: false);
+          tasksBox.put(activeTaskList.id, tasks);
+        }
+      },
     );
   }
 }

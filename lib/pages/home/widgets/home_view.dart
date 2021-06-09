@@ -1,8 +1,10 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/details/details_page.dart';
 import 'package:tasks/pages/home/widgets/completed_section.dart';
+import 'package:tasks/pages/home/widgets/task_item.dart';
 
 class HomeView extends StatelessWidget {
   final Tlist taskList;
@@ -19,11 +21,11 @@ class HomeView extends StatelessWidget {
     final List<Task> completedTaskList =
         taskList.tasks.where((element) => element.completed).toList();
 
-    return CustomScrollView(
-      slivers: <Widget>[
+    return NestedScrollView(
+      headerSliverBuilder: (_, __) => [
         SliverAppBar(
           backgroundColor: Colors.white,
-          expandedHeight: 75.0,
+          expandedHeight: 60.0,
           floating: false,
           snap: false,
           elevation: 0.0,
@@ -38,56 +40,28 @@ class HomeView extends StatelessWidget {
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            List<Dismissible>.generate(
-              pendingTaskList.length,
-              (index) {
-                final item = pendingTaskList[index].name;
-                return Dismissible(
-                  direction: DismissDirection.startToEnd,
-                  key: Key(item),
-                  onDismissed: (direction) {},
-                  background: Container(
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 16.0,
-                          right: 16.0,
-                        ),
-                        child: ListTile(
-                          onTap: () {
-                            final route = MaterialPageRoute(
-                                builder: (_) => DetailsPage(
-                                      activeTaskList: taskList,
-                                      task: pendingTaskList[index],
-                                    ));
-                            Navigator.of(context).push(route);
-                          },
-                          leading: Icon(Icons.radio_button_unchecked),
-                          title: Text(pendingTaskList[index].name),
-                          subtitle: pendingTaskList[index].details == null
-                              ? null
-                              : Text(pendingTaskList[index].details!),
-                        ),
-                      ),
-                      const Divider(height: 1.0),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        CompletedSection(
-          taskList: taskList,
-          tasks: completedTaskList,
-        ),
       ],
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          if (pendingTaskList.isNotEmpty)
+            ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: pendingTaskList.length,
+              itemBuilder: (_, index) => TaskItem(
+                key: Key(pendingTaskList[index].id),
+                taskList: taskList,
+                task: pendingTaskList[index],
+              ),
+            ),
+          if (completedTaskList.isNotEmpty)
+            CompletedSection(
+              taskList: taskList,
+              tasks: completedTaskList,
+            ),
+        ],
+      ),
     );
   }
 }

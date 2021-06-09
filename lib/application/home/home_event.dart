@@ -9,5 +9,7 @@ class HomeEvent with _$HomeEvent {
       _UpdateActiveTaskList;
   const factory HomeEvent.addTask(Task task) = _AddTask;
   const factory HomeEvent.updateTask(Task task) = _UpdateTask;
+  const factory HomeEvent.completedTask(Task task) = _CompletedTask;
+  const factory HomeEvent.incompletedTask(Task task) = _IncompletedTask;
   const factory HomeEvent.deleteTask(Task task) = _DeleteTask;
 }
