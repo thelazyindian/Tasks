@@ -32,8 +32,8 @@ class HomeView extends StatelessWidget {
               taskList.name,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 25.0,
-                fontWeight: FontWeight.w400,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w100,
               ),
             ),
           ),

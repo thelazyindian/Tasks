@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc: ^7.0.1
   freezed_annotation:
   json_annotation: ^4.0.1
+  date_time_format: ^2.0.1
 
 dev_dependencies:
   flutter_test:
