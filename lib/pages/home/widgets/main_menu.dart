@@ -1,141 +1,69 @@
 import 'package:flutter/material.dart';
-
-import 'package:tasks/models/tlist.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasks/application/home/home_bloc.dart';
+import 'package:tasks/pages/home/widgets/task_list_item.dart';
 
 class MainMenu extends StatelessWidget {
-  final List<Tlist> taskLists;
-  final Tlist activeTaskList;
-  const MainMenu({
-    Key? key,
-    required this.taskLists,
-    required this.activeTaskList,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(10.0),
-          topRight: const Radius.circular(10.0),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListView.builder(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        BlocBuilder<HomeBloc, HomeState>(
+          buildWhen: (previous, current) =>
+              previous.taskLists != current.taskLists ||
+              previous.activeTaskList != current.activeTaskList,
+          builder: (context, state) {
+            return ListView.builder(
               shrinkWrap: true,
-              itemCount: taskLists.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: (activeTaskList.id == taskLists[index].id)
-                            ? Color(0x4D90CAF9)
-                            : Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          bottomLeft: Radius.circular(30.0),
-                        ),
-                      ),
-                      child: ListTile(
-                        selected: true,
-                        title: Text(
-                          taskLists[index].name,
-                          style: TextStyle(
-                            color: (activeTaskList.id == taskLists[index].id)
-                                ? Colors.blueAccent
-                                : Colors.black,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                    padding: EdgeInsets.only(
-                      left: 8.0,
-                      top: 8.0,
-                      bottom: 8.0,
-                    ),
-                  ),
-                );
-              }),
-          Divider(
-            height: 4.0,
-          ),
-          ListTile(
-            onTap: () async {},
-            leading: Icon(
-              Icons.add,
-            ),
-            title: Text(
-              "Create list",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
+              padding: const EdgeInsets.fromLTRB(.0, 16.0, 8.0, 16.0),
+              itemCount: state.taskLists.length,
+              itemBuilder: (context, index) => TaskListItem(
+                taskList: state.taskLists[index],
+                active: state.taskLists[index].id == state.activeTaskList!.id,
               ),
-            ),
-          ),
-          Divider(
-            height: 4.0,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.feedback,
-            ),
-            title: Text(
-              "Send feedback",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          Divider(
-            height: 4.0,
-          ),
-          ListTile(
-            title: Text(
-              "Open-source licenses",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          Divider(
-            height: 4.0,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Privacy Policy",
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Container(
-                  width: 25.0,
-                  child: Icon(
-                    Icons.arrow_drop_down_circle,
-                    size: 5.0,
-                  ),
-                ),
-                Text(
-                  "Terms of service",
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+            );
+          },
+        ),
+        const Divider(
+          height: .0,
+          thickness: 2.0,
+        ),
+        _createNewListBtn(context),
+      ],
     );
   }
+
+  Widget _createNewListBtn(BuildContext context) => InkWell(
+        onTap: () {
+          Navigator.pushReplacementNamed(context, '/newList');
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+            vertical: 4.0,
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Icon(
+                  Icons.add,
+                  size: 20.0,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              Text(
+                "Create new list",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                  fontSize: 13.0,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }

@@ -36,7 +36,7 @@ class TaskItem extends StatelessWidget {
             onDismissed: (_) => _toggleComplete(context),
             background: Container(color: Colors.blue),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.fromLTRB(8.0, .0, 16.0, .0),
               child: Row(
                 children: [
                   GestureDetector(
@@ -85,7 +85,7 @@ class TaskItem extends StatelessWidget {
         ),
         background: Container(color: Colors.blue),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(52.0, .0, 16.0, .0),
+          padding: const EdgeInsets.fromLTRB(44.0, .0, 16.0, .0),
           child: Row(
             children: [
               GestureDetector(

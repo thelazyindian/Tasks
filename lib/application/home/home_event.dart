@@ -20,4 +20,7 @@ class HomeEvent with _$HomeEvent {
     Task task,
     SubTask subTask,
   ) = _IncompletedSubTask;
+  const factory HomeEvent.createTaskList(String name) = _CreateTaskList;
+  const factory HomeEvent.renameTaskList(Tlist taskList) = _RenameTaskList;
+  const factory HomeEvent.removeTaskList(Tlist taskList) = _RemoveTaskList;
 }

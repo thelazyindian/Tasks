@@ -1,91 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/application/home/home_bloc.dart';
+import 'package:tasks/models/tlist.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewListPage extends StatefulWidget {
+  final Tlist? taskList;
+
+  const NewListPage({Key? key, this.taskList}) : super(key: key);
   @override
-  _NewListPageState createState() => new _NewListPageState();
+  _NewListPageState createState() => _NewListPageState();
 }
 
 class _NewListPageState extends State<NewListPage> {
-  final String _scaffoldTitle = "Create new list";
-  final String _listTitleInputHint = "Enter list title";
-  final String _snackInvalidTitleMsg = "Enter a valid list title first";
-  final String _appBarDoneAction = "Done";
-  final key = new GlobalKey<ScaffoldState>();
-  String newListTitle = "";
+  late String _scaffoldTitle;
+  final _listTitleInputHint = "Enter list title";
+  final _appBarDoneAction = "Done";
+  String listTitle = '';
 
   @override
   void initState() {
+    _scaffoldTitle =
+        widget.taskList != null ? 'Rename List' : 'Create new list';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        key: key,
-        backgroundColor: Colors.grey[300],
-        appBar: new AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          leading: new IconButton(
-              icon: new Icon(
-                Icons.close,
-                color: Colors.grey,
+    return Scaffold(
+      backgroundColor: Colors.grey.shade300,
+      appBar: _appBar(),
+      body: Column(
+        children: <Widget>[
+          const Divider(
+            thickness: 1.0,
+            height: 1.0,
+          ),
+          Container(
+            color: Colors.white,
+            child: TextFormField(
+              autofocus: true,
+              initialValue: widget.taskList?.name,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
+                border: InputBorder.none,
+                hintText: _listTitleInputHint,
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          title: new Text(
-            _scaffoldTitle,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 25.0,
+              onChanged: (value) => setState(() => listTitle = value),
             ),
           ),
-          actions: <Widget>[
-            new FlatButton(
-                onPressed: () async {
-                  if (newListTitle != null && newListTitle != "") {
-                    print('Saving list title');
-                  } else {
-                    // key.currentState.showSnackBar(
-                    //     new SnackBar(content: new Text(_snackInvalidTitleMsg)));
-                  }
-                },
-                child: new Text(
+          const Divider(
+            thickness: 2.0,
+            height: 1.0,
+          ),
+        ],
+      ),
+    );
+  }
+
+  PreferredSize _appBar() => PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Container(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+          color: Colors.white,
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                padding: EdgeInsets.zero,
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  _scaffoldTitle,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: listTitle.isEmpty
+                    ? null
+                    : () {
+                        context.read<HomeBloc>().add(widget.taskList != null
+                            ? HomeEvent.renameTaskList(
+                                widget.taskList!.copyWith(name: listTitle))
+                            : HomeEvent.createTaskList(listTitle));
+                        Navigator.pop(context);
+                      },
+                child: Text(
                   _appBarDoneAction,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                ))
-          ],
-        ),
-        body: new Column(
-          children: <Widget>[
-            new Divider(
-              height: 1.0,
-            ),
-            new Container(
-              padding: EdgeInsets.only(
-                  left: 16.0, right: 16.0, top: 10.0, bottom: 10.0),
-              color: Colors.white,
-              child: new Wrap(
-                children: <Widget>[
-                  new TextField(
-                    onChanged: (listTitle) {
-                      newListTitle = listTitle;
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: _listTitleInputHint),
-                    //autofocus: true,
-                    enabled: true,
-                  )
-                ],
+                ),
               ),
-            ),
-          ],
-        ));
-  }
+            ],
+          ),
+        ),
+      );
 }

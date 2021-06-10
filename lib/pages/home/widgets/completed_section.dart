@@ -16,7 +16,7 @@ class CompletedSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
+        padding: const EdgeInsets.only(left: 12.0),
         child: Text(
           'Completed (${tasks.length})',
           style: TextStyle(

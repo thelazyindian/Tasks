@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/pages/home/home_page.dart';
+import 'package:tasks/pages/new_list/new_list_page.dart';
 import 'package:tasks/pages/splash/splash_page.dart';
 
 void main() => runApp(MyApp());
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         home: SplashPage(),
         routes: {
           '/home': (_) => HomePage(),
+          '/newList': (_) => NewListPage(),
         },
       ),
     );

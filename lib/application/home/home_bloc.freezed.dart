@@ -75,6 +75,24 @@ class _$HomeEventTearOff {
       subTask,
     );
   }
+
+  _CreateTaskList createTaskList(String name) {
+    return _CreateTaskList(
+      name,
+    );
+  }
+
+  _RenameTaskList renameTaskList(Tlist taskList) {
+    return _RenameTaskList(
+      taskList,
+    );
+  }
+
+  _RemoveTaskList removeTaskList(Tlist taskList) {
+    return _RemoveTaskList(
+      taskList,
+    );
+  }
 }
 
 /// @nodoc
@@ -94,6 +112,9 @@ mixin _$HomeEvent {
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -108,6 +129,9 @@ mixin _$HomeEvent {
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,6 +147,9 @@ mixin _$HomeEvent {
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -137,6 +164,9 @@ mixin _$HomeEvent {
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -210,6 +240,9 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return started();
   }
@@ -227,6 +260,9 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -248,6 +284,9 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return started(this);
   }
@@ -265,6 +304,9 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -363,6 +405,9 @@ class _$_UpdateTaskLists
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return updateTaskLists(taskLists);
   }
@@ -380,6 +425,9 @@ class _$_UpdateTaskLists
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (updateTaskLists != null) {
@@ -401,6 +449,9 @@ class _$_UpdateTaskLists
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return updateTaskLists(this);
   }
@@ -418,6 +469,9 @@ class _$_UpdateTaskLists
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (updateTaskLists != null) {
@@ -532,6 +586,9 @@ class _$_UpdateActiveTaskList
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return updateActiveTaskList(taskList);
   }
@@ -549,6 +606,9 @@ class _$_UpdateActiveTaskList
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (updateActiveTaskList != null) {
@@ -570,6 +630,9 @@ class _$_UpdateActiveTaskList
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return updateActiveTaskList(this);
   }
@@ -587,6 +650,9 @@ class _$_UpdateActiveTaskList
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (updateActiveTaskList != null) {
@@ -694,6 +760,9 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return addTask(task);
   }
@@ -711,6 +780,9 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (addTask != null) {
@@ -732,6 +804,9 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return addTask(this);
   }
@@ -749,6 +824,9 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (addTask != null) {
@@ -858,6 +936,9 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return updateTask(task);
   }
@@ -875,6 +956,9 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (updateTask != null) {
@@ -896,6 +980,9 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return updateTask(this);
   }
@@ -913,6 +1000,9 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (updateTask != null) {
@@ -1022,6 +1112,9 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return completedTask(task);
   }
@@ -1039,6 +1132,9 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (completedTask != null) {
@@ -1060,6 +1156,9 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return completedTask(this);
   }
@@ -1077,6 +1176,9 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (completedTask != null) {
@@ -1188,6 +1290,9 @@ class _$_IncompletedTask
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return incompletedTask(task);
   }
@@ -1205,6 +1310,9 @@ class _$_IncompletedTask
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (incompletedTask != null) {
@@ -1226,6 +1334,9 @@ class _$_IncompletedTask
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return incompletedTask(this);
   }
@@ -1243,6 +1354,9 @@ class _$_IncompletedTask
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (incompletedTask != null) {
@@ -1352,6 +1466,9 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return deleteTask(task);
   }
@@ -1369,6 +1486,9 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (deleteTask != null) {
@@ -1390,6 +1510,9 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return deleteTask(this);
   }
@@ -1407,6 +1530,9 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (deleteTask != null) {
@@ -1539,6 +1665,9 @@ class _$_CompletedSubTask
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return completedSubTask(task, subTask);
   }
@@ -1556,6 +1685,9 @@ class _$_CompletedSubTask
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (completedSubTask != null) {
@@ -1577,6 +1709,9 @@ class _$_CompletedSubTask
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return completedSubTask(this);
   }
@@ -1594,6 +1729,9 @@ class _$_CompletedSubTask
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (completedSubTask != null) {
@@ -1728,6 +1866,9 @@ class _$_IncompletedSubTask
     required TResult Function(Task task) deleteTask,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
     required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
   }) {
     return incompletedSubTask(task, subTask);
   }
@@ -1745,6 +1886,9 @@ class _$_IncompletedSubTask
     TResult Function(Task task)? deleteTask,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
     TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
     required TResult orElse(),
   }) {
     if (incompletedSubTask != null) {
@@ -1766,6 +1910,9 @@ class _$_IncompletedSubTask
     required TResult Function(_DeleteTask value) deleteTask,
     required TResult Function(_CompletedSubTask value) completedSubTask,
     required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
   }) {
     return incompletedSubTask(this);
   }
@@ -1783,6 +1930,9 @@ class _$_IncompletedSubTask
     TResult Function(_DeleteTask value)? deleteTask,
     TResult Function(_CompletedSubTask value)? completedSubTask,
     TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
     required TResult orElse(),
   }) {
     if (incompletedSubTask != null) {
@@ -1800,6 +1950,533 @@ abstract class _IncompletedSubTask implements HomeEvent {
   SubTask get subTask => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$IncompletedSubTaskCopyWith<_IncompletedSubTask> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$CreateTaskListCopyWith<$Res> {
+  factory _$CreateTaskListCopyWith(
+          _CreateTaskList value, $Res Function(_CreateTaskList) then) =
+      __$CreateTaskListCopyWithImpl<$Res>;
+  $Res call({String name});
+}
+
+/// @nodoc
+class __$CreateTaskListCopyWithImpl<$Res> extends _$HomeEventCopyWithImpl<$Res>
+    implements _$CreateTaskListCopyWith<$Res> {
+  __$CreateTaskListCopyWithImpl(
+      _CreateTaskList _value, $Res Function(_CreateTaskList) _then)
+      : super(_value, (v) => _then(v as _CreateTaskList));
+
+  @override
+  _CreateTaskList get _value => super._value as _CreateTaskList;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+  }) {
+    return _then(_CreateTaskList(
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateTaskList
+    with DiagnosticableTreeMixin
+    implements _CreateTaskList {
+  const _$_CreateTaskList(this.name);
+
+  @override
+  final String name;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'HomeEvent.createTaskList(name: $name)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeEvent.createTaskList'))
+      ..add(DiagnosticsProperty('name', name));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _CreateTaskList &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CreateTaskListCopyWith<_CreateTaskList> get copyWith =>
+      __$CreateTaskListCopyWithImpl<_CreateTaskList>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(List<Tlist> taskLists) updateTaskLists,
+    required TResult Function(Tlist taskList) updateActiveTaskList,
+    required TResult Function(Task task) addTask,
+    required TResult Function(Task task) updateTask,
+    required TResult Function(Task task) completedTask,
+    required TResult Function(Task task) incompletedTask,
+    required TResult Function(Task task) deleteTask,
+    required TResult Function(Task task, SubTask subTask) completedSubTask,
+    required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
+  }) {
+    return createTaskList(name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(List<Tlist> taskLists)? updateTaskLists,
+    TResult Function(Tlist taskList)? updateActiveTaskList,
+    TResult Function(Task task)? addTask,
+    TResult Function(Task task)? updateTask,
+    TResult Function(Task task)? completedTask,
+    TResult Function(Task task)? incompletedTask,
+    TResult Function(Task task)? deleteTask,
+    TResult Function(Task task, SubTask subTask)? completedSubTask,
+    TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (createTaskList != null) {
+      return createTaskList(name);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_UpdateTaskLists value) updateTaskLists,
+    required TResult Function(_UpdateActiveTaskList value) updateActiveTaskList,
+    required TResult Function(_AddTask value) addTask,
+    required TResult Function(_UpdateTask value) updateTask,
+    required TResult Function(_CompletedTask value) completedTask,
+    required TResult Function(_IncompletedTask value) incompletedTask,
+    required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_CompletedSubTask value) completedSubTask,
+    required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
+  }) {
+    return createTaskList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_UpdateTaskLists value)? updateTaskLists,
+    TResult Function(_UpdateActiveTaskList value)? updateActiveTaskList,
+    TResult Function(_AddTask value)? addTask,
+    TResult Function(_UpdateTask value)? updateTask,
+    TResult Function(_CompletedTask value)? completedTask,
+    TResult Function(_IncompletedTask value)? incompletedTask,
+    TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_CompletedSubTask value)? completedSubTask,
+    TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (createTaskList != null) {
+      return createTaskList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CreateTaskList implements HomeEvent {
+  const factory _CreateTaskList(String name) = _$_CreateTaskList;
+
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$CreateTaskListCopyWith<_CreateTaskList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$RenameTaskListCopyWith<$Res> {
+  factory _$RenameTaskListCopyWith(
+          _RenameTaskList value, $Res Function(_RenameTaskList) then) =
+      __$RenameTaskListCopyWithImpl<$Res>;
+  $Res call({Tlist taskList});
+
+  $TlistCopyWith<$Res> get taskList;
+}
+
+/// @nodoc
+class __$RenameTaskListCopyWithImpl<$Res> extends _$HomeEventCopyWithImpl<$Res>
+    implements _$RenameTaskListCopyWith<$Res> {
+  __$RenameTaskListCopyWithImpl(
+      _RenameTaskList _value, $Res Function(_RenameTaskList) _then)
+      : super(_value, (v) => _then(v as _RenameTaskList));
+
+  @override
+  _RenameTaskList get _value => super._value as _RenameTaskList;
+
+  @override
+  $Res call({
+    Object? taskList = freezed,
+  }) {
+    return _then(_RenameTaskList(
+      taskList == freezed
+          ? _value.taskList
+          : taskList // ignore: cast_nullable_to_non_nullable
+              as Tlist,
+    ));
+  }
+
+  @override
+  $TlistCopyWith<$Res> get taskList {
+    return $TlistCopyWith<$Res>(_value.taskList, (value) {
+      return _then(_value.copyWith(taskList: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_RenameTaskList
+    with DiagnosticableTreeMixin
+    implements _RenameTaskList {
+  const _$_RenameTaskList(this.taskList);
+
+  @override
+  final Tlist taskList;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'HomeEvent.renameTaskList(taskList: $taskList)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeEvent.renameTaskList'))
+      ..add(DiagnosticsProperty('taskList', taskList));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RenameTaskList &&
+            (identical(other.taskList, taskList) ||
+                const DeepCollectionEquality()
+                    .equals(other.taskList, taskList)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(taskList);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RenameTaskListCopyWith<_RenameTaskList> get copyWith =>
+      __$RenameTaskListCopyWithImpl<_RenameTaskList>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(List<Tlist> taskLists) updateTaskLists,
+    required TResult Function(Tlist taskList) updateActiveTaskList,
+    required TResult Function(Task task) addTask,
+    required TResult Function(Task task) updateTask,
+    required TResult Function(Task task) completedTask,
+    required TResult Function(Task task) incompletedTask,
+    required TResult Function(Task task) deleteTask,
+    required TResult Function(Task task, SubTask subTask) completedSubTask,
+    required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
+  }) {
+    return renameTaskList(taskList);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(List<Tlist> taskLists)? updateTaskLists,
+    TResult Function(Tlist taskList)? updateActiveTaskList,
+    TResult Function(Task task)? addTask,
+    TResult Function(Task task)? updateTask,
+    TResult Function(Task task)? completedTask,
+    TResult Function(Task task)? incompletedTask,
+    TResult Function(Task task)? deleteTask,
+    TResult Function(Task task, SubTask subTask)? completedSubTask,
+    TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (renameTaskList != null) {
+      return renameTaskList(taskList);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_UpdateTaskLists value) updateTaskLists,
+    required TResult Function(_UpdateActiveTaskList value) updateActiveTaskList,
+    required TResult Function(_AddTask value) addTask,
+    required TResult Function(_UpdateTask value) updateTask,
+    required TResult Function(_CompletedTask value) completedTask,
+    required TResult Function(_IncompletedTask value) incompletedTask,
+    required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_CompletedSubTask value) completedSubTask,
+    required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
+  }) {
+    return renameTaskList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_UpdateTaskLists value)? updateTaskLists,
+    TResult Function(_UpdateActiveTaskList value)? updateActiveTaskList,
+    TResult Function(_AddTask value)? addTask,
+    TResult Function(_UpdateTask value)? updateTask,
+    TResult Function(_CompletedTask value)? completedTask,
+    TResult Function(_IncompletedTask value)? incompletedTask,
+    TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_CompletedSubTask value)? completedSubTask,
+    TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (renameTaskList != null) {
+      return renameTaskList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RenameTaskList implements HomeEvent {
+  const factory _RenameTaskList(Tlist taskList) = _$_RenameTaskList;
+
+  Tlist get taskList => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RenameTaskListCopyWith<_RenameTaskList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$RemoveTaskListCopyWith<$Res> {
+  factory _$RemoveTaskListCopyWith(
+          _RemoveTaskList value, $Res Function(_RemoveTaskList) then) =
+      __$RemoveTaskListCopyWithImpl<$Res>;
+  $Res call({Tlist taskList});
+
+  $TlistCopyWith<$Res> get taskList;
+}
+
+/// @nodoc
+class __$RemoveTaskListCopyWithImpl<$Res> extends _$HomeEventCopyWithImpl<$Res>
+    implements _$RemoveTaskListCopyWith<$Res> {
+  __$RemoveTaskListCopyWithImpl(
+      _RemoveTaskList _value, $Res Function(_RemoveTaskList) _then)
+      : super(_value, (v) => _then(v as _RemoveTaskList));
+
+  @override
+  _RemoveTaskList get _value => super._value as _RemoveTaskList;
+
+  @override
+  $Res call({
+    Object? taskList = freezed,
+  }) {
+    return _then(_RemoveTaskList(
+      taskList == freezed
+          ? _value.taskList
+          : taskList // ignore: cast_nullable_to_non_nullable
+              as Tlist,
+    ));
+  }
+
+  @override
+  $TlistCopyWith<$Res> get taskList {
+    return $TlistCopyWith<$Res>(_value.taskList, (value) {
+      return _then(_value.copyWith(taskList: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_RemoveTaskList
+    with DiagnosticableTreeMixin
+    implements _RemoveTaskList {
+  const _$_RemoveTaskList(this.taskList);
+
+  @override
+  final Tlist taskList;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'HomeEvent.removeTaskList(taskList: $taskList)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeEvent.removeTaskList'))
+      ..add(DiagnosticsProperty('taskList', taskList));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RemoveTaskList &&
+            (identical(other.taskList, taskList) ||
+                const DeepCollectionEquality()
+                    .equals(other.taskList, taskList)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(taskList);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RemoveTaskListCopyWith<_RemoveTaskList> get copyWith =>
+      __$RemoveTaskListCopyWithImpl<_RemoveTaskList>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(List<Tlist> taskLists) updateTaskLists,
+    required TResult Function(Tlist taskList) updateActiveTaskList,
+    required TResult Function(Task task) addTask,
+    required TResult Function(Task task) updateTask,
+    required TResult Function(Task task) completedTask,
+    required TResult Function(Task task) incompletedTask,
+    required TResult Function(Task task) deleteTask,
+    required TResult Function(Task task, SubTask subTask) completedSubTask,
+    required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function(Tlist taskList) removeTaskList,
+  }) {
+    return removeTaskList(taskList);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(List<Tlist> taskLists)? updateTaskLists,
+    TResult Function(Tlist taskList)? updateActiveTaskList,
+    TResult Function(Task task)? addTask,
+    TResult Function(Task task)? updateTask,
+    TResult Function(Task task)? completedTask,
+    TResult Function(Task task)? incompletedTask,
+    TResult Function(Task task)? deleteTask,
+    TResult Function(Task task, SubTask subTask)? completedSubTask,
+    TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function(Tlist taskList)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (removeTaskList != null) {
+      return removeTaskList(taskList);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_UpdateTaskLists value) updateTaskLists,
+    required TResult Function(_UpdateActiveTaskList value) updateActiveTaskList,
+    required TResult Function(_AddTask value) addTask,
+    required TResult Function(_UpdateTask value) updateTask,
+    required TResult Function(_CompletedTask value) completedTask,
+    required TResult Function(_IncompletedTask value) incompletedTask,
+    required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_CompletedSubTask value) completedSubTask,
+    required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
+  }) {
+    return removeTaskList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_UpdateTaskLists value)? updateTaskLists,
+    TResult Function(_UpdateActiveTaskList value)? updateActiveTaskList,
+    TResult Function(_AddTask value)? addTask,
+    TResult Function(_UpdateTask value)? updateTask,
+    TResult Function(_CompletedTask value)? completedTask,
+    TResult Function(_IncompletedTask value)? incompletedTask,
+    TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_CompletedSubTask value)? completedSubTask,
+    TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (removeTaskList != null) {
+      return removeTaskList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RemoveTaskList implements HomeEvent {
+  const factory _RemoveTaskList(Tlist taskList) = _$_RemoveTaskList;
+
+  Tlist get taskList => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RemoveTaskListCopyWith<_RemoveTaskList> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

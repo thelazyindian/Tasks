@@ -28,7 +28,7 @@ class HomeView extends StatelessWidget {
           snap: false,
           elevation: 0.0,
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: EdgeInsets.fromLTRB(66.0, 8.0, 16.0, 8.0),
+            titlePadding: EdgeInsets.fromLTRB(58.0, 8.0, 16.0, 8.0),
             title: Text(
               taskList.name,
               style: TextStyle(

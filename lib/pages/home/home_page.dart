@@ -65,10 +65,13 @@ class _HomePageState extends State<HomePage> {
   ) =>
       showModalBottomSheet(
         context: context,
-        builder: (_) => MainMenu(
-          taskLists: taskLists,
-          activeTaskList: activeTaskList,
-        ),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8.0),
+          topRight: Radius.circular(8.0),
+        )),
+        builder: (_) => MainMenu(),
       );
 
   void _showMoreMenu() =>
