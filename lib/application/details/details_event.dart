@@ -1,0 +1,21 @@
+part of 'details_bloc.dart';
+
+@freezed
+class DetailsEvent with _$DetailsEvent {
+  const factory DetailsEvent.started({
+    required List<Tlist> taskLists,
+    required Tlist activeTaskList,
+    required Task task,
+  }) = _Started;
+  const factory DetailsEvent.onNameChanged(String value) = _OnNameChanged;
+  const factory DetailsEvent.onDetailsChanged(String value) = _OnDetailsChanged;
+  const factory DetailsEvent.onSubtaskAdded() = _OnSubtaskAdded;
+  const factory DetailsEvent.onSubtaskRemoved(int index) = _OnSubtaskRemoved;
+  const factory DetailsEvent.onSubtaskCompleted(int index) =
+      _OnSubtaskCompleted;
+  const factory DetailsEvent.onSubtaskUpdated(int index, String value) =
+      _OnSubtaskUpdated;
+  const factory DetailsEvent.onDateChanged(DateTime? value) = _OnDateChanged;
+  const factory DetailsEvent.onTaskListChanged(Tlist taskList) =
+      _OnTaskListChanged;
+}

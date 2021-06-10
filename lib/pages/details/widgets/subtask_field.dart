@@ -1,38 +1,26 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
-class SubtaskField extends StatefulWidget {
+class SubtaskField extends StatelessWidget {
   final String? initialValue;
-  final Function(bool) onTapCheck;
-  final VoidCallback onTapRemove;
+  final bool checked;
+  final VoidCallback onTapCheck, onTapRemove;
   final Function(String) onChanged;
   const SubtaskField({
     Key? key,
     this.initialValue,
+    required this.checked,
     required this.onTapCheck,
     required this.onTapRemove,
     required this.onChanged,
   }) : super(key: key);
 
   @override
-  _SubtaskFieldState createState() => _SubtaskFieldState();
-}
-
-class _SubtaskFieldState extends State<SubtaskField> {
-  bool checked = false;
-
-  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         InkWell(
-          onTap: () {
-            final checkedState = !checked;
-            setState(() {
-              checked = checkedState;
-            });
-            widget.onTapCheck(checkedState);
-          },
+          onTap: onTapCheck,
           child: Icon(
             checked
                 ? CommunityMaterialIcons.check
@@ -44,8 +32,8 @@ class _SubtaskFieldState extends State<SubtaskField> {
         const SizedBox(width: 4.0),
         Expanded(
           child: TextFormField(
-            initialValue: widget.initialValue,
-            onChanged: widget.onChanged,
+            initialValue: initialValue,
+            onChanged: onChanged,
             decoration: InputDecoration(
               hintText: 'Enter title',
               contentPadding: EdgeInsets.zero,
@@ -57,7 +45,7 @@ class _SubtaskFieldState extends State<SubtaskField> {
           ),
         ),
         InkWell(
-          onTap: widget.onTapRemove,
+          onTap: onTapRemove,
           child: Icon(
             CommunityMaterialIcons.close,
             size: 18.0,

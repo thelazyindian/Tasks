@@ -15,4 +15,7 @@ class Tlist with _$Tlist {
   }) = _Tlist;
 
   factory Tlist.fromJson(Map<String, dynamic> json) => _$TlistFromJson(json);
+
+  factory Tlist.initial() =>
+      _Tlist(id: DateTime.now().toIso8601String(), name: '');
 }

@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/application/home/home_bloc.dart';
@@ -110,7 +111,7 @@ class _NewTaskState extends State<NewTask> {
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: Icon(
-              Icons.date_range,
+              CommunityMaterialIcons.calendar_check,
               color: Colors.blue,
             ),
           ),
@@ -127,7 +128,7 @@ class _NewTaskState extends State<NewTask> {
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: Icon(
-              Icons.list_alt_rounded,
+              CommunityMaterialIcons.text,
               color: Colors.blue,
             ),
           ),

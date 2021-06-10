@@ -20,7 +20,10 @@ SubTask _$SubTaskFromJson(Map<String, dynamic> json) {
 class _$SubTaskTearOff {
   const _$SubTaskTearOff();
 
-  _SubTask call({required String id, String? name, bool completed = false}) {
+  _SubTask call(
+      {@HiveField(0) required String id,
+      @HiveField(1) String? name,
+      @HiveField(2) bool completed = false}) {
     return _SubTask(
       id: id,
       name: name,
@@ -38,8 +41,11 @@ const $SubTask = _$SubTaskTearOff();
 
 /// @nodoc
 mixin _$SubTask {
+  @HiveField(0)
   String get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String? get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   bool get completed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +57,10 @@ mixin _$SubTask {
 abstract class $SubTaskCopyWith<$Res> {
   factory $SubTaskCopyWith(SubTask value, $Res Function(SubTask) then) =
       _$SubTaskCopyWithImpl<$Res>;
-  $Res call({String id, String? name, bool completed});
+  $Res call(
+      {@HiveField(0) String id,
+      @HiveField(1) String? name,
+      @HiveField(2) bool completed});
 }
 
 /// @nodoc
@@ -90,7 +99,10 @@ abstract class _$SubTaskCopyWith<$Res> implements $SubTaskCopyWith<$Res> {
   factory _$SubTaskCopyWith(_SubTask value, $Res Function(_SubTask) then) =
       __$SubTaskCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String? name, bool completed});
+  $Res call(
+      {@HiveField(0) String id,
+      @HiveField(1) String? name,
+      @HiveField(2) bool completed});
 }
 
 /// @nodoc
@@ -128,17 +140,23 @@ class __$SubTaskCopyWithImpl<$Res> extends _$SubTaskCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_SubTask implements _SubTask {
-  const _$_SubTask({required this.id, this.name, this.completed = false});
+  const _$_SubTask(
+      {@HiveField(0) required this.id,
+      @HiveField(1) this.name,
+      @HiveField(2) this.completed = false});
 
   factory _$_SubTask.fromJson(Map<String, dynamic> json) =>
       _$_$_SubTaskFromJson(json);
 
   @override
+  @HiveField(0)
   final String id;
   @override
+  @HiveField(1)
   final String? name;
   @JsonKey(defaultValue: false)
   @override
+  @HiveField(2)
   final bool completed;
 
   @override
@@ -178,16 +196,21 @@ class _$_SubTask implements _SubTask {
 }
 
 abstract class _SubTask implements SubTask {
-  const factory _SubTask({required String id, String? name, bool completed}) =
-      _$_SubTask;
+  const factory _SubTask(
+      {@HiveField(0) required String id,
+      @HiveField(1) String? name,
+      @HiveField(2) bool completed}) = _$_SubTask;
 
   factory _SubTask.fromJson(Map<String, dynamic> json) = _$_SubTask.fromJson;
 
   @override
+  @HiveField(0)
   String get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(1)
   String? get name => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   bool get completed => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

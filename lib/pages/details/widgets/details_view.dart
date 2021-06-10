@@ -1,5 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks/application/details/details_bloc.dart';
 import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/models/sub_task.dart';
 import 'package:tasks/models/task.dart';
@@ -10,11 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/utils/methods.dart';
 
 class DetailsView extends StatefulWidget {
-  final Tlist activeTaskList;
   final Task task;
   const DetailsView({
     Key? key,
-    required this.activeTaskList,
     required this.task,
   }) : super(key: key);
 
@@ -23,49 +22,55 @@ class DetailsView extends StatefulWidget {
 }
 
 class _DetailsViewState extends State<DetailsView> {
-  List<SubTask> subtaskFields = [];
-  late List<Tlist> taskLists;
-  DateTime? dateTime;
-
-  @override
-  void initState() {
-    taskLists = context.read<HomeBloc>().state.taskLists;
-    dateTime = widget.task.dateTime;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      children: <Widget>[
-        _taskListDropdownMenu(),
-        _taskName(),
-        _taskDetails(),
-        _dateTimePicker(),
-        _subtasksList(),
-      ],
+    return BlocBuilder<DetailsBloc, DetailsState>(
+      builder: (context, state) {
+        return ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          children: <Widget>[
+            _taskListDropdownMenu(
+              state.taskLists,
+              state.activeTaskList,
+              state.task,
+            ),
+            _taskName(state.task),
+            _taskDetails(state.task),
+            _dateTimePicker(
+              state.task.dateTime,
+              state.task.completed,
+            ),
+            _subtasksList(
+              state.task.subtasks,
+              state.task.completed,
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _taskName() => Padding(
+  Widget _taskName(Task task) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: TextFormField(
-          initialValue: widget.task.name,
-          enabled: !widget.task.completed,
+          initialValue: task.name,
+          enabled: !task.completed,
+          onChanged: (value) => context
+              .read<DetailsBloc>()
+              .add(DetailsEvent.onNameChanged(value)),
           decoration: InputDecoration(
             border: InputBorder.none,
           ),
           style: TextStyle(
             fontSize: 20.0,
-            decoration: widget.task.completed
+            decoration: task.completed
                 ? TextDecoration.lineThrough
                 : TextDecoration.none,
           ),
         ),
       );
 
-  Widget _taskDetails() => Padding(
+  Widget _taskDetails(Task task) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           children: [
@@ -76,8 +81,11 @@ class _DetailsViewState extends State<DetailsView> {
             const SizedBox(width: 24.0),
             Expanded(
               child: TextFormField(
-                initialValue: widget.task.details,
-                enabled: !widget.task.completed,
+                initialValue: task.details,
+                enabled: !task.completed,
+                onChanged: (value) => context
+                    .read<DetailsBloc>()
+                    .add(DetailsEvent.onDetailsChanged(value)),
                 decoration: const InputDecoration(
                   hintText: 'Add details',
                   border: InputBorder.none,
@@ -92,14 +100,19 @@ class _DetailsViewState extends State<DetailsView> {
         ),
       );
 
-  Widget _taskListDropdownMenu() => DropdownButtonFormField<String>(
+  Widget _taskListDropdownMenu(
+    List<Tlist> taskLists,
+    Tlist activeTaskList,
+    Task task,
+  ) =>
+      DropdownButtonFormField<String>(
         items: taskLists
             .map((e) => DropdownMenuItem(
                   value: e.id,
                   child: Text(e.name),
                 ))
             .toList(),
-        value: widget.activeTaskList.id,
+        value: activeTaskList.id,
         elevation: 4,
         icon: Container(),
         selectedItemBuilder: (_) => taskLists
@@ -109,9 +122,8 @@ class _DetailsViewState extends State<DetailsView> {
                     Text(e.name),
                     Icon(
                       Icons.arrow_drop_down,
-                      color: widget.task.completed
-                          ? Colors.grey.shade500
-                          : Colors.blue,
+                      color:
+                          task.completed ? Colors.grey.shade500 : Colors.blue,
                     ),
                   ],
                 ))
@@ -126,16 +138,22 @@ class _DetailsViewState extends State<DetailsView> {
           color: Colors.blue,
           fontWeight: FontWeight.w700,
         ),
-        onChanged: widget.task.completed ? null : (x) {},
+        onChanged: task.completed ? null : (x) {},
       );
 
-  Widget _dateTimePicker() => InkWell(
-        onTap: dateTime != null || widget.task.completed
+  Widget _dateTimePicker(
+    DateTime? dateTime,
+    bool completed,
+  ) =>
+      InkWell(
+        onTap: dateTime != null || completed
             ? null
             : () => showDateTimePicker(
                   context: context,
                   initialDate: dateTime ?? DateTime.now(),
-                  onSelected: (value) => setState(() => dateTime = value),
+                  onSelected: (value) => context
+                      .read<DetailsBloc>()
+                      .add(DetailsEvent.onDateChanged(value)),
                 ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -149,8 +167,11 @@ class _DetailsViewState extends State<DetailsView> {
               const SizedBox(width: 24.0),
               dateTime != null
                   ? SelectedDateView(
-                      dateTime: dateTime!,
-                      onSelected: (value) => setState(() => dateTime = value),
+                      key: Key(widget.task.id),
+                      dateTime: dateTime,
+                      onSelected: (value) => context
+                          .read<DetailsBloc>()
+                          .add(DetailsEvent.onDateChanged(value)),
                     )
                   : Text(
                       'Add date/time',
@@ -163,10 +184,8 @@ class _DetailsViewState extends State<DetailsView> {
         ),
       );
 
-  void _addSubtask() => setState(() {
-        subtaskFields.add(SubTask(id: DateTime.now().toIso8601String()));
-        debugPrint(subtaskFields.toString());
-      });
+  void _addSubtask() =>
+      context.read<DetailsBloc>().add(DetailsEvent.onSubtaskAdded());
 
   Widget _addSubtasksBtn() => Text(
         'Add subtasks',
@@ -175,10 +194,12 @@ class _DetailsViewState extends State<DetailsView> {
         ),
       );
 
-  Widget _subtasksList() => InkWell(
-        onTap: subtaskFields.isNotEmpty || widget.task.completed
-            ? null
-            : _addSubtask,
+  Widget _subtasksList(
+    List<SubTask> subtasks,
+    bool completed,
+  ) =>
+      InkWell(
+        onTap: subtasks.isNotEmpty || completed ? null : _addSubtask,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
@@ -194,15 +215,15 @@ class _DetailsViewState extends State<DetailsView> {
                   color: Colors.black54,
                 ),
               ),
-              subtaskFields.isNotEmpty
+              subtasks.isNotEmpty
                   ? Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: subtaskFields.length + 1,
-                          itemBuilder: (_, idx) => idx == subtaskFields.length
+                          itemCount: subtasks.length + 1,
+                          itemBuilder: (_, idx) => idx == subtasks.length
                               ? InkWell(
                                   onTap: _addSubtask,
                                   child: Padding(
@@ -212,19 +233,20 @@ class _DetailsViewState extends State<DetailsView> {
                                   ),
                                 )
                               : SubtaskField(
-                                  key: Key(subtaskFields[idx].id),
-                                  initialValue: subtaskFields[idx].name,
-                                  onTapCheck: (value) {
-                                    subtaskFields[idx] = subtaskFields[idx]
-                                        .copyWith(completed: value);
-                                  },
-                                  onTapRemove: () {
-                                    setState(() => subtaskFields.removeAt(idx));
-                                  },
-                                  onChanged: (value) {
-                                    subtaskFields[idx] = subtaskFields[idx]
-                                        .copyWith(name: value);
-                                  },
+                                  key: Key(subtasks[idx].id),
+                                  initialValue: subtasks[idx].name,
+                                  checked: subtasks[idx].completed,
+                                  onTapCheck: () => context
+                                      .read<DetailsBloc>()
+                                      .add(
+                                          DetailsEvent.onSubtaskCompleted(idx)),
+                                  onTapRemove: () => context
+                                      .read<DetailsBloc>()
+                                      .add(DetailsEvent.onSubtaskRemoved(idx)),
+                                  onChanged: (value) => context
+                                      .read<DetailsBloc>()
+                                      .add(DetailsEvent.onSubtaskUpdated(
+                                          idx, value)),
                                 ),
                         ),
                       ),

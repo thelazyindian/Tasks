@@ -22,7 +22,7 @@ class TaskAdapter extends TypeAdapter<Task> {
       details: fields[2] as String?,
       dateTime: fields[3] as DateTime?,
       completed: fields[4] as bool,
-      subtasks: (fields[5] as List).cast<String>(),
+      subtasks: (fields[5] as List).cast<SubTask>(),
     );
   }
 
@@ -69,7 +69,7 @@ _$_Task _$_$_TaskFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['dateTime'] as String),
     completed: json['completed'] as bool? ?? false,
     subtasks: (json['subtasks'] as List<dynamic>?)
-            ?.map((e) => e as String)
+            ?.map((e) => SubTask.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [],
   );

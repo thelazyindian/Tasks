@@ -26,7 +26,7 @@ class _$TaskTearOff {
       @HiveField(2) String? details,
       @HiveField(3) DateTime? dateTime,
       @HiveField(4) bool completed = false,
-      @HiveField(5) List<String> subtasks = const []}) {
+      @HiveField(5) List<SubTask> subtasks = const []}) {
     return _Task(
       id: id,
       name: name,
@@ -58,7 +58,7 @@ mixin _$Task {
   @HiveField(4)
   bool get completed => throw _privateConstructorUsedError;
   @HiveField(5)
-  List<String> get subtasks => throw _privateConstructorUsedError;
+  List<SubTask> get subtasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -75,7 +75,7 @@ abstract class $TaskCopyWith<$Res> {
       @HiveField(2) String? details,
       @HiveField(3) DateTime? dateTime,
       @HiveField(4) bool completed,
-      @HiveField(5) List<String> subtasks});
+      @HiveField(5) List<SubTask> subtasks});
 }
 
 /// @nodoc
@@ -119,7 +119,7 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
       subtasks: subtasks == freezed
           ? _value.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<SubTask>,
     ));
   }
 }
@@ -135,7 +135,7 @@ abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       @HiveField(2) String? details,
       @HiveField(3) DateTime? dateTime,
       @HiveField(4) bool completed,
-      @HiveField(5) List<String> subtasks});
+      @HiveField(5) List<SubTask> subtasks});
 }
 
 /// @nodoc
@@ -180,7 +180,7 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
       subtasks: subtasks == freezed
           ? _value.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<SubTask>,
     ));
   }
 }
@@ -218,7 +218,7 @@ class _$_Task implements _Task {
   @JsonKey(defaultValue: const [])
   @override
   @HiveField(5)
-  final List<String> subtasks;
+  final List<SubTask> subtasks;
 
   @override
   String toString() {
@@ -275,7 +275,7 @@ abstract class _Task implements Task {
       @HiveField(2) String? details,
       @HiveField(3) DateTime? dateTime,
       @HiveField(4) bool completed,
-      @HiveField(5) List<String> subtasks}) = _$_Task;
+      @HiveField(5) List<SubTask> subtasks}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
@@ -296,7 +296,7 @@ abstract class _Task implements Task {
   bool get completed => throw _privateConstructorUsedError;
   @override
   @HiveField(5)
-  List<String> get subtasks => throw _privateConstructorUsedError;
+  List<SubTask> get subtasks => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$TaskCopyWith<_Task> get copyWith => throw _privateConstructorUsedError;

@@ -12,4 +12,12 @@ class HomeEvent with _$HomeEvent {
   const factory HomeEvent.completedTask(Task task) = _CompletedTask;
   const factory HomeEvent.incompletedTask(Task task) = _IncompletedTask;
   const factory HomeEvent.deleteTask(Task task) = _DeleteTask;
+  const factory HomeEvent.completedSubTask(
+    Task task,
+    SubTask subTask,
+  ) = _CompletedSubTask;
+  const factory HomeEvent.incompletedSubTask(
+    Task task,
+    SubTask subTask,
+  ) = _IncompletedSubTask;
 }

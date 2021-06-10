@@ -10,8 +10,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => HomeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => HomeBloc()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Tasks',

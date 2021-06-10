@@ -14,41 +14,32 @@ class CompletedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Divider(
-          height: .0,
-          thickness: 1.0,
-        ),
-        ExpansionTile(
-          title: Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: Text(
-              'Completed (${tasks.length})',
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+    return ExpansionTile(
+      title: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Text(
+          'Completed (${tasks.length})',
+          style: TextStyle(
+            fontSize: 15.0,
+            fontWeight: FontWeight.w600,
           ),
-          backgroundColor: Colors.white,
-          iconColor: Colors.grey.shade700,
-          textColor: Colors.grey.shade700,
-          collapsedTextColor: Colors.grey.shade700,
-          collapsedIconColor: Colors.grey.shade700,
-          children: <Widget>[
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: tasks.length,
-              padding: EdgeInsets.zero,
-              itemBuilder: (_, index) => TaskItem(
-                key: Key(tasks[index].id),
-                taskList: taskList,
-                task: tasks[index],
-              ),
-            ),
-          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      iconColor: Colors.grey.shade700,
+      textColor: Colors.grey.shade700,
+      collapsedTextColor: Colors.grey.shade700,
+      collapsedIconColor: Colors.grey.shade700,
+      children: <Widget>[
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: tasks.length,
+          padding: EdgeInsets.zero,
+          itemBuilder: (_, index) => TaskItem(
+            key: Key(tasks[index].id),
+            taskList: taskList,
+            task: tasks[index],
+          ),
         ),
       ],
     );
