@@ -11,10 +11,12 @@ import 'package:date_time_format/date_time_format.dart';
 class TaskItem extends StatelessWidget {
   final Task task;
   final Tlist taskList;
+  final bool viewDate;
   const TaskItem({
     Key? key,
     required this.taskList,
     required this.task,
+    this.viewDate = true,
   }) : super(key: key);
 
   @override
@@ -52,7 +54,8 @@ class TaskItem extends StatelessWidget {
                         children: [
                           _taskNameView(task.name, task.completed),
                           if (task.details?.isNotEmpty ?? false) _detailsView(),
-                          if (task.dateTime != null) _dateTimeView(),
+                          if (task.dateTime != null && viewDate)
+                            _dateTimeView(),
                         ],
                       ),
                     ),

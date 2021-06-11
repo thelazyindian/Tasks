@@ -61,9 +61,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if (e.taskList.tasks.isEmpty) {
           final tasks = (tasksBox.get(e.taskList.id, defaultValue: []) as List)
               .cast<Task>();
-          debugPrint('tasks: ${e.taskList.tasks}');
+          final sortedTasks = sortTasks(e.taskList, tasks);
           yield state.copyWith(
-              activeTaskList: e.taskList.copyWith(tasks: tasks));
+              activeTaskList: e.taskList.copyWith(tasks: sortedTasks));
         }
         _activeTaskListSubscription?.cancel();
         _activeTaskListSubscription =
@@ -72,8 +72,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             final tasks =
                 (tasksBox.get(e.taskList.id, defaultValue: []) as List)
                     .cast<Task>();
+            final sortedTasks = sortTasks(e.taskList, tasks);
             add(HomeEvent.updateActiveTaskList(
-                e.taskList.copyWith(tasks: tasks)));
+                e.taskList.copyWith(tasks: sortedTasks)));
           }
         });
       },
@@ -164,7 +165,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           Hive.box('tasks').delete(activeTaskListId);
         }
       },
-      sortBy: (e) async* {},
+      sortBy: (e) async* {
+        final taskListsBox = Hive.box<Tlist>('taskLists');
+        final taskLists = taskListsBox.values.toList();
+        final idx = taskLists
+            .indexWhere((element) => element.id == state.activeTaskList!.id);
+        if (idx >= 0) {
+          final activeTaskList = taskLists[idx].copyWith(sortBy: e.value);
+          taskListsBox.putAt(
+            idx,
+            activeTaskList,
+          );
+          add(HomeEvent.updateActiveTaskList(activeTaskList));
+        }
+      },
     );
   }
 
@@ -206,5 +220,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         tasksBox.put(activeTaskList.id, tasks);
       }
     }
+  }
+
+  List<Task> sortTasks(Tlist taskList, List<Task> tasks) {
+    if (taskList.sortBy == SortBy.MyOrder) {
+      tasks
+          .sort((a, b) => DateTime.parse(a.id).compareTo(DateTime.parse(b.id)));
+      return tasks;
+    }
+    final tasksWithDate =
+        tasks.where((element) => element.dateTime != null).toList();
+    final tasksWithNoDate =
+        tasks.where((element) => element.dateTime == null).toList();
+    tasksWithDate.sort((a, b) => a.dateTime!.compareTo(b.dateTime!));
+    tasksWithNoDate
+        .sort((a, b) => DateTime.parse(a.id).compareTo(DateTime.parse(b.id)));
+    tasksWithDate.addAll(tasksWithNoDate);
+    return tasksWithDate;
   }
 }

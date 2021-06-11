@@ -34,6 +34,7 @@ class SortByDialog extends StatelessWidget {
                     groupValue: activeTaskList.sortBy,
                     onChanged: (value) {
                       if (value != null) {
+                        debugPrint('Sortby $value');
                         context.read<HomeBloc>().add(HomeEvent.sortBy(value));
                       }
                       Navigator.pop(context);

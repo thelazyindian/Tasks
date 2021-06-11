@@ -33,6 +33,7 @@ class CompletedSection extends StatelessWidget {
       children: <Widget>[
         ListView.builder(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemCount: tasks.length,
           padding: EdgeInsets.zero,
           itemBuilder: (_, index) => TaskItem(

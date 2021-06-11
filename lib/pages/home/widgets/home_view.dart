@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/models/sort_by.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/home/widgets/completed_section.dart';
 import 'package:tasks/pages/home/widgets/task_item.dart';
+import 'package:date_time_format/date_time_format.dart';
 
 class HomeView extends StatelessWidget {
   final Tlist taskList;
@@ -46,12 +48,29 @@ class HomeView extends StatelessWidget {
           if (pendingTaskList.isNotEmpty)
             ListView.builder(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: pendingTaskList.length,
-              itemBuilder: (_, index) => TaskItem(
-                key: Key(pendingTaskList[index].id),
-                taskList: taskList,
-                task: pendingTaskList[index],
+              itemBuilder: (_, index) => Wrap(
+                children: [
+                  if (taskList.sortBy == SortBy.Date)
+                    if (pendingTaskList[index].dateTime != null &&
+                        (index == 0 ||
+                            pendingTaskList[index].dateTime !=
+                                pendingTaskList[index - 1].dateTime))
+                      _dateCategoryTitle(
+                          pendingTaskList[index].dateTime!.format('D, M j'))
+                    else if (pendingTaskList[index].dateTime == null &&
+                        (index == 0 ||
+                            pendingTaskList[index - 1].dateTime != null))
+                      _dateCategoryTitle('No due date'),
+                  TaskItem(
+                    key: Key(pendingTaskList[index].id),
+                    taskList: taskList,
+                    task: pendingTaskList[index],
+                    viewDate: !(taskList.sortBy == SortBy.Date),
+                  ),
+                ],
               ),
             ),
           Padding(
@@ -69,6 +88,20 @@ class HomeView extends StatelessWidget {
               tasks: completedTaskList,
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _dateCategoryTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24.0, 8.0, 16.0, 8.0),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 15.0,
+          fontWeight: FontWeight.w600,
+          color: Colors.grey.shade700,
+        ),
       ),
     );
   }
