@@ -33,7 +33,7 @@ flutter:
 
   assets:
     - assets/user/satya_profile.png
-    - assets/images/icon.png
+    - assets/images/
 
 module:
   androidX: true

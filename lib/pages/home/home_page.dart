@@ -25,8 +25,9 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         return Scaffold(
           floatingActionButton: FloatingActionButton(
-            elevation: 5.0,
-            child: const Icon(Icons.add),
+            elevation: 3.0,
+            backgroundColor: Colors.white,
+            child: Image.asset('assets/images/plus.png'),
             onPressed: () => _addNewTask(),
           ),
           floatingActionButtonLocation:
