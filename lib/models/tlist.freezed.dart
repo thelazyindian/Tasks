@@ -21,12 +21,17 @@ class _$TlistTearOff {
   const _$TlistTearOff();
 
   _Tlist call(
-      {@HiveField(0) required String id,
-      @HiveField(1) required String name,
+      {@HiveField(0)
+          required String id,
+      @HiveField(1)
+          required String name,
+      @HiveField(2, defaultValue: SortBy.MyOrder)
+          SortBy sortBy = SortBy.MyOrder,
       List<Task> tasks = const []}) {
     return _Tlist(
       id: id,
       name: name,
+      sortBy: sortBy,
       tasks: tasks,
     );
   }
@@ -45,6 +50,8 @@ mixin _$Tlist {
   String get id => throw _privateConstructorUsedError;
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2, defaultValue: SortBy.MyOrder)
+  SortBy get sortBy => throw _privateConstructorUsedError;
   List<Task> get tasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,7 +64,10 @@ abstract class $TlistCopyWith<$Res> {
   factory $TlistCopyWith(Tlist value, $Res Function(Tlist) then) =
       _$TlistCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) String id, @HiveField(1) String name, List<Task> tasks});
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2, defaultValue: SortBy.MyOrder) SortBy sortBy,
+      List<Task> tasks});
 }
 
 /// @nodoc
@@ -72,6 +82,7 @@ class _$TlistCopyWithImpl<$Res> implements $TlistCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? sortBy = freezed,
     Object? tasks = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +94,10 @@ class _$TlistCopyWithImpl<$Res> implements $TlistCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      sortBy: sortBy == freezed
+          ? _value.sortBy
+          : sortBy // ignore: cast_nullable_to_non_nullable
+              as SortBy,
       tasks: tasks == freezed
           ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
@@ -97,7 +112,10 @@ abstract class _$TlistCopyWith<$Res> implements $TlistCopyWith<$Res> {
       __$TlistCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) String id, @HiveField(1) String name, List<Task> tasks});
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2, defaultValue: SortBy.MyOrder) SortBy sortBy,
+      List<Task> tasks});
 }
 
 /// @nodoc
@@ -113,6 +131,7 @@ class __$TlistCopyWithImpl<$Res> extends _$TlistCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? sortBy = freezed,
     Object? tasks = freezed,
   }) {
     return _then(_Tlist(
@@ -124,6 +143,10 @@ class __$TlistCopyWithImpl<$Res> extends _$TlistCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      sortBy: sortBy == freezed
+          ? _value.sortBy
+          : sortBy // ignore: cast_nullable_to_non_nullable
+              as SortBy,
       tasks: tasks == freezed
           ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
@@ -138,6 +161,7 @@ class _$_Tlist implements _Tlist {
   const _$_Tlist(
       {@HiveField(0) required this.id,
       @HiveField(1) required this.name,
+      @HiveField(2, defaultValue: SortBy.MyOrder) this.sortBy = SortBy.MyOrder,
       this.tasks = const []});
 
   factory _$_Tlist.fromJson(Map<String, dynamic> json) =>
@@ -149,13 +173,17 @@ class _$_Tlist implements _Tlist {
   @override
   @HiveField(1)
   final String name;
+  @JsonKey(defaultValue: SortBy.MyOrder)
+  @override
+  @HiveField(2, defaultValue: SortBy.MyOrder)
+  final SortBy sortBy;
   @JsonKey(defaultValue: const [])
   @override
   final List<Task> tasks;
 
   @override
   String toString() {
-    return 'Tlist(id: $id, name: $name, tasks: $tasks)';
+    return 'Tlist(id: $id, name: $name, sortBy: $sortBy, tasks: $tasks)';
   }
 
   @override
@@ -166,6 +194,8 @@ class _$_Tlist implements _Tlist {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.sortBy, sortBy) ||
+                const DeepCollectionEquality().equals(other.sortBy, sortBy)) &&
             (identical(other.tasks, tasks) ||
                 const DeepCollectionEquality().equals(other.tasks, tasks)));
   }
@@ -175,6 +205,7 @@ class _$_Tlist implements _Tlist {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(sortBy) ^
       const DeepCollectionEquality().hash(tasks);
 
   @JsonKey(ignore: true)
@@ -192,6 +223,7 @@ abstract class _Tlist implements Tlist {
   const factory _Tlist(
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
+      @HiveField(2, defaultValue: SortBy.MyOrder) SortBy sortBy,
       List<Task> tasks}) = _$_Tlist;
 
   factory _Tlist.fromJson(Map<String, dynamic> json) = _$_Tlist.fromJson;
@@ -202,6 +234,9 @@ abstract class _Tlist implements Tlist {
   @override
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @override
+  @HiveField(2, defaultValue: SortBy.MyOrder)
+  SortBy get sortBy => throw _privateConstructorUsedError;
   @override
   List<Task> get tasks => throw _privateConstructorUsedError;
   @override

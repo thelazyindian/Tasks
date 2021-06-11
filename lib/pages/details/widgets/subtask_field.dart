@@ -19,7 +19,7 @@ class SubtaskField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
+        GestureDetector(
           onTap: onTapCheck,
           child: Icon(
             checked
@@ -44,7 +44,7 @@ class SubtaskField extends StatelessWidget {
             ),
           ),
         ),
-        InkWell(
+        GestureDetector(
           onTap: onTapRemove,
           child: Icon(
             CommunityMaterialIcons.close,

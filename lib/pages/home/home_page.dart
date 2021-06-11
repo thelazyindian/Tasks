@@ -13,6 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final bottomSheetBorder = RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(8.0),
+    topRight: Radius.circular(8.0),
+  ));
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -66,14 +72,14 @@ class _HomePageState extends State<HomePage> {
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8.0),
-          topRight: Radius.circular(8.0),
-        )),
+        shape: bottomSheetBorder,
         builder: (_) => MainMenu(),
       );
 
-  void _showMoreMenu() =>
-      showModalBottomSheet(context: context, builder: (_) => MoreMenu());
+  void _showMoreMenu() => showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        shape: bottomSheetBorder,
+        builder: (_) => MoreMenu(),
+      );
 }

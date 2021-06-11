@@ -7,10 +7,4 @@ class DetailsState with _$DetailsState {
     required Tlist activeTaskList,
     required Task task,
   }) = _DetailsState;
-
-  factory DetailsState.initial() => _DetailsState(
-        taskLists: [],
-        activeTaskList: Tlist.initial(),
-        task: Task.initial(),
-      );
 }
