@@ -34,6 +34,7 @@ flutter:
   assets:
     - assets/user/satya_profile.png
     - assets/images/
+    - assets/google_fonts/
 
 module:
   androidX: true

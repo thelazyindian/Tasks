@@ -1,13 +1,12 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/application/details/details_bloc.dart';
-import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/models/sub_task.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/core/selected_date_view.dart';
 import 'package:tasks/pages/details/widgets/subtask_field.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/utils/methods.dart';
 
 class DetailsView extends StatefulWidget {

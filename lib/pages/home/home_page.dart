@@ -36,18 +36,20 @@ class _HomePageState extends State<HomePage> {
             elevation: 8.0,
             color: Colors.white,
             shape: CircularNotchedRectangle(),
-            notchMargin: 4.0,
+            notchMargin: 6.0,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
                   icon: const Icon(Icons.menu),
+                  color: Colors.grey.shade600,
                   onPressed: () =>
                       _showMainMenu(state.taskLists, state.activeTaskList!),
                 ),
                 IconButton(
                   icon: const Icon(Icons.more_vert),
+                  color: Colors.grey.shade600,
                   onPressed: () => _showMoreMenu(),
                 )
               ],

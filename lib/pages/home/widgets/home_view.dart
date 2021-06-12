@@ -74,7 +74,7 @@ class HomeView extends StatelessWidget {
 
   Widget _appBar() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(58.0, 16.0, 16.0, 8.0),
+      padding: EdgeInsets.fromLTRB(58.0, 16.0, 16.0, 16.0),
       child: Text(
         taskList.name,
         style: TextStyle(
