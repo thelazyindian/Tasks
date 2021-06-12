@@ -28,9 +28,10 @@ class DetailsPage extends StatelessWidget {
             color: Colors.grey.shade700,
           ),
           onPressed: () {
-            context
-                .read<HomeBloc>()
-                .add(HomeEvent.updateTask(detailsBloc.state.task));
+            context.read<HomeBloc>().add(HomeEvent.updateTask(
+                  taskListId: detailsBloc.state.activeTaskList.id,
+                  task: detailsBloc.state.task,
+                ));
             Navigator.pop(context);
           },
         ),
@@ -39,7 +40,10 @@ class DetailsPage extends StatelessWidget {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
               onPressed: () {
-                context.read<HomeBloc>().add(HomeEvent.deleteTask(task));
+                context.read<HomeBloc>().add(HomeEvent.deleteTask(
+                      taskListId: detailsBloc.state.activeTaskList.id,
+                      task: task,
+                    ));
                 Navigator.pop(context);
               },
               icon: Icon(CommunityMaterialIcons.delete_outline),
@@ -52,9 +56,10 @@ class DetailsPage extends StatelessWidget {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          context
-              .read<HomeBloc>()
-              .add(HomeEvent.updateTask(detailsBloc.state.task));
+          context.read<HomeBloc>().add(HomeEvent.updateTask(
+                taskListId: detailsBloc.state.activeTaskList.id,
+                task: detailsBloc.state.task,
+              ));
           return true;
         },
         child: BlocProvider.value(
@@ -73,9 +78,16 @@ class DetailsPage extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
+                  final taskListId = detailsBloc.state.activeTaskList.id;
                   context.read<HomeBloc>().add(task.completed
-                      ? HomeEvent.incompletedTask(detailsBloc.state.task)
-                      : HomeEvent.completedTask(detailsBloc.state.task));
+                      ? HomeEvent.incompletedTask(
+                          taskListId: taskListId,
+                          task: detailsBloc.state.task,
+                        )
+                      : HomeEvent.completedTask(
+                          taskListId: taskListId,
+                          task: detailsBloc.state.task,
+                        ));
                   Navigator.pop(context);
                 },
                 child: Text(

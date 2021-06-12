@@ -18,6 +18,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   StreamSubscription? _activeTaskListSubscription;
   StreamSubscription? _taskListsSubscription;
+  late Box<Tlist> taskListsBox;
+  late Box<dynamic> tasksBox;
 
   @override
   Stream<HomeState> mapEventToState(
@@ -30,9 +32,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         Hive.registerAdapter(SubTaskAdapter());
         Hive.registerAdapter(SortByAdapter());
 
-        final taskListsBox = await Hive.openBox<Tlist>('taskLists');
-        final tasksBox = await Hive.openBox('tasks');
-        // tasksBox.clear();
+        taskListsBox = await Hive.openBox<Tlist>('taskLists');
+        tasksBox = await Hive.openBox('tasks');
         if (taskListsBox.isEmpty) {
           taskListsBox.add(Tlist(
             id: DateTime.now().toIso8601String(),
@@ -46,7 +47,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         _taskListsSubscription?.cancel();
         _taskListsSubscription = taskListsBox.watch().listen((_) {
-          debugPrint('taskListsBox listenable');
           final taskLists = taskListsBox.values.toList();
           add(HomeEvent.updateTaskLists(taskLists));
         });
@@ -55,9 +55,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         yield state.copyWith(taskLists: e.taskLists);
       },
       updateActiveTaskList: (e) async* {
-        debugPrint('activeTaskList: ${e.taskList}');
         yield state.copyWith(activeTaskList: e.taskList);
-        final tasksBox = Hive.box('tasks');
+
         if (e.taskList.tasks.isEmpty) {
           final tasks = (tasksBox.get(e.taskList.id, defaultValue: []) as List)
               .cast<Task>();
@@ -68,6 +67,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _activeTaskListSubscription?.cancel();
         _activeTaskListSubscription =
             tasksBox.watch(key: e.taskList.id).listen((event) {
+          debugPrint('deleted ${event.deleted} key ${event.key}');
           if (!event.deleted) {
             final tasks =
                 (tasksBox.get(e.taskList.id, defaultValue: []) as List)
@@ -79,44 +79,54 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         });
       },
       addTask: (e) async* {
-        final tasksBox = Hive.box('tasks');
         final activeTaskList = state.activeTaskList!;
         final tasks = List<Task>.from(activeTaskList.tasks);
         tasks.add(e.task);
         tasksBox.put(activeTaskList.id, tasks);
       },
       updateTask: (e) async* {
-        final tasksBox = Hive.box('tasks');
-        final activeTaskList = state.activeTaskList!;
-        final tasks = List<Task>.from(activeTaskList.tasks);
+        final taskList = _getTaskList(
+          taskListId: e.taskListId,
+          taskList: state.activeTaskList!,
+        );
+        final tasks = List<Task>.from(taskList.tasks);
         final idx = tasks.indexWhere((element) => element.id == e.task.id);
         if (idx >= 0) {
           tasks[idx] = e.task;
-          tasksBox.put(activeTaskList.id, tasks);
+          tasksBox.put(taskList.id, tasks);
         }
       },
       deleteTask: (e) async* {
-        final tasksBox = Hive.box('tasks');
-        final activeTaskList = state.activeTaskList!;
-        final tasks = List<Task>.from(activeTaskList.tasks);
+        final taskList = _getTaskList(
+          taskListId: e.taskListId,
+          taskList: state.activeTaskList!,
+        );
+        final tasks = List<Task>.from(taskList.tasks);
         final idx = tasks.indexWhere((element) => element.id == e.task.id);
         if (idx >= 0) {
           tasks.removeAt(idx);
-          tasksBox.put(activeTaskList.id, tasks);
+          tasksBox.put(taskList.id, tasks);
         }
       },
       deleteCompletedTasks: (e) async* {
-        final tasksBox = Hive.box('tasks');
         final activeTaskList = state.activeTaskList!;
         final tasks = List<Task>.from(activeTaskList.tasks);
         tasks.removeWhere((element) => element.completed);
         tasksBox.put(activeTaskList.id, tasks);
       },
       completedTask: (e) async* {
-        _toggleCompletedTask(task: e.task, completed: true);
+        _toggleCompletedTask(
+          taskListId: e.taskListId,
+          task: e.task,
+          completed: true,
+        );
       },
       incompletedTask: (e) async* {
-        _toggleCompletedTask(task: e.task, completed: false);
+        _toggleCompletedTask(
+          taskListId: e.taskListId,
+          task: e.task,
+          completed: false,
+        );
       },
       completedSubTask: (e) async* {
         _toggleCompletedSubTask(
@@ -133,7 +143,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       },
       createTaskList: (e) async* {
-        final taskListsBox = Hive.box<Tlist>('taskLists');
         final taskList = Tlist(
           id: DateTime.now().toIso8601String(),
           name: e.name,
@@ -142,7 +151,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         add(HomeEvent.updateActiveTaskList(taskList));
       },
       renameTaskList: (e) async* {
-        final taskListsBox = Hive.box<Tlist>('taskLists');
         final idx = taskListsBox.values
             .toList()
             .indexWhere((element) => element.id == e.taskList.id);
@@ -152,12 +160,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       removeTaskList: (e) async* {
-        final taskListsBox = Hive.box<Tlist>('taskLists');
         final taskLists = taskListsBox.values.toList().cast<Tlist>();
         final idx = taskLists
             .indexWhere((element) => element.id == state.activeTaskList!.id);
-        debugPrint('remlist ${state.activeTaskList}');
-        debugPrint('index $idx');
+
         if (idx > 0 && taskLists.length > 1) {
           final activeTaskListId = state.activeTaskList!.id;
           add(HomeEvent.updateActiveTaskList(taskLists[idx - 1]));
@@ -166,7 +172,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       sortBy: (e) async* {
-        final taskListsBox = Hive.box<Tlist>('taskLists');
         final taskLists = taskListsBox.values.toList();
         final idx = taskLists
             .indexWhere((element) => element.id == state.activeTaskList!.id);
@@ -182,13 +187,31 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
+  Tlist _getTaskList({
+    String? taskListId,
+    required Tlist taskList,
+  }) {
+    if (taskListId != null && taskListId != taskList.id) {
+      taskList =
+          state.taskLists.firstWhere((element) => element.id == taskListId);
+      taskList = taskList.copyWith(
+        tasks:
+            (tasksBox.get(taskListId, defaultValue: []) as List).cast<Task>(),
+      );
+    }
+    return taskList;
+  }
+
   void _toggleCompletedTask({
+    String? taskListId,
     required Task task,
     required bool completed,
   }) {
-    final tasksBox = Hive.box('tasks');
-    final activeTaskList = state.activeTaskList!;
-    final tasks = List<Task>.from(activeTaskList.tasks);
+    final taskList = _getTaskList(
+      taskListId: taskListId,
+      taskList: state.activeTaskList!,
+    );
+    final tasks = List<Task>.from(taskList.tasks);
     final idx = tasks.indexWhere((element) => element.id == task.id);
     if (idx >= 0) {
       tasks[idx] = task.copyWith(
@@ -196,7 +219,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         subtasks:
             task.subtasks.map((e) => e.copyWith(completed: completed)).toList(),
       );
-      tasksBox.put(activeTaskList.id, tasks);
+      tasksBox.put(taskList.id, tasks);
     }
   }
 
@@ -205,7 +228,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required SubTask subTask,
     required bool completed,
   }) {
-    final tasksBox = Hive.box('tasks');
     final activeTaskList = state.activeTaskList!;
     final tasks = List<Task>.from(activeTaskList.tasks);
     final idx = tasks.indexWhere((element) => element.id == task.id);

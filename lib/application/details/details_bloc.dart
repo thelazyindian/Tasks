@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive/hive.dart';
 import 'package:tasks/models/sub_task.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
@@ -18,7 +19,6 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     DetailsEvent event,
   ) async* {
     yield* event.map(
-      started: (e) async* {},
       onNameChanged: (e) async* {
         yield state.copyWith.task(name: e.value);
       },
@@ -43,7 +43,22 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
       onDateChanged: (e) async* {
         yield state.copyWith.task(dateTime: e.value);
       },
-      onTaskListChanged: (e) async* {},
+      onTaskListChanged: (e) async* {
+        final tasksBox = Hive.box('tasks');
+        final fromTasks = List.from(
+                tasksBox.get(state.activeTaskList.id, defaultValue: []) as List)
+            .cast<Task>();
+        fromTasks.removeWhere((element) => element.id == state.task.id);
+        tasksBox.put(state.activeTaskList.id, fromTasks);
+        final toTasks =
+            List.from(tasksBox.get(e.taskListId, defaultValue: []) as List)
+                .cast<Task>();
+        toTasks.add(state.task);
+        tasksBox.put(e.taskListId, toTasks);
+        final idx =
+            state.taskLists.indexWhere((element) => element.id == e.taskListId);
+        yield state.copyWith(activeTaskList: state.taskLists[idx]);
+      },
       onSubtaskCompleted: (e) async* {
         final subtasks = List<SubTask>.from(state.task.subtasks);
         subtasks[e.index] =

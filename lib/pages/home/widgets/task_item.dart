@@ -170,8 +170,8 @@ class TaskItem extends StatelessWidget {
 
   void _toggleComplete(BuildContext context) {
     context.read<HomeBloc>().add(task.completed
-        ? HomeEvent.incompletedTask(task)
-        : HomeEvent.completedTask(task));
+        ? HomeEvent.incompletedTask(task: task)
+        : HomeEvent.completedTask(task: task));
   }
 
   void _toggleSubTaskComplete(

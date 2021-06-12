@@ -8,10 +8,22 @@ class HomeEvent with _$HomeEvent {
   const factory HomeEvent.updateActiveTaskList(Tlist taskList) =
       _UpdateActiveTaskList;
   const factory HomeEvent.addTask(Task task) = _AddTask;
-  const factory HomeEvent.updateTask(Task task) = _UpdateTask;
-  const factory HomeEvent.completedTask(Task task) = _CompletedTask;
-  const factory HomeEvent.incompletedTask(Task task) = _IncompletedTask;
-  const factory HomeEvent.deleteTask(Task task) = _DeleteTask;
+  const factory HomeEvent.updateTask({
+    String? taskListId,
+    required Task task,
+  }) = _UpdateTask;
+  const factory HomeEvent.completedTask({
+    String? taskListId,
+    required Task task,
+  }) = _CompletedTask;
+  const factory HomeEvent.incompletedTask({
+    String? taskListId,
+    required Task task,
+  }) = _IncompletedTask;
+  const factory HomeEvent.deleteTask({
+    String? taskListId,
+    required Task task,
+  }) = _DeleteTask;
   const factory HomeEvent.deleteCompletedTasks() = _DeleteCompletedTasks;
   const factory HomeEvent.sortBy(SortBy value) = _SortBy;
   const factory HomeEvent.completedSubTask(

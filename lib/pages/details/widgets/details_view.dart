@@ -108,7 +108,14 @@ class _DetailsViewState extends State<DetailsView> {
         items: taskLists
             .map((e) => DropdownMenuItem(
                   value: e.id,
-                  child: Text(e.name),
+                  child: Text(
+                    e.name,
+                    style: TextStyle(
+                      color: e.id == activeTaskList.id
+                          ? Colors.blue
+                          : Colors.grey.shade500,
+                    ),
+                  ),
                 ))
             .toList(),
         value: activeTaskList.id,
@@ -118,7 +125,12 @@ class _DetailsViewState extends State<DetailsView> {
             .map((e) => Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(e.name),
+                    Text(
+                      e.name,
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ),
+                    ),
                     Icon(
                       Icons.arrow_drop_down,
                       color:
@@ -134,10 +146,17 @@ class _DetailsViewState extends State<DetailsView> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
         ),
         style: TextStyle(
-          color: Colors.blue,
           fontWeight: FontWeight.w700,
         ),
-        onChanged: task.completed ? null : (x) {},
+        onChanged: task.completed
+            ? null
+            : (value) {
+                if (value != null) {
+                  context
+                      .read<DetailsBloc>()
+                      .add(DetailsEvent.onTaskListChanged(value));
+                }
+              },
       );
 
   Widget _dateTimePicker(

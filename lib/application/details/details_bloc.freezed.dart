@@ -16,17 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$DetailsEventTearOff {
   const _$DetailsEventTearOff();
 
-  _Started started(
-      {required List<Tlist> taskLists,
-      required Tlist activeTaskList,
-      required Task task}) {
-    return _Started(
-      taskLists: taskLists,
-      activeTaskList: activeTaskList,
-      task: task,
-    );
-  }
-
   _OnNameChanged onNameChanged(String value) {
     return _OnNameChanged(
       value,
@@ -68,9 +57,9 @@ class _$DetailsEventTearOff {
     );
   }
 
-  _OnTaskListChanged onTaskListChanged(Tlist taskList) {
+  _OnTaskListChanged onTaskListChanged(String taskListId) {
     return _OnTaskListChanged(
-      taskList,
+      taskListId,
     );
   }
 }
@@ -82,9 +71,6 @@ const $DetailsEvent = _$DetailsEventTearOff();
 mixin _$DetailsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -92,13 +78,11 @@ mixin _$DetailsEvent {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -106,13 +90,12 @@ mixin _$DetailsEvent {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -125,7 +108,6 @@ mixin _$DetailsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -153,198 +135,6 @@ class _$DetailsEventCopyWithImpl<$Res> implements $DetailsEventCopyWith<$Res> {
   final DetailsEvent _value;
   // ignore: unused_field
   final $Res Function(DetailsEvent) _then;
-}
-
-/// @nodoc
-abstract class _$StartedCopyWith<$Res> {
-  factory _$StartedCopyWith(_Started value, $Res Function(_Started) then) =
-      __$StartedCopyWithImpl<$Res>;
-  $Res call({List<Tlist> taskLists, Tlist activeTaskList, Task task});
-
-  $TlistCopyWith<$Res> get activeTaskList;
-  $TaskCopyWith<$Res> get task;
-}
-
-/// @nodoc
-class __$StartedCopyWithImpl<$Res> extends _$DetailsEventCopyWithImpl<$Res>
-    implements _$StartedCopyWith<$Res> {
-  __$StartedCopyWithImpl(_Started _value, $Res Function(_Started) _then)
-      : super(_value, (v) => _then(v as _Started));
-
-  @override
-  _Started get _value => super._value as _Started;
-
-  @override
-  $Res call({
-    Object? taskLists = freezed,
-    Object? activeTaskList = freezed,
-    Object? task = freezed,
-  }) {
-    return _then(_Started(
-      taskLists: taskLists == freezed
-          ? _value.taskLists
-          : taskLists // ignore: cast_nullable_to_non_nullable
-              as List<Tlist>,
-      activeTaskList: activeTaskList == freezed
-          ? _value.activeTaskList
-          : activeTaskList // ignore: cast_nullable_to_non_nullable
-              as Tlist,
-      task: task == freezed
-          ? _value.task
-          : task // ignore: cast_nullable_to_non_nullable
-              as Task,
-    ));
-  }
-
-  @override
-  $TlistCopyWith<$Res> get activeTaskList {
-    return $TlistCopyWith<$Res>(_value.activeTaskList, (value) {
-      return _then(_value.copyWith(activeTaskList: value));
-    });
-  }
-
-  @override
-  $TaskCopyWith<$Res> get task {
-    return $TaskCopyWith<$Res>(_value.task, (value) {
-      return _then(_value.copyWith(task: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_Started implements _Started {
-  const _$_Started(
-      {required this.taskLists,
-      required this.activeTaskList,
-      required this.task});
-
-  @override
-  final List<Tlist> taskLists;
-  @override
-  final Tlist activeTaskList;
-  @override
-  final Task task;
-
-  @override
-  String toString() {
-    return 'DetailsEvent.started(taskLists: $taskLists, activeTaskList: $activeTaskList, task: $task)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _Started &&
-            (identical(other.taskLists, taskLists) ||
-                const DeepCollectionEquality()
-                    .equals(other.taskLists, taskLists)) &&
-            (identical(other.activeTaskList, activeTaskList) ||
-                const DeepCollectionEquality()
-                    .equals(other.activeTaskList, activeTaskList)) &&
-            (identical(other.task, task) ||
-                const DeepCollectionEquality().equals(other.task, task)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(taskLists) ^
-      const DeepCollectionEquality().hash(activeTaskList) ^
-      const DeepCollectionEquality().hash(task);
-
-  @JsonKey(ignore: true)
-  @override
-  _$StartedCopyWith<_Started> get copyWith =>
-      __$StartedCopyWithImpl<_Started>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
-    required TResult Function(String value) onNameChanged,
-    required TResult Function(String value) onDetailsChanged,
-    required TResult Function() onSubtaskAdded,
-    required TResult Function(int index) onSubtaskRemoved,
-    required TResult Function(int index) onSubtaskCompleted,
-    required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
-  }) {
-    return started(taskLists, activeTaskList, task);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
-    TResult Function(String value)? onNameChanged,
-    TResult Function(String value)? onDetailsChanged,
-    TResult Function()? onSubtaskAdded,
-    TResult Function(int index)? onSubtaskRemoved,
-    TResult Function(int index)? onSubtaskCompleted,
-    TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
-    required TResult orElse(),
-  }) {
-    if (started != null) {
-      return started(taskLists, activeTaskList, task);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_OnNameChanged value) onNameChanged,
-    required TResult Function(_OnDetailsChanged value) onDetailsChanged,
-    required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
-    required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
-    required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
-    required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
-    required TResult Function(_OnTaskListChanged value) onTaskListChanged,
-  }) {
-    return started(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_OnNameChanged value)? onNameChanged,
-    TResult Function(_OnDetailsChanged value)? onDetailsChanged,
-    TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
-    TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
-    TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
-    TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
-    TResult Function(_OnTaskListChanged value)? onTaskListChanged,
-    required TResult orElse(),
-  }) {
-    if (started != null) {
-      return started(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Started implements DetailsEvent {
-  const factory _Started(
-      {required List<Tlist> taskLists,
-      required Tlist activeTaskList,
-      required Task task}) = _$_Started;
-
-  List<Tlist> get taskLists => throw _privateConstructorUsedError;
-  Tlist get activeTaskList => throw _privateConstructorUsedError;
-  Task get task => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$StartedCopyWith<_Started> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -412,9 +202,6 @@ class _$_OnNameChanged implements _OnNameChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -422,7 +209,7 @@ class _$_OnNameChanged implements _OnNameChanged {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onNameChanged(value);
   }
@@ -430,8 +217,6 @@ class _$_OnNameChanged implements _OnNameChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -439,7 +224,7 @@ class _$_OnNameChanged implements _OnNameChanged {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onNameChanged != null) {
@@ -451,7 +236,6 @@ class _$_OnNameChanged implements _OnNameChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -467,7 +251,6 @@ class _$_OnNameChanged implements _OnNameChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -559,9 +342,6 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -569,7 +349,7 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onDetailsChanged(value);
   }
@@ -577,8 +357,6 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -586,7 +364,7 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onDetailsChanged != null) {
@@ -598,7 +376,6 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -614,7 +391,6 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -681,9 +457,6 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -691,7 +464,7 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskAdded();
   }
@@ -699,8 +472,6 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -708,7 +479,7 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onSubtaskAdded != null) {
@@ -720,7 +491,6 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -736,7 +506,6 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -823,9 +592,6 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -833,7 +599,7 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskRemoved(index);
   }
@@ -841,8 +607,6 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -850,7 +614,7 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onSubtaskRemoved != null) {
@@ -862,7 +626,6 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -878,7 +641,6 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -970,9 +732,6 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -980,7 +739,7 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskCompleted(index);
   }
@@ -988,8 +747,6 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -997,7 +754,7 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onSubtaskCompleted != null) {
@@ -1009,7 +766,6 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -1025,7 +781,6 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -1128,9 +883,6 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -1138,7 +890,7 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskUpdated(index, value);
   }
@@ -1146,8 +898,6 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -1155,7 +905,7 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onSubtaskUpdated != null) {
@@ -1167,7 +917,6 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -1183,7 +932,6 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -1277,9 +1025,6 @@ class _$_OnDateChanged implements _OnDateChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -1287,7 +1032,7 @@ class _$_OnDateChanged implements _OnDateChanged {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onDateChanged(value);
   }
@@ -1295,8 +1040,6 @@ class _$_OnDateChanged implements _OnDateChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -1304,7 +1047,7 @@ class _$_OnDateChanged implements _OnDateChanged {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onDateChanged != null) {
@@ -1316,7 +1059,6 @@ class _$_OnDateChanged implements _OnDateChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -1332,7 +1074,6 @@ class _$_OnDateChanged implements _OnDateChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -1364,9 +1105,7 @@ abstract class _$OnTaskListChangedCopyWith<$Res> {
   factory _$OnTaskListChangedCopyWith(
           _OnTaskListChanged value, $Res Function(_OnTaskListChanged) then) =
       __$OnTaskListChangedCopyWithImpl<$Res>;
-  $Res call({Tlist taskList});
-
-  $TlistCopyWith<$Res> get taskList;
+  $Res call({String taskListId});
 }
 
 /// @nodoc
@@ -1382,49 +1121,42 @@ class __$OnTaskListChangedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? taskList = freezed,
+    Object? taskListId = freezed,
   }) {
     return _then(_OnTaskListChanged(
-      taskList == freezed
-          ? _value.taskList
-          : taskList // ignore: cast_nullable_to_non_nullable
-              as Tlist,
+      taskListId == freezed
+          ? _value.taskListId
+          : taskListId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
-  }
-
-  @override
-  $TlistCopyWith<$Res> get taskList {
-    return $TlistCopyWith<$Res>(_value.taskList, (value) {
-      return _then(_value.copyWith(taskList: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$_OnTaskListChanged implements _OnTaskListChanged {
-  const _$_OnTaskListChanged(this.taskList);
+  const _$_OnTaskListChanged(this.taskListId);
 
   @override
-  final Tlist taskList;
+  final String taskListId;
 
   @override
   String toString() {
-    return 'DetailsEvent.onTaskListChanged(taskList: $taskList)';
+    return 'DetailsEvent.onTaskListChanged(taskListId: $taskListId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _OnTaskListChanged &&
-            (identical(other.taskList, taskList) ||
+            (identical(other.taskListId, taskListId) ||
                 const DeepCollectionEquality()
-                    .equals(other.taskList, taskList)));
+                    .equals(other.taskListId, taskListId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(taskList);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(taskListId);
 
   @JsonKey(ignore: true)
   @override
@@ -1434,9 +1166,6 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Tlist> taskLists, Tlist activeTaskList, Task task)
-        started,
     required TResult Function(String value) onNameChanged,
     required TResult Function(String value) onDetailsChanged,
     required TResult Function() onSubtaskAdded,
@@ -1444,16 +1173,14 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
     required TResult Function(DateTime? value) onDateChanged,
-    required TResult Function(Tlist taskList) onTaskListChanged,
+    required TResult Function(String taskListId) onTaskListChanged,
   }) {
-    return onTaskListChanged(taskList);
+    return onTaskListChanged(taskListId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tlist> taskLists, Tlist activeTaskList, Task task)?
-        started,
     TResult Function(String value)? onNameChanged,
     TResult Function(String value)? onDetailsChanged,
     TResult Function()? onSubtaskAdded,
@@ -1461,11 +1188,11 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
     TResult Function(DateTime? value)? onDateChanged,
-    TResult Function(Tlist taskList)? onTaskListChanged,
+    TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
     if (onTaskListChanged != null) {
-      return onTaskListChanged(taskList);
+      return onTaskListChanged(taskListId);
     }
     return orElse();
   }
@@ -1473,7 +1200,6 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
     required TResult Function(_OnNameChanged value) onNameChanged,
     required TResult Function(_OnDetailsChanged value) onDetailsChanged,
     required TResult Function(_OnSubtaskAdded value) onSubtaskAdded,
@@ -1489,7 +1215,6 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
     TResult Function(_OnNameChanged value)? onNameChanged,
     TResult Function(_OnDetailsChanged value)? onDetailsChanged,
     TResult Function(_OnSubtaskAdded value)? onSubtaskAdded,
@@ -1508,9 +1233,9 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
 }
 
 abstract class _OnTaskListChanged implements DetailsEvent {
-  const factory _OnTaskListChanged(Tlist taskList) = _$_OnTaskListChanged;
+  const factory _OnTaskListChanged(String taskListId) = _$_OnTaskListChanged;
 
-  Tlist get taskList => throw _privateConstructorUsedError;
+  String get taskListId => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$OnTaskListChangedCopyWith<_OnTaskListChanged> get copyWith =>
       throw _privateConstructorUsedError;
