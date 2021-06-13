@@ -80,13 +80,16 @@ class TaskItem extends StatelessWidget {
   ) =>
       Dismissible(
         key: Key(subTask.id),
+        confirmDismiss: (_) async {
+          _toggleSubTaskComplete(
+            context,
+            subTask,
+          );
+          return false;
+        },
         direction: subTask.completed
             ? DismissDirection.endToStart
             : DismissDirection.startToEnd,
-        onDismissed: (_) => _toggleSubTaskComplete(
-          context,
-          subTask,
-        ),
         background: Container(color: Theme.of(context).accentColor),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(44.0, .0, 16.0, .0),

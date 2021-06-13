@@ -10,7 +10,9 @@ import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
 
 part 'home_bloc.freezed.dart';
+
 part 'home_event.dart';
+
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -238,7 +240,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (subTasksIdx >= 0) {
         subTasks[subTasksIdx] =
             subTasks[subTasksIdx].copyWith(completed: completed);
-        tasks[idx] = task.copyWith(subtasks: subTasks);
+        tasks[idx] = task.copyWith(
+          subtasks: subTasks,
+          completed: (task.completed && !completed) ? false : task.completed,
+        );
         tasksBox.put(activeTaskList.id, tasks);
       }
     }

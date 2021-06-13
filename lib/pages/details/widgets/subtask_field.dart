@@ -1,7 +1,8 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-class SubtaskField extends StatelessWidget {
+class SubtaskField extends StatefulWidget {
   final String? initialValue;
   final bool checked, enabled;
   final VoidCallback onTapCheck, onTapRemove;
@@ -18,25 +19,43 @@ class SubtaskField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SubtaskFieldState createState() => _SubtaskFieldState();
+}
+
+class _SubtaskFieldState extends State<SubtaskField> {
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    focusNode = FocusNode();
+    super.initState();
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      focusNode.requestFocus();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: enabled ? onTapCheck : null,
+          onTap: widget.enabled ? widget.onTapCheck : null,
           child: Icon(
-            checked
+            widget.checked
                 ? CommunityMaterialIcons.check
                 : CommunityMaterialIcons.radiobox_blank,
-            color: checked ? Theme.of(context).accentColor : Colors.black54,
+            color:
+                widget.checked ? Theme.of(context).accentColor : Colors.black54,
             size: 18.0,
           ),
         ),
         const SizedBox(width: 4.0),
         Expanded(
           child: TextFormField(
-            initialValue: initialValue,
-            enabled: enabled,
-            onChanged: onChanged,
+            focusNode: focusNode,
+            initialValue: widget.initialValue,
+            enabled: widget.enabled,
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               hintText: 'Enter title',
               contentPadding: EdgeInsets.zero,
@@ -45,9 +64,9 @@ class SubtaskField extends StatelessWidget {
             style: TextStyle(fontSize: 13.5),
           ),
         ),
-        if (enabled)
+        if (widget.enabled)
           GestureDetector(
-            onTap: onTapRemove,
+            onTap: widget.onTapRemove,
             child: Icon(
               CommunityMaterialIcons.close,
               size: 18.0,
