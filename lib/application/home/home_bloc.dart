@@ -22,6 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   StreamSubscription? _taskListsSubscription;
   late Box<Tlist> taskListsBox;
   late Box<dynamic> tasksBox;
+  late Box<dynamic> settingsBox;
 
   @override
   Stream<HomeState> mapEventToState(
@@ -36,14 +37,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         taskListsBox = await Hive.openBox<Tlist>('taskLists');
         tasksBox = await Hive.openBox('tasks');
+        settingsBox = await Hive.openBox('settings');
+
         if (taskListsBox.isEmpty) {
-          taskListsBox.add(Tlist(
+          final defaultTlist = Tlist(
             id: DateTime.now().toIso8601String(),
             name: 'My Tasks',
-          ));
+          );
+          taskListsBox.add(defaultTlist);
+          settingsBox.put('activeTlist', defaultTlist);
         }
         final taskLists = taskListsBox.values.toList();
-        final activeTaskList = taskLists[0];
+        final activeTaskList = settingsBox.get('activeTlist')!;
         add(HomeEvent.updateTaskLists(taskLists));
         add(HomeEvent.updateActiveTaskList(activeTaskList));
 
@@ -57,6 +62,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         yield state.copyWith(taskLists: e.taskLists);
       },
       updateActiveTaskList: (e) async* {
+        settingsBox.put('activeTlist', e.taskList);
         yield state.copyWith(activeTaskList: e.taskList);
 
         if (e.taskList.tasks.isEmpty) {
