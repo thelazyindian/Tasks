@@ -22,7 +22,11 @@ class HomeView extends StatelessWidget {
         taskList.tasks.where((element) => element.completed).toList();
 
     return ListView(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+      physics: BouncingScrollPhysics(),
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).viewPadding.top,
+        bottom: 32.0,
+      ),
       children: [
         _appBar(),
         if (pendingTaskList.isEmpty && completedTaskList.isEmpty)

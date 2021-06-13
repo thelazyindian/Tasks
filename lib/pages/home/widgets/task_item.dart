@@ -12,6 +12,7 @@ class TaskItem extends StatelessWidget {
   final Task task;
   final Tlist taskList;
   final bool viewDate;
+
   const TaskItem({
     Key? key,
     required this.taskList,
@@ -27,17 +28,17 @@ class TaskItem extends StatelessWidget {
             MaterialPageRoute(builder: (_) => DetailsPage(task: task));
         Navigator.of(context).push(route);
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Dismissible(
-            key: Key(task.id),
-            direction: task.completed
-                ? DismissDirection.endToStart
-                : DismissDirection.startToEnd,
-            onDismissed: (_) => _toggleComplete(context),
-            background: Container(color: Colors.blue),
-            child: Padding(
+      child: Dismissible(
+        key: Key(task.id),
+        direction: task.completed
+            ? DismissDirection.endToStart
+            : DismissDirection.startToEnd,
+        onDismissed: (_) => _toggleComplete(context),
+        background: Container(color: Theme.of(context).accentColor),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
               padding: const EdgeInsets.fromLTRB(8.0, .0, 16.0, .0),
               child: Row(
                 children: [
@@ -63,12 +64,12 @@ class TaskItem extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          if (task.subtasks.isNotEmpty)
-            ...task.subtasks
-                .map((subTask) => _subtaskItemView(context, subTask))
-                .toList(),
-        ],
+            if (task.subtasks.isNotEmpty)
+              ...task.subtasks
+                  .map((subTask) => _subtaskItemView(context, subTask))
+                  .toList(),
+          ],
+        ),
       ),
     );
   }
@@ -86,7 +87,7 @@ class TaskItem extends StatelessWidget {
           context,
           subTask,
         ),
-        background: Container(color: Colors.blue),
+        background: Container(color: Theme.of(context).accentColor),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(44.0, .0, 16.0, .0),
           child: Row(

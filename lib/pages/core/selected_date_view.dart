@@ -5,10 +5,13 @@ import 'package:date_time_format/date_time_format.dart';
 class SelectedDateView extends StatelessWidget {
   final DateTime dateTime;
   final Function(DateTime?) onSelected;
+  final bool enabled;
+
   const SelectedDateView({
     Key? key,
     required this.dateTime,
     required this.onSelected,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -22,11 +25,13 @@ class SelectedDateView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
-            onTap: () => showDateTimePicker(
-              context: context,
-              initialDate: dateTime,
-              onSelected: onSelected,
-            ),
+            onTap: enabled
+                ? () => showDateTimePicker(
+                      context: context,
+                      initialDate: dateTime,
+                      onSelected: onSelected,
+                    )
+                : null,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 6.0, .0, 8.0),
               child: Text(
@@ -39,18 +44,21 @@ class SelectedDateView extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-            onTap: () => onSelected(null),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-              child: Icon(
-                Icons.close,
-                size: 20.0,
-                color: Colors.grey.shade600,
+          if (enabled)
+            InkWell(
+              onTap: () => onSelected(null),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                child: Icon(
+                  Icons.close,
+                  size: 20.0,
+                  color: Colors.grey.shade600,
+                ),
               ),
-            ),
-          ),
+            )
+          else
+            const SizedBox(width: 8.0),
         ],
       ),
     );

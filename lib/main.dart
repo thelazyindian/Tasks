@@ -27,17 +27,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => HomeBloc()),
-      ],
+    return BlocProvider(
+      create: (_) => HomeBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Tasks',
         theme: ThemeData(
           dividerColor: Colors.grey.shade300,
-          primarySwatch: Colors.blue,
-          canvasColor: Colors.transparent,
+          primaryColor: Colors.white,
+          accentColor: Colors.blue,
           backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
           dialogBackgroundColor: Colors.white,

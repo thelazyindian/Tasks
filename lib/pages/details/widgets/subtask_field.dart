@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class SubtaskField extends StatelessWidget {
   final String? initialValue;
-  final bool checked;
+  final bool checked, enabled;
   final VoidCallback onTapCheck, onTapRemove;
   final Function(String) onChanged;
+
   const SubtaskField({
     Key? key,
     this.initialValue,
@@ -13,6 +14,7 @@ class SubtaskField extends StatelessWidget {
     required this.onTapCheck,
     required this.onTapRemove,
     required this.onChanged,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class SubtaskField extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap: onTapCheck,
+          onTap: enabled ? onTapCheck : null,
           child: Icon(
             checked
                 ? CommunityMaterialIcons.check
@@ -33,24 +35,24 @@ class SubtaskField extends StatelessWidget {
         Expanded(
           child: TextFormField(
             initialValue: initialValue,
+            enabled: enabled,
             onChanged: onChanged,
             decoration: InputDecoration(
               hintText: 'Enter title',
               contentPadding: EdgeInsets.zero,
               border: InputBorder.none,
             ),
-            style: TextStyle(
-              fontSize: 13.5,
+            style: TextStyle(fontSize: 13.5),
+          ),
+        ),
+        if (enabled)
+          GestureDetector(
+            onTap: onTapRemove,
+            child: Icon(
+              CommunityMaterialIcons.close,
+              size: 18.0,
             ),
           ),
-        ),
-        GestureDetector(
-          onTap: onTapRemove,
-          child: Icon(
-            CommunityMaterialIcons.close,
-            size: 18.0,
-          ),
-        ),
       ],
     );
   }

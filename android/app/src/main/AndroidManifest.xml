@@ -2,7 +2,8 @@
     package="io.github.thelazyindian.tasks">
    <application
         android:label="tasks"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -112,7 +112,7 @@ class _NewTaskState extends State<NewTask> {
             padding: const EdgeInsets.all(6.0),
             child: Icon(
               CommunityMaterialIcons.calendar_check,
-              color: Colors.blue,
+              color: Theme.of(context).accentColor,
             ),
           ),
         ),
@@ -129,7 +129,7 @@ class _NewTaskState extends State<NewTask> {
             padding: const EdgeInsets.all(6.0),
             child: Icon(
               CommunityMaterialIcons.text,
-              color: Colors.blue,
+              color: Theme.of(context).accentColor,
             ),
           ),
         ),

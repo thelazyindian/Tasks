@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/tasks.iml" filepath="$PROJECT_DIR$/tasks.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tasks_android.iml" filepath="$PROJECT_DIR$/tasks_android.iml" />
     </modules>
   </component>
 </project>

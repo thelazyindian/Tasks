@@ -30,10 +30,10 @@ class _SplashPageState extends State<SplashPage> {
         fit: StackFit.expand,
         children: <Widget>[
           Center(
-            child: Image(
+            child: Image.asset(
+              'assets/images/icon.png',
               width: 150.0,
               height: 150.0,
-              image: AssetImage("assets/images/icon.png"),
             ),
           ),
           Positioned(
@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
-                fontSize: 30.0,
+                fontSize: 28.0,
                 letterSpacing: 1.0,
               ),
             ),

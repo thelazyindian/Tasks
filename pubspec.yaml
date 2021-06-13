@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.3
-  path_provider: ^2.0.2
   google_fonts: ^2.1.0
   hive: ^2.0.4
   hive_flutter: ^1.0.0
@@ -32,9 +30,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/user/satya_profile.png
     - assets/images/
     - assets/google_fonts/
-
-module:
-  androidX: true

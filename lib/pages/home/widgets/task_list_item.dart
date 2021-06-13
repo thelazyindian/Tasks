@@ -22,7 +22,7 @@ class TaskListItem extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: active
-              ? Theme.of(context).accentColor.withOpacity(0.35)
+              ? Theme.of(context).accentColor.withOpacity(0.25)
               : Colors.transparent,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(24.0),

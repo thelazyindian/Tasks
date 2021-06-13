@@ -11,6 +11,7 @@ import 'package:tasks/utils/methods.dart';
 
 class DetailsView extends StatefulWidget {
   final Task task;
+
   const DetailsView({
     Key? key,
     required this.task,
@@ -26,6 +27,7 @@ class _DetailsViewState extends State<DetailsView> {
     return BlocBuilder<DetailsBloc, DetailsState>(
       builder: (context, state) {
         return ListView(
+          physics: BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           children: <Widget>[
             _taskListDropdownMenu(
@@ -112,7 +114,7 @@ class _DetailsViewState extends State<DetailsView> {
                     e.name,
                     style: TextStyle(
                       color: e.id == activeTaskList.id
-                          ? Colors.blue
+                          ? Theme.of(context).accentColor
                           : Colors.grey.shade500,
                     ),
                   ),
@@ -128,13 +130,16 @@ class _DetailsViewState extends State<DetailsView> {
                     Text(
                       e.name,
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: task.completed
+                            ? Colors.grey.shade500
+                            : Theme.of(context).accentColor,
                       ),
                     ),
                     Icon(
                       Icons.arrow_drop_down,
-                      color:
-                          task.completed ? Colors.grey.shade500 : Colors.blue,
+                      color: task.completed
+                          ? Colors.grey.shade500
+                          : Theme.of(context).accentColor,
                     ),
                   ],
                 ))
@@ -186,6 +191,7 @@ class _DetailsViewState extends State<DetailsView> {
               dateTime != null
                   ? SelectedDateView(
                       key: Key(widget.task.id),
+                      enabled: !completed,
                       dateTime: dateTime,
                       onSelected: (value) => context
                           .read<DetailsBloc>()
@@ -240,7 +246,8 @@ class _DetailsViewState extends State<DetailsView> {
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: subtasks.length + 1,
+                          itemCount:
+                              completed ? subtasks.length : subtasks.length + 1,
                           itemBuilder: (_, idx) => idx == subtasks.length
                               ? InkWell(
                                   onTap: _addSubtask,
@@ -254,6 +261,7 @@ class _DetailsViewState extends State<DetailsView> {
                                   key: Key(subtasks[idx].id),
                                   initialValue: subtasks[idx].name,
                                   checked: subtasks[idx].completed,
+                                  enabled: !completed,
                                   onTapCheck: () => context
                                       .read<DetailsBloc>()
                                       .add(
