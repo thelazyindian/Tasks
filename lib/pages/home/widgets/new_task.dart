@@ -27,68 +27,55 @@ class _NewTaskState extends State<NewTask> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Wrap(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(10.0),
-                  topRight: const Radius.circular(10.0)),
-            ),
-            child: Wrap(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TextField(
-                        controller: _taskEditingController,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Task',
-                        ),
-                        autocorrect: false,
-                        keyboardType: TextInputType.text,
-                      ),
-                      if (viewDetailsField)
-                        TextField(
-                          controller: _detailsEditingController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Add details',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                          autocorrect: false,
-                          keyboardType: TextInputType.text,
-                        ),
-                      if (dateTime != null)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: SelectedDateView(
-                            dateTime: dateTime!,
-                            onSelected: (value) =>
-                                setState(() => dateTime = value),
-                          ),
-                        ),
-                    ],
+                TextField(
+                  controller: _taskEditingController,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Task',
                   ),
+                  autocorrect: false,
+                  keyboardType: TextInputType.text,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, .0, 16.0, 16.0),
-                  child: Row(
-                    children: <Widget>[
-                      detailsButton(),
-                      dateButton(),
-                      Spacer(),
-                      saveButton(),
-                    ],
+                if (viewDetailsField)
+                  TextField(
+                    controller: _detailsEditingController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Add details',
+                      hintStyle: TextStyle(fontSize: 14.0),
+                    ),
+                    autocorrect: false,
+                    keyboardType: TextInputType.text,
                   ),
-                ),
+                if (dateTime != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: SelectedDateView(
+                      dateTime: dateTime!,
+                      onSelected: (value) => setState(() => dateTime = value),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, .0, 16.0, 16.0),
+            child: Row(
+              children: <Widget>[
+                detailsButton(),
+                dateButton(),
+                Spacer(),
+                saveButton(),
               ],
             ),
           ),

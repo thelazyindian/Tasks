@@ -126,7 +126,9 @@ class TaskItem extends StatelessWidget {
           completed
               ? CommunityMaterialIcons.check
               : CommunityMaterialIcons.radiobox_blank,
-          color: completed ? Theme.of(context).accentColor : Colors.black54,
+          color: completed
+              ? Theme.of(context).accentIconTheme.color
+              : Theme.of(context).iconTheme.color,
           size: 20.0,
         ),
       );

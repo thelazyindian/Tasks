@@ -1,4 +1,7 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasks/application/theme/theme_cubit.dart';
 import 'package:tasks/models/sort_by.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
@@ -79,13 +82,31 @@ class HomeView extends StatelessWidget {
   Widget _appBar() {
     return Padding(
       padding: EdgeInsets.fromLTRB(58.0, 16.0, 16.0, 16.0),
-      child: Text(
-        taskList.name,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 28.0,
-          fontWeight: FontWeight.w100,
-        ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              taskList.name,
+              style: TextStyle(
+                fontSize: 28.0,
+                fontWeight: FontWeight.w100,
+              ),
+            ),
+          ),
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                icon: Icon(
+                  state.map(
+                    light: (_) => CommunityMaterialIcons.weather_night,
+                    dark: (_) => CommunityMaterialIcons.white_balance_sunny,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

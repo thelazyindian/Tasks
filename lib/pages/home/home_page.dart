@@ -13,12 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final bottomSheetBorder = RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(8.0),
-    topRight: Radius.circular(8.0),
-  ));
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -26,7 +20,6 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           floatingActionButton: FloatingActionButton(
             elevation: 3.0,
-            backgroundColor: Colors.white,
             child: Image.asset('assets/images/plus.png'),
             onPressed: () => _addNewTask(),
           ),
@@ -34,7 +27,6 @@ class _HomePageState extends State<HomePage> {
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
             elevation: 8.0,
-            color: Colors.white,
             shape: CircularNotchedRectangle(),
             notchMargin: 6.0,
             child: Row(
@@ -65,7 +57,10 @@ class _HomePageState extends State<HomePage> {
 
   void _addNewTask() {
     showModalBottomSheet(
-        isScrollControlled: true, context: context, builder: (_) => NewTask());
+      isScrollControlled: true,
+      context: context,
+      builder: (_) => NewTask(),
+    );
   }
 
   void _showMainMenu(
@@ -74,15 +69,11 @@ class _HomePageState extends State<HomePage> {
   ) =>
       showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.white,
-        shape: bottomSheetBorder,
         builder: (_) => MainMenu(),
       );
 
   void _showMoreMenu() => showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.white,
-        shape: bottomSheetBorder,
         builder: (_) => MoreMenu(),
       );
 }
