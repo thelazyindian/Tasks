@@ -5,6 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tasks/application/home/home_bloc.dart';
+import 'package:tasks/application/theme/theme_cubit.dart';
+import 'package:tasks/models/sort_by.dart';
+import 'package:tasks/models/sub_task.dart';
+import 'package:tasks/models/task.dart';
+import 'package:tasks/models/tlist.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -15,12 +20,21 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Hive.initFlutter().then((value) {
-      context.read<HomeBloc>().add(HomeEvent.started());
-      Future.delayed(Duration(seconds: 1)).then(
-        (value) => Navigator.of(context).pushReplacementNamed('/home'),
-      );
-    });
+    Hive.initFlutter().then(
+      (_) {
+        Hive.registerAdapter(TlistAdapter());
+        Hive.registerAdapter(TaskAdapter());
+        Hive.registerAdapter(SubTaskAdapter());
+        Hive.registerAdapter(SortByAdapter());
+        Hive.openBox('settings').then((_) {
+          context.read<ThemeCubit>().started();
+          context.read<HomeBloc>().add(HomeEvent.started());
+          Future.delayed(Duration(seconds: 1)).then(
+            (_) => Navigator.of(context).pushReplacementNamed('/home'),
+          );
+        });
+      },
+    );
   }
 
   @override

@@ -30,14 +30,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     yield* event.map(
       started: (e) async* {
-        Hive.registerAdapter(TlistAdapter());
-        Hive.registerAdapter(TaskAdapter());
-        Hive.registerAdapter(SubTaskAdapter());
-        Hive.registerAdapter(SortByAdapter());
-
         taskListsBox = await Hive.openBox<Tlist>('taskLists');
         tasksBox = await Hive.openBox('tasks');
-        settingsBox = await Hive.openBox('settings');
+        settingsBox = Hive.box('settings');
 
         if (taskListsBox.isEmpty) {
           final defaultTlist = Tlist(

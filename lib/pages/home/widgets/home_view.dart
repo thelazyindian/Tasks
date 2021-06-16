@@ -134,10 +134,16 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/images/chilling.png',
-              height: 230.0,
-              width: 230.0,
+            FractionallySizedBox(
+              widthFactor: 0.7,
+              child: BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (_, state) => Image.asset(
+                  state.map(
+                    light: (_) => 'assets/images/chilling_light.png',
+                    dark: (_) => 'assets/images/chilling_dark.png',
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 16.0),
             Text(
