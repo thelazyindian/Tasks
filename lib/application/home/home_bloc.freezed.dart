@@ -66,6 +66,13 @@ class _$HomeEventTearOff {
     );
   }
 
+  _Reorder reorder(int previous, int current) {
+    return _Reorder(
+      previous,
+      current,
+    );
+  }
+
   _DeleteCompletedTasks deleteCompletedTasks() {
     return const _DeleteCompletedTasks();
   }
@@ -122,6 +129,7 @@ mixin _$HomeEvent {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -141,6 +149,7 @@ mixin _$HomeEvent {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -161,6 +170,7 @@ mixin _$HomeEvent {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -180,6 +190,7 @@ mixin _$HomeEvent {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -258,6 +269,7 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -280,6 +292,7 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -306,6 +319,7 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -328,6 +342,7 @@ class _$_Started with DiagnosticableTreeMixin implements _Started {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -431,6 +446,7 @@ class _$_UpdateTaskLists
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -453,6 +469,7 @@ class _$_UpdateTaskLists
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -479,6 +496,7 @@ class _$_UpdateTaskLists
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -501,6 +519,7 @@ class _$_UpdateTaskLists
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -620,6 +639,7 @@ class _$_UpdateActiveTaskList
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -642,6 +662,7 @@ class _$_UpdateActiveTaskList
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -668,6 +689,7 @@ class _$_UpdateActiveTaskList
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -690,6 +712,7 @@ class _$_UpdateActiveTaskList
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -802,6 +825,7 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -824,6 +848,7 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -850,6 +875,7 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -872,6 +898,7 @@ class _$_AddTask with DiagnosticableTreeMixin implements _AddTask {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -999,6 +1026,7 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -1021,6 +1049,7 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -1047,6 +1076,7 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -1069,6 +1099,7 @@ class _$_UpdateTask with DiagnosticableTreeMixin implements _UpdateTask {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -1198,6 +1229,7 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -1220,6 +1252,7 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -1246,6 +1279,7 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -1268,6 +1302,7 @@ class _$_CompletedTask with DiagnosticableTreeMixin implements _CompletedTask {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -1399,6 +1434,7 @@ class _$_IncompletedTask
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -1421,6 +1457,7 @@ class _$_IncompletedTask
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -1447,6 +1484,7 @@ class _$_IncompletedTask
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -1469,6 +1507,7 @@ class _$_IncompletedTask
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -1598,6 +1637,7 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -1620,6 +1660,7 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -1646,6 +1687,7 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -1668,6 +1710,7 @@ class _$_DeleteTask with DiagnosticableTreeMixin implements _DeleteTask {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -1692,6 +1735,197 @@ abstract class _DeleteTask implements HomeEvent {
   Task get task => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$DeleteTaskCopyWith<_DeleteTask> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$ReorderCopyWith<$Res> {
+  factory _$ReorderCopyWith(_Reorder value, $Res Function(_Reorder) then) =
+      __$ReorderCopyWithImpl<$Res>;
+  $Res call({int previous, int current});
+}
+
+/// @nodoc
+class __$ReorderCopyWithImpl<$Res> extends _$HomeEventCopyWithImpl<$Res>
+    implements _$ReorderCopyWith<$Res> {
+  __$ReorderCopyWithImpl(_Reorder _value, $Res Function(_Reorder) _then)
+      : super(_value, (v) => _then(v as _Reorder));
+
+  @override
+  _Reorder get _value => super._value as _Reorder;
+
+  @override
+  $Res call({
+    Object? previous = freezed,
+    Object? current = freezed,
+  }) {
+    return _then(_Reorder(
+      previous == freezed
+          ? _value.previous
+          : previous // ignore: cast_nullable_to_non_nullable
+              as int,
+      current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Reorder with DiagnosticableTreeMixin implements _Reorder {
+  const _$_Reorder(this.previous, this.current);
+
+  @override
+  final int previous;
+  @override
+  final int current;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'HomeEvent.reorder(previous: $previous, current: $current)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeEvent.reorder'))
+      ..add(DiagnosticsProperty('previous', previous))
+      ..add(DiagnosticsProperty('current', current));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Reorder &&
+            (identical(other.previous, previous) ||
+                const DeepCollectionEquality()
+                    .equals(other.previous, previous)) &&
+            (identical(other.current, current) ||
+                const DeepCollectionEquality().equals(other.current, current)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(previous) ^
+      const DeepCollectionEquality().hash(current);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ReorderCopyWith<_Reorder> get copyWith =>
+      __$ReorderCopyWithImpl<_Reorder>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(List<Tlist> taskLists) updateTaskLists,
+    required TResult Function(Tlist taskList) updateActiveTaskList,
+    required TResult Function(Task task) addTask,
+    required TResult Function(String? taskListId, Task task) updateTask,
+    required TResult Function(String? taskListId, Task task) completedTask,
+    required TResult Function(String? taskListId, Task task) incompletedTask,
+    required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
+    required TResult Function() deleteCompletedTasks,
+    required TResult Function(SortBy value) sortBy,
+    required TResult Function(Task task, SubTask subTask) completedSubTask,
+    required TResult Function(Task task, SubTask subTask) incompletedSubTask,
+    required TResult Function(String name) createTaskList,
+    required TResult Function(Tlist taskList) renameTaskList,
+    required TResult Function() removeTaskList,
+  }) {
+    return reorder(previous, current);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(List<Tlist> taskLists)? updateTaskLists,
+    TResult Function(Tlist taskList)? updateActiveTaskList,
+    TResult Function(Task task)? addTask,
+    TResult Function(String? taskListId, Task task)? updateTask,
+    TResult Function(String? taskListId, Task task)? completedTask,
+    TResult Function(String? taskListId, Task task)? incompletedTask,
+    TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
+    TResult Function()? deleteCompletedTasks,
+    TResult Function(SortBy value)? sortBy,
+    TResult Function(Task task, SubTask subTask)? completedSubTask,
+    TResult Function(Task task, SubTask subTask)? incompletedSubTask,
+    TResult Function(String name)? createTaskList,
+    TResult Function(Tlist taskList)? renameTaskList,
+    TResult Function()? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (reorder != null) {
+      return reorder(previous, current);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_UpdateTaskLists value) updateTaskLists,
+    required TResult Function(_UpdateActiveTaskList value) updateActiveTaskList,
+    required TResult Function(_AddTask value) addTask,
+    required TResult Function(_UpdateTask value) updateTask,
+    required TResult Function(_CompletedTask value) completedTask,
+    required TResult Function(_IncompletedTask value) incompletedTask,
+    required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
+    required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
+    required TResult Function(_SortBy value) sortBy,
+    required TResult Function(_CompletedSubTask value) completedSubTask,
+    required TResult Function(_IncompletedSubTask value) incompletedSubTask,
+    required TResult Function(_CreateTaskList value) createTaskList,
+    required TResult Function(_RenameTaskList value) renameTaskList,
+    required TResult Function(_RemoveTaskList value) removeTaskList,
+  }) {
+    return reorder(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_UpdateTaskLists value)? updateTaskLists,
+    TResult Function(_UpdateActiveTaskList value)? updateActiveTaskList,
+    TResult Function(_AddTask value)? addTask,
+    TResult Function(_UpdateTask value)? updateTask,
+    TResult Function(_CompletedTask value)? completedTask,
+    TResult Function(_IncompletedTask value)? incompletedTask,
+    TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
+    TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
+    TResult Function(_SortBy value)? sortBy,
+    TResult Function(_CompletedSubTask value)? completedSubTask,
+    TResult Function(_IncompletedSubTask value)? incompletedSubTask,
+    TResult Function(_CreateTaskList value)? createTaskList,
+    TResult Function(_RenameTaskList value)? renameTaskList,
+    TResult Function(_RemoveTaskList value)? removeTaskList,
+    required TResult orElse(),
+  }) {
+    if (reorder != null) {
+      return reorder(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Reorder implements HomeEvent {
+  const factory _Reorder(int previous, int current) = _$_Reorder;
+
+  int get previous => throw _privateConstructorUsedError;
+  int get current => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$ReorderCopyWith<_Reorder> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1752,6 +1986,7 @@ class _$_DeleteCompletedTasks
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -1774,6 +2009,7 @@ class _$_DeleteCompletedTasks
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -1800,6 +2036,7 @@ class _$_DeleteCompletedTasks
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -1822,6 +2059,7 @@ class _$_DeleteCompletedTasks
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -1920,6 +2158,7 @@ class _$_SortBy with DiagnosticableTreeMixin implements _SortBy {
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -1942,6 +2181,7 @@ class _$_SortBy with DiagnosticableTreeMixin implements _SortBy {
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -1968,6 +2208,7 @@ class _$_SortBy with DiagnosticableTreeMixin implements _SortBy {
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -1990,6 +2231,7 @@ class _$_SortBy with DiagnosticableTreeMixin implements _SortBy {
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -2126,6 +2368,7 @@ class _$_CompletedSubTask
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -2148,6 +2391,7 @@ class _$_CompletedSubTask
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -2174,6 +2418,7 @@ class _$_CompletedSubTask
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -2196,6 +2441,7 @@ class _$_CompletedSubTask
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -2335,6 +2581,7 @@ class _$_IncompletedSubTask
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -2357,6 +2604,7 @@ class _$_IncompletedSubTask
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -2383,6 +2631,7 @@ class _$_IncompletedSubTask
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -2405,6 +2654,7 @@ class _$_IncompletedSubTask
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -2514,6 +2764,7 @@ class _$_CreateTaskList
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -2536,6 +2787,7 @@ class _$_CreateTaskList
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -2562,6 +2814,7 @@ class _$_CreateTaskList
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -2584,6 +2837,7 @@ class _$_CreateTaskList
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -2701,6 +2955,7 @@ class _$_RenameTaskList
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -2723,6 +2978,7 @@ class _$_RenameTaskList
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -2749,6 +3005,7 @@ class _$_RenameTaskList
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -2771,6 +3028,7 @@ class _$_RenameTaskList
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,
@@ -2851,6 +3109,7 @@ class _$_RemoveTaskList
     required TResult Function(String? taskListId, Task task) completedTask,
     required TResult Function(String? taskListId, Task task) incompletedTask,
     required TResult Function(String? taskListId, Task task) deleteTask,
+    required TResult Function(int previous, int current) reorder,
     required TResult Function() deleteCompletedTasks,
     required TResult Function(SortBy value) sortBy,
     required TResult Function(Task task, SubTask subTask) completedSubTask,
@@ -2873,6 +3132,7 @@ class _$_RemoveTaskList
     TResult Function(String? taskListId, Task task)? completedTask,
     TResult Function(String? taskListId, Task task)? incompletedTask,
     TResult Function(String? taskListId, Task task)? deleteTask,
+    TResult Function(int previous, int current)? reorder,
     TResult Function()? deleteCompletedTasks,
     TResult Function(SortBy value)? sortBy,
     TResult Function(Task task, SubTask subTask)? completedSubTask,
@@ -2899,6 +3159,7 @@ class _$_RemoveTaskList
     required TResult Function(_CompletedTask value) completedTask,
     required TResult Function(_IncompletedTask value) incompletedTask,
     required TResult Function(_DeleteTask value) deleteTask,
+    required TResult Function(_Reorder value) reorder,
     required TResult Function(_DeleteCompletedTasks value) deleteCompletedTasks,
     required TResult Function(_SortBy value) sortBy,
     required TResult Function(_CompletedSubTask value) completedSubTask,
@@ -2921,6 +3182,7 @@ class _$_RemoveTaskList
     TResult Function(_CompletedTask value)? completedTask,
     TResult Function(_IncompletedTask value)? incompletedTask,
     TResult Function(_DeleteTask value)? deleteTask,
+    TResult Function(_Reorder value)? reorder,
     TResult Function(_DeleteCompletedTasks value)? deleteCompletedTasks,
     TResult Function(_SortBy value)? sortBy,
     TResult Function(_CompletedSubTask value)? completedSubTask,

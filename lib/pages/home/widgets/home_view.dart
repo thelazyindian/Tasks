@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/application/theme/theme_cubit.dart';
 import 'package:tasks/models/sort_by.dart';
 import 'package:tasks/models/task.dart';
@@ -35,33 +36,35 @@ class HomeView extends StatelessWidget {
         if (pendingTaskList.isEmpty && completedTaskList.isEmpty)
           _emptyTasksView(context),
         if (pendingTaskList.isNotEmpty)
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: pendingTaskList.length,
-            itemBuilder: (_, index) => Wrap(
-              children: [
-                if (taskList.sortBy == SortBy.Date)
-                  if (pendingTaskList[index].dateTime != null &&
-                      (index == 0 ||
-                          pendingTaskList[index].dateTime !=
-                              pendingTaskList[index - 1].dateTime))
-                    _dateCategoryTitle(context,
-                        pendingTaskList[index].dateTime!.format('D, M j'))
-                  else if (pendingTaskList[index].dateTime == null &&
-                      (index == 0 ||
-                          pendingTaskList[index - 1].dateTime != null))
-                    _dateCategoryTitle(context, 'No due date'),
-                TaskItem(
-                  key: Key(pendingTaskList[index].id),
-                  taskList: taskList,
-                  task: pendingTaskList[index],
-                  viewDate: !(taskList.sortBy == SortBy.Date),
-                ),
-              ],
-            ),
-          ),
+          ReorderableListView.builder(
+              shrinkWrap: true,
+              buildDefaultDragHandles: taskList.sortBy == SortBy.MyOrder,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: pendingTaskList.length,
+              itemBuilder: (_, index) => Wrap(
+                    key: Key(index.toString()),
+                    children: [
+                      if (taskList.sortBy == SortBy.Date)
+                        if (pendingTaskList[index].dateTime != null &&
+                            (index == 0 ||
+                                pendingTaskList[index].dateTime !=
+                                    pendingTaskList[index - 1].dateTime))
+                          _dateCategoryTitle(context,
+                              pendingTaskList[index].dateTime!.format('D, M j'))
+                        else if (pendingTaskList[index].dateTime == null &&
+                            (index == 0 ||
+                                pendingTaskList[index - 1].dateTime != null))
+                          _dateCategoryTitle(context, 'No due date'),
+                      TaskItem(
+                        taskList: taskList,
+                        task: pendingTaskList[index],
+                        viewDate: !(taskList.sortBy == SortBy.Date),
+                      ),
+                    ],
+                  ),
+              onReorder: (prev, curr) =>
+                  context.read<HomeBloc>().add(HomeEvent.reorder(prev, curr))),
         if (pendingTaskList.isNotEmpty && completedTaskList.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8.0),

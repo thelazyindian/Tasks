@@ -24,6 +24,7 @@ class HomeEvent with _$HomeEvent {
     String? taskListId,
     required Task task,
   }) = _DeleteTask;
+  const factory HomeEvent.reorder(int previous, int current) = _Reorder;
   const factory HomeEvent.deleteCompletedTasks() = _DeleteCompletedTasks;
   const factory HomeEvent.sortBy(SortBy value) = _SortBy;
   const factory HomeEvent.completedSubTask(

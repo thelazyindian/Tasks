@@ -130,6 +130,7 @@ class _NewTaskState extends State<NewTask> {
                     Task(
                       id: DateTime.now().toIso8601String(),
                       name: _taskEditingController.text,
+                      order: 0,
                       details: _detailsEditingController.text,
                       dateTime: dateTime,
                     ),

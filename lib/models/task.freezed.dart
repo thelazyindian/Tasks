@@ -23,13 +23,15 @@ class _$TaskTearOff {
   _Task call(
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
-      @HiveField(2) String? details,
-      @HiveField(3) DateTime? dateTime,
-      @HiveField(4) bool completed = false,
-      @HiveField(5) List<SubTask> subtasks = const []}) {
+      @HiveField(2) required int order,
+      @HiveField(3) String? details,
+      @HiveField(4) DateTime? dateTime,
+      @HiveField(5) bool completed = false,
+      @HiveField(6) List<SubTask> subtasks = const []}) {
     return _Task(
       id: id,
       name: name,
+      order: order,
       details: details,
       dateTime: dateTime,
       completed: completed,
@@ -52,12 +54,14 @@ mixin _$Task {
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
   @HiveField(2)
-  String? get details => throw _privateConstructorUsedError;
+  int get order => throw _privateConstructorUsedError;
   @HiveField(3)
-  DateTime? get dateTime => throw _privateConstructorUsedError;
+  String? get details => throw _privateConstructorUsedError;
   @HiveField(4)
-  bool get completed => throw _privateConstructorUsedError;
+  DateTime? get dateTime => throw _privateConstructorUsedError;
   @HiveField(5)
+  bool get completed => throw _privateConstructorUsedError;
+  @HiveField(6)
   List<SubTask> get subtasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -72,10 +76,11 @@ abstract class $TaskCopyWith<$Res> {
   $Res call(
       {@HiveField(0) String id,
       @HiveField(1) String name,
-      @HiveField(2) String? details,
-      @HiveField(3) DateTime? dateTime,
-      @HiveField(4) bool completed,
-      @HiveField(5) List<SubTask> subtasks});
+      @HiveField(2) int order,
+      @HiveField(3) String? details,
+      @HiveField(4) DateTime? dateTime,
+      @HiveField(5) bool completed,
+      @HiveField(6) List<SubTask> subtasks});
 }
 
 /// @nodoc
@@ -90,6 +95,7 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? order = freezed,
     Object? details = freezed,
     Object? dateTime = freezed,
     Object? completed = freezed,
@@ -104,6 +110,10 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      order: order == freezed
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
       details: details == freezed
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
@@ -132,10 +142,11 @@ abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   $Res call(
       {@HiveField(0) String id,
       @HiveField(1) String name,
-      @HiveField(2) String? details,
-      @HiveField(3) DateTime? dateTime,
-      @HiveField(4) bool completed,
-      @HiveField(5) List<SubTask> subtasks});
+      @HiveField(2) int order,
+      @HiveField(3) String? details,
+      @HiveField(4) DateTime? dateTime,
+      @HiveField(5) bool completed,
+      @HiveField(6) List<SubTask> subtasks});
 }
 
 /// @nodoc
@@ -151,6 +162,7 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? order = freezed,
     Object? details = freezed,
     Object? dateTime = freezed,
     Object? completed = freezed,
@@ -165,6 +177,10 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      order: order == freezed
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
       details: details == freezed
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
@@ -191,10 +207,11 @@ class _$_Task implements _Task {
   const _$_Task(
       {@HiveField(0) required this.id,
       @HiveField(1) required this.name,
-      @HiveField(2) this.details,
-      @HiveField(3) this.dateTime,
-      @HiveField(4) this.completed = false,
-      @HiveField(5) this.subtasks = const []});
+      @HiveField(2) required this.order,
+      @HiveField(3) this.details,
+      @HiveField(4) this.dateTime,
+      @HiveField(5) this.completed = false,
+      @HiveField(6) this.subtasks = const []});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) =>
       _$_$_TaskFromJson(json);
@@ -207,22 +224,25 @@ class _$_Task implements _Task {
   final String name;
   @override
   @HiveField(2)
-  final String? details;
+  final int order;
   @override
   @HiveField(3)
+  final String? details;
+  @override
+  @HiveField(4)
   final DateTime? dateTime;
   @JsonKey(defaultValue: false)
   @override
-  @HiveField(4)
+  @HiveField(5)
   final bool completed;
   @JsonKey(defaultValue: const [])
   @override
-  @HiveField(5)
+  @HiveField(6)
   final List<SubTask> subtasks;
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, details: $details, dateTime: $dateTime, completed: $completed, subtasks: $subtasks)';
+    return 'Task(id: $id, name: $name, order: $order, details: $details, dateTime: $dateTime, completed: $completed, subtasks: $subtasks)';
   }
 
   @override
@@ -233,6 +253,8 @@ class _$_Task implements _Task {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.order, order) ||
+                const DeepCollectionEquality().equals(other.order, order)) &&
             (identical(other.details, details) ||
                 const DeepCollectionEquality()
                     .equals(other.details, details)) &&
@@ -252,6 +274,7 @@ class _$_Task implements _Task {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(order) ^
       const DeepCollectionEquality().hash(details) ^
       const DeepCollectionEquality().hash(dateTime) ^
       const DeepCollectionEquality().hash(completed) ^
@@ -272,10 +295,11 @@ abstract class _Task implements Task {
   const factory _Task(
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
-      @HiveField(2) String? details,
-      @HiveField(3) DateTime? dateTime,
-      @HiveField(4) bool completed,
-      @HiveField(5) List<SubTask> subtasks}) = _$_Task;
+      @HiveField(2) required int order,
+      @HiveField(3) String? details,
+      @HiveField(4) DateTime? dateTime,
+      @HiveField(5) bool completed,
+      @HiveField(6) List<SubTask> subtasks}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
@@ -287,15 +311,18 @@ abstract class _Task implements Task {
   String get name => throw _privateConstructorUsedError;
   @override
   @HiveField(2)
-  String? get details => throw _privateConstructorUsedError;
+  int get order => throw _privateConstructorUsedError;
   @override
   @HiveField(3)
-  DateTime? get dateTime => throw _privateConstructorUsedError;
+  String? get details => throw _privateConstructorUsedError;
   @override
   @HiveField(4)
-  bool get completed => throw _privateConstructorUsedError;
+  DateTime? get dateTime => throw _privateConstructorUsedError;
   @override
   @HiveField(5)
+  bool get completed => throw _privateConstructorUsedError;
+  @override
+  @HiveField(6)
   List<SubTask> get subtasks => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

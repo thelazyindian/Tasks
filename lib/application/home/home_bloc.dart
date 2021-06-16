@@ -70,7 +70,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _activeTaskListSubscription?.cancel();
         _activeTaskListSubscription =
             tasksBox.watch(key: e.taskList.id).listen((event) {
-          debugPrint('deleted ${event.deleted} key ${event.key}');
           if (!event.deleted) {
             final tasks =
                 (tasksBox.get(e.taskList.id, defaultValue: []) as List)
@@ -84,7 +83,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       addTask: (e) async* {
         final activeTaskList = state.activeTaskList!;
         final tasks = List<Task>.from(activeTaskList.tasks);
-        tasks.add(e.task);
+        tasks.add(e.task.copyWith(order: tasks.length));
         tasksBox.put(activeTaskList.id, tasks);
       },
       updateTask: (e) async* {
@@ -108,7 +107,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final idx = tasks.indexWhere((element) => element.id == e.task.id);
         if (idx >= 0) {
           tasks.removeAt(idx);
-          tasksBox.put(taskList.id, tasks);
+          final orderTasks = tasks
+              .mapIndexed((index, element) => element.copyWith(order: index))
+              .toList();
+          tasksBox.put(taskList.id, orderTasks);
         }
       },
       deleteCompletedTasks: (e) async* {
@@ -187,6 +189,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           add(HomeEvent.updateActiveTaskList(activeTaskList));
         }
       },
+      reorder: (e) async* {
+        final activeTaskList = state.activeTaskList!;
+        final tasks = List<Task>.from(activeTaskList.tasks);
+        final task = tasks.firstWhere((element) => element.order == e.previous);
+        tasks.removeAt(e.previous);
+        tasks.insert(e.current < e.previous ? e.current : e.current - 1, task);
+        final orderTasks = tasks
+            .mapIndexed((index, element) => element.copyWith(order: index))
+            .toList();
+        tasksBox.put(activeTaskList.id, orderTasks);
+      },
     );
   }
 
@@ -252,8 +265,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   List<Task> sortTasks(Tlist taskList, List<Task> tasks) {
     if (taskList.sortBy == SortBy.MyOrder) {
-      tasks
-          .sort((a, b) => DateTime.parse(a.id).compareTo(DateTime.parse(b.id)));
+      tasks.sort((first, second) => first.order.compareTo(second.order));
       return tasks;
     }
     final tasksWithDate =

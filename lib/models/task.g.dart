@@ -19,28 +19,31 @@ class TaskAdapter extends TypeAdapter<Task> {
     return Task(
       id: fields[0] as String,
       name: fields[1] as String,
-      details: fields[2] as String?,
-      dateTime: fields[3] as DateTime?,
-      completed: fields[4] as bool,
-      subtasks: (fields[5] as List).cast<SubTask>(),
+      order: fields[2] as int,
+      details: fields[3] as String?,
+      dateTime: fields[4] as DateTime?,
+      completed: fields[5] as bool,
+      subtasks: (fields[6] as List).cast<SubTask>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Task obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.details)
+      ..write(obj.order)
       ..writeByte(3)
-      ..write(obj.dateTime)
+      ..write(obj.details)
       ..writeByte(4)
-      ..write(obj.completed)
+      ..write(obj.dateTime)
       ..writeByte(5)
+      ..write(obj.completed)
+      ..writeByte(6)
       ..write(obj.subtasks);
   }
 
@@ -63,6 +66,7 @@ _$_Task _$_$_TaskFromJson(Map<String, dynamic> json) {
   return _$_Task(
     id: json['id'] as String,
     name: json['name'] as String,
+    order: json['order'] as int,
     details: json['details'] as String?,
     dateTime: json['dateTime'] == null
         ? null
@@ -78,6 +82,7 @@ _$_Task _$_$_TaskFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_TaskToJson(_$_Task instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'order': instance.order,
       'details': instance.details,
       'dateTime': instance.dateTime?.toIso8601String(),
       'completed': instance.completed,
