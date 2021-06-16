@@ -87,6 +87,8 @@ class HomeView extends StatelessWidget {
           Expanded(
             child: Text(
               taskList.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 28.0,
                 fontWeight: FontWeight.w100,

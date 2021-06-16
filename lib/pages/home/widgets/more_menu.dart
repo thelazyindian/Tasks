@@ -27,7 +27,10 @@ class MoreMenu extends StatelessWidget {
             ),
             subtitle: Text(
               sortByString[taskList.sortBy]!,
-              style: TextStyle(fontSize: 12.0),
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Theme.of(context).iconTheme.color,
+              ),
             ),
             onTap: () {
               Navigator.pop(context);
