@@ -37,8 +37,9 @@ class TaskListItem extends StatelessWidget {
               fontWeight: FontWeight.bold,
               letterSpacing: 1.0,
               fontSize: 13.0,
-              color:
-                  active ? Theme.of(context).accentColor : Colors.grey.shade600,
+              color: active
+                  ? Theme.of(context).accentColor
+                  : Theme.of(context).primaryIconTheme.color,
             ),
           ),
         ),

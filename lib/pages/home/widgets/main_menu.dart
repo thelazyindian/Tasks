@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/application/home/home_bloc.dart';
@@ -27,7 +29,7 @@ class MainMenu extends StatelessWidget {
         ),
         const Divider(
           height: .0,
-          thickness: 2.0,
+          thickness: 1.0,
         ),
         _createNewListBtn(context),
       ],
@@ -50,7 +52,7 @@ class MainMenu extends StatelessWidget {
                 child: Icon(
                   Icons.add,
                   size: 20.0,
-                  color: Colors.grey.shade600,
+                  color: Theme.of(context).primaryIconTheme.color,
                 ),
               ),
               Text(
@@ -59,7 +61,7 @@ class MainMenu extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.0,
                   fontSize: 13.0,
-                  color: Colors.grey.shade600,
+                  color: Theme.of(context).primaryIconTheme.color,
                 ),
               ),
             ],

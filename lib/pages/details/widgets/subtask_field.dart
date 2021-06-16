@@ -44,8 +44,7 @@ class _SubtaskFieldState extends State<SubtaskField> {
             widget.checked
                 ? CommunityMaterialIcons.check
                 : CommunityMaterialIcons.radiobox_blank,
-            color:
-                widget.checked ? Theme.of(context).accentColor : Colors.black54,
+            color: widget.checked ? Theme.of(context).accentColor : null,
             size: 18.0,
           ),
         ),
@@ -61,7 +60,10 @@ class _SubtaskFieldState extends State<SubtaskField> {
               contentPadding: EdgeInsets.zero,
               border: InputBorder.none,
             ),
-            style: TextStyle(fontSize: 13.5),
+            style: TextStyle(
+              fontSize: 13.5,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
         ),
         if (widget.enabled)

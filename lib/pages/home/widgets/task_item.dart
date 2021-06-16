@@ -54,7 +54,8 @@ class TaskItem extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           _taskNameView(task.name, task.completed),
-                          if (task.details?.isNotEmpty ?? false) _detailsView(),
+                          if (task.details?.isNotEmpty ?? false)
+                            _detailsView(context),
                           if (task.dateTime != null && viewDate)
                             _dateTimeView(),
                         ],
@@ -127,7 +128,7 @@ class TaskItem extends StatelessWidget {
               ? CommunityMaterialIcons.check
               : CommunityMaterialIcons.radiobox_blank,
           color: completed
-              ? Theme.of(context).accentIconTheme.color
+              ? Theme.of(context).accentColor
               : Theme.of(context).iconTheme.color,
           size: 20.0,
         ),
@@ -146,13 +147,13 @@ class TaskItem extends StatelessWidget {
         ),
       );
 
-  Widget _detailsView() => Padding(
+  Widget _detailsView(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 4.0),
         child: Text(
           task.details!,
           style: TextStyle(
             fontSize: 14.0,
-            color: Colors.black54,
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
       );

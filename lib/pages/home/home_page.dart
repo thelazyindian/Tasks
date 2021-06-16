@@ -35,13 +35,11 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 IconButton(
                   icon: const Icon(Icons.menu),
-                  color: Colors.grey.shade600,
                   onPressed: () =>
                       _showMainMenu(state.taskLists, state.activeTaskList!),
                 ),
                 IconButton(
                   icon: const Icon(Icons.more_vert),
-                  color: Colors.grey.shade600,
                   onPressed: () => _showMoreMenu(),
                 )
               ],

@@ -25,11 +25,11 @@ class CompletedSection extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: Colors.white,
-      iconColor: Colors.grey.shade700,
-      textColor: Colors.grey.shade700,
-      collapsedTextColor: Colors.grey.shade700,
-      collapsedIconColor: Colors.grey.shade700,
+      backgroundColor: Theme.of(context).primaryColor,
+      iconColor: Theme.of(context).secondaryHeaderColor,
+      textColor: Theme.of(context).secondaryHeaderColor,
+      collapsedTextColor: Theme.of(context).secondaryHeaderColor,
+      collapsedIconColor: Theme.of(context).secondaryHeaderColor,
       children: <Widget>[
         ListView.builder(
           shrinkWrap: true,

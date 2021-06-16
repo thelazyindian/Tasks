@@ -19,12 +19,12 @@ class SelectedDateView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
+          GestureDetector(
             onTap: enabled
                 ? () => showDateTimePicker(
                       context: context,
@@ -37,7 +37,7 @@ class SelectedDateView extends StatelessWidget {
               child: Text(
                 dateTime.format('D, M j'),
                 style: TextStyle(
-                  fontSize: 13.5,
+                  fontSize: 12.0,
                   color: Colors.grey.shade500,
                   fontWeight: FontWeight.w600,
                 ),
@@ -47,13 +47,14 @@ class SelectedDateView extends StatelessWidget {
           if (enabled)
             InkWell(
               onTap: () => onSelected(null),
+              customBorder: CircleBorder(),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
                 child: Icon(
                   Icons.close,
                   size: 20.0,
-                  color: Colors.grey.shade600,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
                 ),
               ),
             )

@@ -75,10 +75,7 @@ class _DetailsViewState extends State<DetailsView> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           children: [
-            Icon(
-              CommunityMaterialIcons.text,
-              color: Colors.black54,
-            ),
+            Icon(CommunityMaterialIcons.text),
             const SizedBox(width: 24.0),
             Expanded(
               child: TextFormField(
@@ -93,7 +90,7 @@ class _DetailsViewState extends State<DetailsView> {
                 ),
                 style: TextStyle(
                   fontSize: 14.0,
-                  color: Colors.black54,
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
             ),
@@ -123,6 +120,7 @@ class _DetailsViewState extends State<DetailsView> {
         value: activeTaskList.id,
         elevation: 4,
         icon: Container(),
+        dropdownColor: Theme.of(context).dialogBackgroundColor,
         selectedItemBuilder: (_) => taskLists
             .map((e) => Row(
                   mainAxisSize: MainAxisSize.min,
@@ -145,7 +143,6 @@ class _DetailsViewState extends State<DetailsView> {
                 ))
             .toList(),
         iconEnabledColor: Theme.of(context).accentColor,
-        dropdownColor: Colors.white,
         decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -183,10 +180,7 @@ class _DetailsViewState extends State<DetailsView> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                CommunityMaterialIcons.calendar_check,
-                color: Colors.black54,
-              ),
+              Icon(CommunityMaterialIcons.calendar_check),
               const SizedBox(width: 24.0),
               dateTime != null
                   ? SelectedDateView(
@@ -200,7 +194,7 @@ class _DetailsViewState extends State<DetailsView> {
                   : Text(
                       'Add date/time',
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
             ],
@@ -214,7 +208,7 @@ class _DetailsViewState extends State<DetailsView> {
   Widget _addSubtasksBtn() => Text(
         'Add subtasks',
         style: TextStyle(
-          color: Colors.black54,
+          color: Theme.of(context).iconTheme.color,
         ),
       );
 
@@ -234,10 +228,7 @@ class _DetailsViewState extends State<DetailsView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 9.0),
-                child: Icon(
-                  Icons.subdirectory_arrow_right,
-                  color: Colors.black54,
-                ),
+                child: Icon(Icons.subdirectory_arrow_right),
               ),
               subtasks.isNotEmpty
                   ? Expanded(

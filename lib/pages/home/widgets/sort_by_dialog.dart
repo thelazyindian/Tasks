@@ -10,7 +10,6 @@ class SortByDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final activeTaskList = context.read<HomeBloc>().state.activeTaskList!;
     return Dialog(
-      backgroundColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Wrap(

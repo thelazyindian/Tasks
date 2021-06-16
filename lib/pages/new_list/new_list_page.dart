@@ -27,7 +27,6 @@ class _NewListPageState extends State<NewListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
       appBar: _appBar(),
       body: Column(
         children: <Widget>[
@@ -35,25 +34,27 @@ class _NewListPageState extends State<NewListPage> {
             thickness: 1.0,
             height: 1.0,
           ),
-          Container(
-            color: Colors.white,
-            child: TextFormField(
-              autofocus: true,
-              initialValue: widget.taskList?.name,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
-                ),
-                border: InputBorder.none,
-                hintText: _listTitleInputHint,
+          TextFormField(
+            autofocus: true,
+            initialValue: widget.taskList?.name,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
               ),
-              onChanged: (value) => setState(() => listTitle = value),
+              border: InputBorder.none,
+              hintText: _listTitleInputHint,
             ),
+            onChanged: (value) => setState(() => listTitle = value),
           ),
           const Divider(
             thickness: 2.0,
             height: 1.0,
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).canvasColor,
+            ),
           ),
         ],
       ),
@@ -62,48 +63,49 @@ class _NewListPageState extends State<NewListPage> {
 
   PreferredSize _appBar() => PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Container(
+        child: Padding(
           padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-          color: Colors.white,
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                padding: EdgeInsets.zero,
-                icon: Icon(
-                  Icons.close,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  _scaffoldTitle,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20.0,
+          child: Material(
+            color: Theme.of(context).appBarTheme.color,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  padding: EdgeInsets.zero,
+                  icon: Icon(
+                    Icons.close,
+                    color: Theme.of(context).appBarTheme.iconTheme!.color,
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: listTitle.isEmpty
-                    ? null
-                    : () {
-                        context.read<HomeBloc>().add(widget.taskList != null
-                            ? HomeEvent.renameTaskList(
-                                widget.taskList!.copyWith(name: listTitle))
-                            : HomeEvent.createTaskList(listTitle));
-                        Navigator.pop(context);
-                      },
-                child: Text(
-                  _appBarDoneAction,
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    _scaffoldTitle,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.0,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: listTitle.isEmpty
+                      ? null
+                      : () {
+                          context.read<HomeBloc>().add(widget.taskList != null
+                              ? HomeEvent.renameTaskList(
+                                  widget.taskList!.copyWith(name: listTitle))
+                              : HomeEvent.createTaskList(listTitle));
+                          Navigator.pop(context);
+                        },
+                  child: Text(
+                    _appBarDoneAction,
+                    style: TextStyle(
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

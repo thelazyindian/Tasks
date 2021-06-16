@@ -22,11 +22,9 @@ class DetailsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.grey.shade700,
-          ),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             context.read<HomeBloc>().add(HomeEvent.updateTask(
                   taskListId: detailsBloc.state.activeTaskList.id,
@@ -47,12 +45,9 @@ class DetailsPage extends StatelessWidget {
                 Navigator.pop(context);
               },
               icon: Icon(CommunityMaterialIcons.delete_outline),
-              color: Colors.grey.shade700,
             ),
           ),
         ],
-        elevation: 0.0,
-        backgroundColor: Colors.white,
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -68,9 +63,9 @@ class DetailsPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Material(
-        elevation: 32.0,
+        color: Theme.of(context).bottomAppBarColor,
         shadowColor: Colors.black,
-        color: Colors.white,
+        elevation: 32.0,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
           child: Row(

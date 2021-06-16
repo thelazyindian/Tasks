@@ -47,12 +47,12 @@ class HomeView extends StatelessWidget {
                       (index == 0 ||
                           pendingTaskList[index].dateTime !=
                               pendingTaskList[index - 1].dateTime))
-                    _dateCategoryTitle(
+                    _dateCategoryTitle(context,
                         pendingTaskList[index].dateTime!.format('D, M j'))
                   else if (pendingTaskList[index].dateTime == null &&
                       (index == 0 ||
                           pendingTaskList[index - 1].dateTime != null))
-                    _dateCategoryTitle('No due date'),
+                    _dateCategoryTitle(context, 'No due date'),
                 TaskItem(
                   key: Key(pendingTaskList[index].id),
                   taskList: taskList,
@@ -97,6 +97,7 @@ class HomeView extends StatelessWidget {
             builder: (context, state) {
               return IconButton(
                 onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                color: Theme.of(context).primaryIconTheme.color,
                 icon: Icon(
                   state.map(
                     light: (_) => CommunityMaterialIcons.weather_night,
@@ -111,7 +112,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _dateCategoryTitle(String title) {
+  Widget _dateCategoryTitle(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24.0, 8.0, 16.0, 8.0),
       child: Text(
@@ -119,7 +120,7 @@ class HomeView extends StatelessWidget {
         style: TextStyle(
           fontSize: 15.0,
           fontWeight: FontWeight.w600,
-          color: Colors.grey.shade700,
+          color: Theme.of(context).secondaryHeaderColor,
         ),
       ),
     );
