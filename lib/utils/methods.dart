@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/pages/core/date_time_picker_dialog.dart';
 
 void showDateTimePicker({
   required BuildContext context,
   required DateTime initialDate,
   required Function(DateTime?) onSelected,
 }) {
-  showDatePicker(
+  showDialog(
     context: context,
-    initialDate: initialDate,
-    firstDate: DateTime(DateTime.now().year - 30),
-    lastDate: DateTime(DateTime.now().year + 30),
-  ).then((value) => onSelected(value));
+    builder: (_) => DateTimePickerDialog(
+      initialDate: initialDate,
+      onSelected: onSelected,
+    ),
+  );
 }

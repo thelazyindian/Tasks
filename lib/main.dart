@@ -17,10 +17,22 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late ThemeCubit themeCubit;
+
+  @override
+  void initState() {
+    themeCubit = ThemeCubit();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final themeCubit = ThemeCubit();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
