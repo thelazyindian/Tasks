@@ -4,18 +4,29 @@ import 'package:date_time_format/date_time_format.dart';
 
 class SelectedDateView extends StatelessWidget {
   final DateTime dateTime;
-  final Function(DateTime?) onSelected;
+  final TimeOfDay? timeOfDay;
+  final Function(DateTime?, TimeOfDay?) onSelected;
   final bool enabled;
 
   const SelectedDateView({
     Key? key,
     required this.dateTime,
     required this.onSelected,
+    this.timeOfDay,
     this.enabled = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final dateTimeCombined = (timeOfDay != null)
+        ? DateTime(
+            dateTime.year,
+            dateTime.month,
+            dateTime.day,
+            timeOfDay!.hour,
+            timeOfDay!.minute,
+          )
+        : dateTime;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -29,13 +40,15 @@ class SelectedDateView extends StatelessWidget {
                 ? () => showDateTimePicker(
                       context: context,
                       initialDate: dateTime,
+                      timeOfDay: timeOfDay,
                       onSelected: onSelected,
                     )
                 : null,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 6.0, .0, 8.0),
               child: Text(
-                dateTime.format('D, M j'),
+                dateTimeCombined
+                    .format(timeOfDay != null ? 'D, M j, g:i A' : 'D, M j'),
                 style: TextStyle(
                   fontSize: 12.0,
                   color: Colors.grey.shade500,
@@ -46,7 +59,7 @@ class SelectedDateView extends StatelessWidget {
           ),
           if (enabled)
             InkWell(
-              onTap: () => onSelected(null),
+              onTap: () => onSelected(null, null),
               customBorder: CircleBorder(),
               child: Padding(
                 padding:

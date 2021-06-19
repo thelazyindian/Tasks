@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +18,9 @@ class NewTask extends StatefulWidget {
 
 class _NewTaskState extends State<NewTask> {
   late TextEditingController _taskEditingController, _detailsEditingController;
-  bool viewDetailsField = false;
-  DateTime? dateTime;
+  bool _viewDetailsField = false;
+  DateTime? _dateTime;
+  TimeOfDay? _timeOfDay;
 
   @override
   void initState() {
@@ -46,7 +50,7 @@ class _NewTaskState extends State<NewTask> {
                   autocorrect: false,
                   keyboardType: TextInputType.text,
                 ),
-                if (viewDetailsField)
+                if (_viewDetailsField)
                   TextField(
                     controller: _detailsEditingController,
                     decoration: InputDecoration(
@@ -57,12 +61,16 @@ class _NewTaskState extends State<NewTask> {
                     autocorrect: false,
                     keyboardType: TextInputType.text,
                   ),
-                if (dateTime != null)
+                if (_dateTime != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: SelectedDateView(
-                      dateTime: dateTime!,
-                      onSelected: (value) => setState(() => dateTime = value),
+                      dateTime: _dateTime!,
+                      timeOfDay: _timeOfDay,
+                      onSelected: (date, time) => setState(() {
+                        _dateTime = date;
+                        _timeOfDay = time;
+                      }),
                     ),
                   ),
               ],
@@ -92,8 +100,12 @@ class _NewTaskState extends State<NewTask> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
           onTap: () => showDateTimePicker(
             context: context,
-            initialDate: DateTime.now(),
-            onSelected: (value) => setState(() => dateTime = value),
+            initialDate: _dateTime ?? DateTime.now(),
+            timeOfDay: _timeOfDay,
+            onSelected: (date, time) => setState(() {
+              _dateTime = date;
+              _timeOfDay = time;
+            }),
           ),
           child: Padding(
             padding: const EdgeInsets.all(6.0),
@@ -111,7 +123,7 @@ class _NewTaskState extends State<NewTask> {
           highlightColor: Theme.of(context).accentColor.withOpacity(0.3),
           customBorder:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-          onTap: () => setState(() => viewDetailsField = !viewDetailsField),
+          onTap: () => setState(() => _viewDetailsField = !_viewDetailsField),
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: Icon(
@@ -125,14 +137,16 @@ class _NewTaskState extends State<NewTask> {
   Widget saveButton() => TextButton(
         onPressed: () {
           if (_taskEditingController.text.isNotEmpty) {
+            final id = Random.secure().nextInt((2 ^ 31));
             context.read<HomeBloc>().add(
                   HomeEvent.addTask(
                     Task(
-                      id: DateTime.now().toIso8601String(),
+                      id: id,
                       name: _taskEditingController.text,
                       order: 0,
                       details: _detailsEditingController.text,
-                      dateTime: dateTime,
+                      dateTime: _dateTime,
+                      timeOfDay: _timeOfDay,
                     ),
                   ),
                 );

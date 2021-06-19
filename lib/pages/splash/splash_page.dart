@@ -10,6 +10,7 @@ import 'package:tasks/models/sort_by.dart';
 import 'package:tasks/models/sub_task.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
+import 'package:tasks/utils/time_of_day_converter.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -26,6 +27,8 @@ class _SplashPageState extends State<SplashPage> {
         Hive.registerAdapter(TaskAdapter());
         Hive.registerAdapter(SubTaskAdapter());
         Hive.registerAdapter(SortByAdapter());
+        Hive.registerAdapter(TimeOfDayAdapter());
+
         Hive.openBox('settings').then((_) {
           context.read<ThemeCubit>().started();
           context.read<HomeBloc>().add(HomeEvent.started());

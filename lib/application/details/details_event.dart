@@ -10,7 +10,10 @@ class DetailsEvent with _$DetailsEvent {
       _OnSubtaskCompleted;
   const factory DetailsEvent.onSubtaskUpdated(int index, String value) =
       _OnSubtaskUpdated;
-  const factory DetailsEvent.onDateChanged(DateTime? value) = _OnDateChanged;
+  const factory DetailsEvent.onDateTimeChanged(
+    DateTime? date,
+    TimeOfDay? time,
+  ) = _OnDateTimeChanged;
   const factory DetailsEvent.onTaskListChanged(String taskListId) =
       _OnTaskListChanged;
 }

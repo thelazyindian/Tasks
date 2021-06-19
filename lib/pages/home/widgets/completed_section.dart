@@ -37,7 +37,7 @@ class CompletedSection extends StatelessWidget {
           itemCount: tasks.length,
           padding: EdgeInsets.zero,
           itemBuilder: (_, index) => TaskItem(
-            key: Key(tasks[index].id),
+            key: Key('${tasks[index].id}'),
             taskList: taskList,
             task: tasks[index],
           ),

@@ -51,9 +51,10 @@ class _$DetailsEventTearOff {
     );
   }
 
-  _OnDateChanged onDateChanged(DateTime? value) {
-    return _OnDateChanged(
-      value,
+  _OnDateTimeChanged onDateTimeChanged(DateTime? date, TimeOfDay? time) {
+    return _OnDateTimeChanged(
+      date,
+      time,
     );
   }
 
@@ -77,7 +78,8 @@ mixin _$DetailsEvent {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) =>
       throw _privateConstructorUsedError;
@@ -89,7 +91,7 @@ mixin _$DetailsEvent {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) =>
@@ -102,7 +104,7 @@ mixin _$DetailsEvent {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) =>
       throw _privateConstructorUsedError;
@@ -114,7 +116,7 @@ mixin _$DetailsEvent {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) =>
@@ -208,7 +210,8 @@ class _$_OnNameChanged implements _OnNameChanged {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onNameChanged(value);
@@ -223,7 +226,7 @@ class _$_OnNameChanged implements _OnNameChanged {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -242,7 +245,7 @@ class _$_OnNameChanged implements _OnNameChanged {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onNameChanged(this);
@@ -257,7 +260,7 @@ class _$_OnNameChanged implements _OnNameChanged {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -348,7 +351,8 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onDetailsChanged(value);
@@ -363,7 +367,7 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -382,7 +386,7 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onDetailsChanged(this);
@@ -397,7 +401,7 @@ class _$_OnDetailsChanged implements _OnDetailsChanged {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -463,7 +467,8 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskAdded();
@@ -478,7 +483,7 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -497,7 +502,7 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onSubtaskAdded(this);
@@ -512,7 +517,7 @@ class _$_OnSubtaskAdded implements _OnSubtaskAdded {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -598,7 +603,8 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskRemoved(index);
@@ -613,7 +619,7 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -632,7 +638,7 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onSubtaskRemoved(this);
@@ -647,7 +653,7 @@ class _$_OnSubtaskRemoved implements _OnSubtaskRemoved {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -738,7 +744,8 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskCompleted(index);
@@ -753,7 +760,7 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -772,7 +779,7 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onSubtaskCompleted(this);
@@ -787,7 +794,7 @@ class _$_OnSubtaskCompleted implements _OnSubtaskCompleted {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -889,7 +896,8 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onSubtaskUpdated(index, value);
@@ -904,7 +912,7 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -923,7 +931,7 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onSubtaskUpdated(this);
@@ -938,7 +946,7 @@ class _$_OnSubtaskUpdated implements _OnSubtaskUpdated {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -961,66 +969,77 @@ abstract class _OnSubtaskUpdated implements DetailsEvent {
 }
 
 /// @nodoc
-abstract class _$OnDateChangedCopyWith<$Res> {
-  factory _$OnDateChangedCopyWith(
-          _OnDateChanged value, $Res Function(_OnDateChanged) then) =
-      __$OnDateChangedCopyWithImpl<$Res>;
-  $Res call({DateTime? value});
+abstract class _$OnDateTimeChangedCopyWith<$Res> {
+  factory _$OnDateTimeChangedCopyWith(
+          _OnDateTimeChanged value, $Res Function(_OnDateTimeChanged) then) =
+      __$OnDateTimeChangedCopyWithImpl<$Res>;
+  $Res call({DateTime? date, TimeOfDay? time});
 }
 
 /// @nodoc
-class __$OnDateChangedCopyWithImpl<$Res>
+class __$OnDateTimeChangedCopyWithImpl<$Res>
     extends _$DetailsEventCopyWithImpl<$Res>
-    implements _$OnDateChangedCopyWith<$Res> {
-  __$OnDateChangedCopyWithImpl(
-      _OnDateChanged _value, $Res Function(_OnDateChanged) _then)
-      : super(_value, (v) => _then(v as _OnDateChanged));
+    implements _$OnDateTimeChangedCopyWith<$Res> {
+  __$OnDateTimeChangedCopyWithImpl(
+      _OnDateTimeChanged _value, $Res Function(_OnDateTimeChanged) _then)
+      : super(_value, (v) => _then(v as _OnDateTimeChanged));
 
   @override
-  _OnDateChanged get _value => super._value as _OnDateChanged;
+  _OnDateTimeChanged get _value => super._value as _OnDateTimeChanged;
 
   @override
   $Res call({
-    Object? value = freezed,
+    Object? date = freezed,
+    Object? time = freezed,
   }) {
-    return _then(_OnDateChanged(
-      value == freezed
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+    return _then(_OnDateTimeChanged(
+      date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as TimeOfDay?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_OnDateChanged implements _OnDateChanged {
-  const _$_OnDateChanged(this.value);
+class _$_OnDateTimeChanged implements _OnDateTimeChanged {
+  const _$_OnDateTimeChanged(this.date, this.time);
 
   @override
-  final DateTime? value;
+  final DateTime? date;
+  @override
+  final TimeOfDay? time;
 
   @override
   String toString() {
-    return 'DetailsEvent.onDateChanged(value: $value)';
+    return 'DetailsEvent.onDateTimeChanged(date: $date, time: $time)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _OnDateChanged &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)));
+        (other is _OnDateTimeChanged &&
+            (identical(other.date, date) ||
+                const DeepCollectionEquality().equals(other.date, date)) &&
+            (identical(other.time, time) ||
+                const DeepCollectionEquality().equals(other.time, time)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(value);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(date) ^
+      const DeepCollectionEquality().hash(time);
 
   @JsonKey(ignore: true)
   @override
-  _$OnDateChangedCopyWith<_OnDateChanged> get copyWith =>
-      __$OnDateChangedCopyWithImpl<_OnDateChanged>(this, _$identity);
+  _$OnDateTimeChangedCopyWith<_OnDateTimeChanged> get copyWith =>
+      __$OnDateTimeChangedCopyWithImpl<_OnDateTimeChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1031,10 +1050,11 @@ class _$_OnDateChanged implements _OnDateChanged {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
-    return onDateChanged(value);
+    return onDateTimeChanged(date, time);
   }
 
   @override
@@ -1046,12 +1066,12 @@ class _$_OnDateChanged implements _OnDateChanged {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
-    if (onDateChanged != null) {
-      return onDateChanged(value);
+    if (onDateTimeChanged != null) {
+      return onDateTimeChanged(date, time);
     }
     return orElse();
   }
@@ -1065,10 +1085,10 @@ class _$_OnDateChanged implements _OnDateChanged {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
-    return onDateChanged(this);
+    return onDateTimeChanged(this);
   }
 
   @override
@@ -1080,23 +1100,25 @@ class _$_OnDateChanged implements _OnDateChanged {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {
-    if (onDateChanged != null) {
-      return onDateChanged(this);
+    if (onDateTimeChanged != null) {
+      return onDateTimeChanged(this);
     }
     return orElse();
   }
 }
 
-abstract class _OnDateChanged implements DetailsEvent {
-  const factory _OnDateChanged(DateTime? value) = _$_OnDateChanged;
+abstract class _OnDateTimeChanged implements DetailsEvent {
+  const factory _OnDateTimeChanged(DateTime? date, TimeOfDay? time) =
+      _$_OnDateTimeChanged;
 
-  DateTime? get value => throw _privateConstructorUsedError;
+  DateTime? get date => throw _privateConstructorUsedError;
+  TimeOfDay? get time => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$OnDateChangedCopyWith<_OnDateChanged> get copyWith =>
+  _$OnDateTimeChangedCopyWith<_OnDateTimeChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1172,7 +1194,8 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
     required TResult Function(int index) onSubtaskRemoved,
     required TResult Function(int index) onSubtaskCompleted,
     required TResult Function(int index, String value) onSubtaskUpdated,
-    required TResult Function(DateTime? value) onDateChanged,
+    required TResult Function(DateTime? date, TimeOfDay? time)
+        onDateTimeChanged,
     required TResult Function(String taskListId) onTaskListChanged,
   }) {
     return onTaskListChanged(taskListId);
@@ -1187,7 +1210,7 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
     TResult Function(int index)? onSubtaskRemoved,
     TResult Function(int index)? onSubtaskCompleted,
     TResult Function(int index, String value)? onSubtaskUpdated,
-    TResult Function(DateTime? value)? onDateChanged,
+    TResult Function(DateTime? date, TimeOfDay? time)? onDateTimeChanged,
     TResult Function(String taskListId)? onTaskListChanged,
     required TResult orElse(),
   }) {
@@ -1206,7 +1229,7 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
     required TResult Function(_OnSubtaskRemoved value) onSubtaskRemoved,
     required TResult Function(_OnSubtaskCompleted value) onSubtaskCompleted,
     required TResult Function(_OnSubtaskUpdated value) onSubtaskUpdated,
-    required TResult Function(_OnDateChanged value) onDateChanged,
+    required TResult Function(_OnDateTimeChanged value) onDateTimeChanged,
     required TResult Function(_OnTaskListChanged value) onTaskListChanged,
   }) {
     return onTaskListChanged(this);
@@ -1221,7 +1244,7 @@ class _$_OnTaskListChanged implements _OnTaskListChanged {
     TResult Function(_OnSubtaskRemoved value)? onSubtaskRemoved,
     TResult Function(_OnSubtaskCompleted value)? onSubtaskCompleted,
     TResult Function(_OnSubtaskUpdated value)? onSubtaskUpdated,
-    TResult Function(_OnDateChanged value)? onDateChanged,
+    TResult Function(_OnDateTimeChanged value)? onDateTimeChanged,
     TResult Function(_OnTaskListChanged value)? onTaskListChanged,
     required TResult orElse(),
   }) {

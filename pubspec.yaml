@@ -17,6 +17,8 @@ dependencies:
   json_annotation: ^4.0.1
   date_time_format: ^2.0.1
   community_material_icon: 5.9.55
+  flutter_local_notifications: ^6.0.0
+  timezone: ^0.7.0
 
 dev_dependencies:
   flutter_test:

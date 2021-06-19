@@ -8,8 +8,10 @@ import 'package:tasks/pages/home/home_page.dart';
 import 'package:tasks/pages/new_list/new_list_page.dart';
 import 'package:tasks/pages/splash/splash_page.dart';
 import 'package:tasks/utils/theme.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
+  tz.initializeTimeZones();
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('assets/google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);

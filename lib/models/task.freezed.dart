@@ -21,19 +21,21 @@ class _$TaskTearOff {
   const _$TaskTearOff();
 
   _Task call(
-      {@HiveField(0) required String id,
+      {@HiveField(0) required int id,
       @HiveField(1) required String name,
       @HiveField(2) required int order,
       @HiveField(3) String? details,
       @HiveField(4) DateTime? dateTime,
-      @HiveField(5) bool completed = false,
-      @HiveField(6) List<SubTask> subtasks = const []}) {
+      @HiveField(5) @TimeOfDayConverter() TimeOfDay? timeOfDay,
+      @HiveField(6) bool completed = false,
+      @HiveField(7) List<SubTask> subtasks = const []}) {
     return _Task(
       id: id,
       name: name,
       order: order,
       details: details,
       dateTime: dateTime,
+      timeOfDay: timeOfDay,
       completed: completed,
       subtasks: subtasks,
     );
@@ -50,7 +52,7 @@ const $Task = _$TaskTearOff();
 /// @nodoc
 mixin _$Task {
   @HiveField(0)
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
   @HiveField(2)
@@ -60,8 +62,11 @@ mixin _$Task {
   @HiveField(4)
   DateTime? get dateTime => throw _privateConstructorUsedError;
   @HiveField(5)
-  bool get completed => throw _privateConstructorUsedError;
+  @TimeOfDayConverter()
+  TimeOfDay? get timeOfDay => throw _privateConstructorUsedError;
   @HiveField(6)
+  bool get completed => throw _privateConstructorUsedError;
+  @HiveField(7)
   List<SubTask> get subtasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,13 +79,14 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res>;
   $Res call(
-      {@HiveField(0) String id,
+      {@HiveField(0) int id,
       @HiveField(1) String name,
       @HiveField(2) int order,
       @HiveField(3) String? details,
       @HiveField(4) DateTime? dateTime,
-      @HiveField(5) bool completed,
-      @HiveField(6) List<SubTask> subtasks});
+      @HiveField(5) @TimeOfDayConverter() TimeOfDay? timeOfDay,
+      @HiveField(6) bool completed,
+      @HiveField(7) List<SubTask> subtasks});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
     Object? order = freezed,
     Object? details = freezed,
     Object? dateTime = freezed,
+    Object? timeOfDay = freezed,
     Object? completed = freezed,
     Object? subtasks = freezed,
   }) {
@@ -105,7 +112,7 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -122,6 +129,10 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      timeOfDay: timeOfDay == freezed
+          ? _value.timeOfDay
+          : timeOfDay // ignore: cast_nullable_to_non_nullable
+              as TimeOfDay?,
       completed: completed == freezed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -140,13 +151,14 @@ abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       __$TaskCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@HiveField(0) String id,
+      {@HiveField(0) int id,
       @HiveField(1) String name,
       @HiveField(2) int order,
       @HiveField(3) String? details,
       @HiveField(4) DateTime? dateTime,
-      @HiveField(5) bool completed,
-      @HiveField(6) List<SubTask> subtasks});
+      @HiveField(5) @TimeOfDayConverter() TimeOfDay? timeOfDay,
+      @HiveField(6) bool completed,
+      @HiveField(7) List<SubTask> subtasks});
 }
 
 /// @nodoc
@@ -165,6 +177,7 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
     Object? order = freezed,
     Object? details = freezed,
     Object? dateTime = freezed,
+    Object? timeOfDay = freezed,
     Object? completed = freezed,
     Object? subtasks = freezed,
   }) {
@@ -172,7 +185,7 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -189,6 +202,10 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      timeOfDay: timeOfDay == freezed
+          ? _value.timeOfDay
+          : timeOfDay // ignore: cast_nullable_to_non_nullable
+              as TimeOfDay?,
       completed: completed == freezed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -202,7 +219,8 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_Task implements _Task {
   const _$_Task(
       {@HiveField(0) required this.id,
@@ -210,15 +228,16 @@ class _$_Task implements _Task {
       @HiveField(2) required this.order,
       @HiveField(3) this.details,
       @HiveField(4) this.dateTime,
-      @HiveField(5) this.completed = false,
-      @HiveField(6) this.subtasks = const []});
+      @HiveField(5) @TimeOfDayConverter() this.timeOfDay,
+      @HiveField(6) this.completed = false,
+      @HiveField(7) this.subtasks = const []});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) =>
       _$_$_TaskFromJson(json);
 
   @override
   @HiveField(0)
-  final String id;
+  final int id;
   @override
   @HiveField(1)
   final String name;
@@ -231,18 +250,22 @@ class _$_Task implements _Task {
   @override
   @HiveField(4)
   final DateTime? dateTime;
-  @JsonKey(defaultValue: false)
   @override
   @HiveField(5)
+  @TimeOfDayConverter()
+  final TimeOfDay? timeOfDay;
+  @JsonKey(defaultValue: false)
+  @override
+  @HiveField(6)
   final bool completed;
   @JsonKey(defaultValue: const [])
   @override
-  @HiveField(6)
+  @HiveField(7)
   final List<SubTask> subtasks;
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, order: $order, details: $details, dateTime: $dateTime, completed: $completed, subtasks: $subtasks)';
+    return 'Task(id: $id, name: $name, order: $order, details: $details, dateTime: $dateTime, timeOfDay: $timeOfDay, completed: $completed, subtasks: $subtasks)';
   }
 
   @override
@@ -261,6 +284,9 @@ class _$_Task implements _Task {
             (identical(other.dateTime, dateTime) ||
                 const DeepCollectionEquality()
                     .equals(other.dateTime, dateTime)) &&
+            (identical(other.timeOfDay, timeOfDay) ||
+                const DeepCollectionEquality()
+                    .equals(other.timeOfDay, timeOfDay)) &&
             (identical(other.completed, completed) ||
                 const DeepCollectionEquality()
                     .equals(other.completed, completed)) &&
@@ -277,6 +303,7 @@ class _$_Task implements _Task {
       const DeepCollectionEquality().hash(order) ^
       const DeepCollectionEquality().hash(details) ^
       const DeepCollectionEquality().hash(dateTime) ^
+      const DeepCollectionEquality().hash(timeOfDay) ^
       const DeepCollectionEquality().hash(completed) ^
       const DeepCollectionEquality().hash(subtasks);
 
@@ -293,19 +320,20 @@ class _$_Task implements _Task {
 
 abstract class _Task implements Task {
   const factory _Task(
-      {@HiveField(0) required String id,
+      {@HiveField(0) required int id,
       @HiveField(1) required String name,
       @HiveField(2) required int order,
       @HiveField(3) String? details,
       @HiveField(4) DateTime? dateTime,
-      @HiveField(5) bool completed,
-      @HiveField(6) List<SubTask> subtasks}) = _$_Task;
+      @HiveField(5) @TimeOfDayConverter() TimeOfDay? timeOfDay,
+      @HiveField(6) bool completed,
+      @HiveField(7) List<SubTask> subtasks}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
   @override
   @HiveField(0)
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   @override
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
@@ -320,9 +348,13 @@ abstract class _Task implements Task {
   DateTime? get dateTime => throw _privateConstructorUsedError;
   @override
   @HiveField(5)
-  bool get completed => throw _privateConstructorUsedError;
+  @TimeOfDayConverter()
+  TimeOfDay? get timeOfDay => throw _privateConstructorUsedError;
   @override
   @HiveField(6)
+  bool get completed => throw _privateConstructorUsedError;
+  @override
+  @HiveField(7)
   List<SubTask> get subtasks => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

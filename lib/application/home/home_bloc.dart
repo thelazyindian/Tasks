@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:tasks/models/sort_by.dart';
 import 'package:tasks/models/sub_task.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
+import 'package:tasks/utils/methods.dart';
 
 part 'home_bloc.freezed.dart';
 
@@ -85,6 +87,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final tasks = List<Task>.from(activeTaskList.tasks);
         tasks.add(e.task.copyWith(order: tasks.length));
         tasksBox.put(activeTaskList.id, tasks);
+        _scheduleTaskNotification(e.task);
       },
       updateTask: (e) async* {
         final taskList = _getTaskList(
@@ -94,6 +97,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final tasks = List<Task>.from(taskList.tasks);
         final idx = tasks.indexWhere((element) => element.id == e.task.id);
         if (idx >= 0) {
+          _scheduleTaskNotification(e.task);
           tasks[idx] = e.task;
           tasksBox.put(taskList.id, tasks);
         }
@@ -107,6 +111,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final idx = tasks.indexWhere((element) => element.id == e.task.id);
         if (idx >= 0) {
           tasks.removeAt(idx);
+          final flutterLocalNotificationsPlugin =
+              FlutterLocalNotificationsPlugin();
+          flutterLocalNotificationsPlugin.cancel(e.task.id);
           final orderTasks = tasks
               .mapIndexed((index, element) => element.copyWith(order: index))
               .toList();
@@ -273,9 +280,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final tasksWithNoDate =
         tasks.where((element) => element.dateTime == null).toList();
     tasksWithDate.sort((a, b) => a.dateTime!.compareTo(b.dateTime!));
-    tasksWithNoDate
-        .sort((a, b) => DateTime.parse(a.id).compareTo(DateTime.parse(b.id)));
+    tasksWithNoDate.sort((a, b) => a.order.compareTo(b.order));
     tasksWithDate.addAll(tasksWithNoDate);
     return tasksWithDate;
+  }
+
+  void _scheduleTaskNotification(Task task) {
+    if (task.dateTime != null) {
+      final dateTime = (task.timeOfDay != null)
+          ? DateTime(
+              task.dateTime!.year,
+              task.dateTime!.month,
+              task.dateTime!.day,
+              task.timeOfDay!.hour,
+              task.timeOfDay!.minute,
+            )
+          : task.dateTime!;
+      scheduleNotification(
+        id: task.id,
+        title: task.name,
+        body: task.details,
+        dateTime: dateTime,
+      );
+    }
   }
 }

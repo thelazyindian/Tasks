@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:tasks/models/sub_task.dart';
@@ -40,8 +41,11 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         subtasks[e.index] = subtasks[e.index].copyWith(name: e.value);
         yield state.copyWith.task(subtasks: subtasks);
       },
-      onDateChanged: (e) async* {
-        yield state.copyWith.task(dateTime: e.value);
+      onDateTimeChanged: (e) async* {
+        yield state.copyWith.task(
+          dateTime: e.date,
+          timeOfDay: e.time,
+        );
       },
       onTaskListChanged: (e) async* {
         final tasksBox = Hive.box('tasks');

@@ -29,7 +29,7 @@ class TaskItem extends StatelessWidget {
         Navigator.of(context).push(route);
       },
       child: Dismissible(
-        key: Key(task.id),
+        key: Key('${task.id}'),
         direction: task.completed
             ? DismissDirection.endToStart
             : DismissDirection.startToEnd,
@@ -56,7 +56,7 @@ class TaskItem extends StatelessWidget {
                           _taskNameView(task.name, task.completed),
                           if (task.details?.isNotEmpty ?? false)
                             _detailsView(context),
-                          if (task.dateTime != null && viewDate)
+                          if (task.dateTime != null && task.timeOfDay != null)
                             _dateTimeView(),
                         ],
                       ),
@@ -158,22 +158,38 @@ class TaskItem extends StatelessWidget {
         ),
       );
 
-  Widget _dateTimeView() => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(color: Colors.grey.shade300),
+  Widget _dateTimeView() {
+    final dateTime = (task.timeOfDay != null)
+        ? DateTime(
+            task.dateTime!.year,
+            task.dateTime!.month,
+            task.dateTime!.day,
+            task.timeOfDay!.hour,
+            task.timeOfDay!.minute,
+          )
+        : task.dateTime!;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      margin: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
+      child: Text(
+        dateTime.format(viewDate
+            ? task.timeOfDay != null
+                ? 'D, M j, g:i A'
+                : 'D, M j'
+            : 'g:i A'),
+        style: TextStyle(
+          fontSize: 12,
+          color: Colors.grey.shade500,
+          fontWeight: FontWeight.w600,
         ),
-        margin: const EdgeInsets.only(top: 8.0),
-        padding: const EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
-        child: Text(
-          task.dateTime!.format('D, M j'),
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey.shade500,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
   void _toggleComplete(BuildContext context) {
     context.read<HomeBloc>().add(task.completed

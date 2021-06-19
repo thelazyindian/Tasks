@@ -83,6 +83,9 @@ final darkTheme = ThemeData.dark().copyWith(
     displayColor: primaryColorLight,
     bodyColor: primaryColorLight,
   ),
+  timePickerTheme: TimePickerThemeData(
+    backgroundColor: secondaryColorDark,
+  ),
   secondaryHeaderColor: primaryColorLight,
 );
 

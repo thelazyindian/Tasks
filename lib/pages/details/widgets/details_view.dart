@@ -39,6 +39,7 @@ class _DetailsViewState extends State<DetailsView> {
             _taskDetails(state.task),
             _dateTimePicker(
               state.task.dateTime,
+              state.task.timeOfDay,
               state.task.completed,
             ),
             _subtasksList(
@@ -163,6 +164,7 @@ class _DetailsViewState extends State<DetailsView> {
 
   Widget _dateTimePicker(
     DateTime? dateTime,
+    TimeOfDay? timeOfDay,
     bool completed,
   ) =>
       InkWell(
@@ -171,9 +173,10 @@ class _DetailsViewState extends State<DetailsView> {
             : () => showDateTimePicker(
                   context: context,
                   initialDate: dateTime ?? DateTime.now(),
-                  onSelected: (value) => context
+                  timeOfDay: timeOfDay,
+                  onSelected: (date, time) => context
                       .read<DetailsBloc>()
-                      .add(DetailsEvent.onDateChanged(value)),
+                      .add(DetailsEvent.onDateTimeChanged(date, time)),
                 ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -184,12 +187,13 @@ class _DetailsViewState extends State<DetailsView> {
               const SizedBox(width: 24.0),
               dateTime != null
                   ? SelectedDateView(
-                      key: Key(widget.task.id),
+                      key: Key('${widget.task.id}'),
                       enabled: !completed,
                       dateTime: dateTime,
-                      onSelected: (value) => context
+                      timeOfDay: timeOfDay,
+                      onSelected: (date, time) => context
                           .read<DetailsBloc>()
-                          .add(DetailsEvent.onDateChanged(value)),
+                          .add(DetailsEvent.onDateTimeChanged(date, time)),
                     )
                   : Text(
                       'Add date/time',

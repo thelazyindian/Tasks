@@ -1,45 +1,39 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks/pages/core/date_time_picker/date_time_picker_dialog.dart';
 
-class DateTimePickerDialog extends StatefulWidget {
+class CustomDatePicker extends StatelessWidget {
   final DateTime initialDate;
+  final TimeOfDay? timeOfDay;
   final Function(DateTime?) onSelected;
-  const DateTimePickerDialog({
+  final VoidCallback onDone;
+  final Function(PickerView) onPickerChanged;
+  const CustomDatePicker({
     Key? key,
     required this.initialDate,
     required this.onSelected,
+    required this.onPickerChanged,
+    this.timeOfDay,
+    required this.onDone,
   }) : super(key: key);
 
   @override
-  _DateTimePickerDialogState createState() => _DateTimePickerDialogState();
-}
-
-enum PickerView { Calendar, Time, Repeat }
-
-class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
-  late PickerView _pickerView;
-
-  @override
-  void initState() {
-    _pickerView = PickerView.Calendar;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+    return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: _getPickerView(),
+            child: CalendarDatePicker(
+              initialDate: initialDate,
+              firstDate: DateTime(DateTime.now().year - 30),
+              lastDate: DateTime(DateTime.now().year + 30),
+              onDateChanged: (date) => onSelected(date),
+            ),
           ),
           InkWell(
-            onTap: () {
-              showTimePicker(context: context, initialTime: TimeOfDay.now());
-            },
+            onTap: () => onPickerChanged(PickerView.Time),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
@@ -56,7 +50,7 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
                         color: Theme.of(context).dividerColor,
                       ),
                       child: Text(
-                        'Set time',
+                        timeOfDay?.format(context) ?? 'Set time',
                         style: TextStyle(fontSize: 12.0),
                       ),
                     ),
@@ -66,11 +60,12 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
               ),
             ),
           ),
-          Padding(
+          Container(
+            alignment: AlignmentDirectional.centerEnd,
             padding:
                 const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            child: OverflowBar(
+              spacing: 8.0,
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
@@ -85,7 +80,7 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
                 ),
                 const SizedBox(width: 32.0),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: onDone,
                   child: Text(
                     'Done',
                     style: TextStyle(
@@ -100,27 +95,5 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
         ],
       ),
     );
-  }
-
-  Widget _getPickerView() {
-    if (_pickerView == PickerView.Calendar) {
-      return CalendarDatePicker(
-        initialDate: widget.initialDate,
-        firstDate: DateTime(DateTime.now().year - 30),
-        lastDate: DateTime(DateTime.now().year + 30),
-        onDateChanged: (x) {},
-      );
-    } else if (_pickerView == PickerView.Time) {
-      return Container();
-      // return _TimePickerDialog(
-      //   initialTime: initialTime,
-      //   initialEntryMode: initialEntryMode,
-      //   cancelText: cancelText,
-      //   confirmText: confirmText,
-      //   helpText: helpText,
-      // );
-    } else {
-      return Container();
-    }
   }
 }
