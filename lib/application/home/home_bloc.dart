@@ -296,12 +296,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               task.timeOfDay!.minute,
             )
           : task.dateTime!;
-      scheduleNotification(
-        id: task.id,
-        title: task.name,
-        body: task.details,
-        dateTime: dateTime,
-      );
+      if (task.timeOfDay != null ||
+          !(task.dateTime!.year == DateTime.now().year &&
+              task.dateTime!.month == DateTime.now().month &&
+              task.dateTime!.day == DateTime.now().day)) {
+        scheduleNotification(
+          id: task.id,
+          title: task.name,
+          body: task.details,
+          dateTime: dateTime,
+        );
+      }
     }
   }
 }
