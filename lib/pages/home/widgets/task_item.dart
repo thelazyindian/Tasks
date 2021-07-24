@@ -1,12 +1,13 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/models/sub_task.dart';
 import 'package:tasks/models/task.dart';
 import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/details/details_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:date_time_format/date_time_format.dart';
+import 'package:tasks/utils/extensions.dart';
 
 class TaskItem extends StatelessWidget {
   final Task task;
@@ -56,7 +57,8 @@ class TaskItem extends StatelessWidget {
                           _taskNameView(task.name, task.completed),
                           if (task.details?.isNotEmpty ?? false)
                             _detailsView(context),
-                          if (task.dateTime != null && task.timeOfDay != null)
+                          if (!viewDate && task.timeOfDay != null ||
+                              viewDate && task.dateTime != null)
                             _dateTimeView(),
                         ],
                       ),
@@ -159,15 +161,16 @@ class TaskItem extends StatelessWidget {
       );
 
   Widget _dateTimeView() {
-    final dateTime = (task.timeOfDay != null)
-        ? DateTime(
-            task.dateTime!.year,
-            task.dateTime!.month,
-            task.dateTime!.day,
-            task.timeOfDay!.hour,
-            task.timeOfDay!.minute,
-          )
-        : task.dateTime!;
+    final dateTime = DateTime(
+      task.dateTime!.year,
+      task.dateTime!.month,
+      task.dateTime!.day,
+      task.timeOfDay?.hour ?? 0,
+      task.timeOfDay?.minute ?? 0,
+    );
+    final text = viewDate
+        ? dateTime.getYTTorFormat('D, M j', task.timeOfDay != null)
+        : dateTime.format('g:i A');
 
     return Container(
       decoration: BoxDecoration(
@@ -177,11 +180,7 @@ class TaskItem extends StatelessWidget {
       margin: const EdgeInsets.only(top: 8.0),
       padding: const EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
       child: Text(
-        dateTime.format(viewDate
-            ? task.timeOfDay != null
-                ? 'D, M j, g:i A'
-                : 'D, M j'
-            : 'g:i A'),
+        text,
         style: TextStyle(
           fontSize: 12,
           color: Colors.grey.shade500,

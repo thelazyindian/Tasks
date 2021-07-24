@@ -9,6 +9,7 @@ import 'package:tasks/models/tlist.dart';
 import 'package:tasks/pages/home/widgets/completed_section.dart';
 import 'package:tasks/pages/home/widgets/task_item.dart';
 import 'package:date_time_format/date_time_format.dart';
+import 'package:tasks/utils/extensions.dart';
 
 class HomeView extends StatelessWidget {
   final Tlist taskList;
@@ -37,34 +38,40 @@ class HomeView extends StatelessWidget {
           _emptyTasksView(context),
         if (pendingTaskList.isNotEmpty)
           ReorderableListView.builder(
-              shrinkWrap: true,
-              buildDefaultDragHandles: taskList.sortBy == SortBy.MyOrder,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: pendingTaskList.length,
-              itemBuilder: (_, index) => Wrap(
-                    key: Key(index.toString()),
-                    children: [
-                      if (taskList.sortBy == SortBy.Date)
-                        if (pendingTaskList[index].dateTime != null &&
-                            (index == 0 ||
-                                pendingTaskList[index].dateTime !=
-                                    pendingTaskList[index - 1].dateTime))
-                          _dateCategoryTitle(context,
-                              pendingTaskList[index].dateTime!.format('D, M j'))
-                        else if (pendingTaskList[index].dateTime == null &&
-                            (index == 0 ||
-                                pendingTaskList[index - 1].dateTime != null))
-                          _dateCategoryTitle(context, 'No due date'),
-                      TaskItem(
-                        taskList: taskList,
-                        task: pendingTaskList[index],
-                        viewDate: !(taskList.sortBy == SortBy.Date),
-                      ),
-                    ],
-                  ),
-              onReorder: (prev, curr) =>
-                  context.read<HomeBloc>().add(HomeEvent.reorder(prev, curr))),
+            shrinkWrap: true,
+            buildDefaultDragHandles: taskList.sortBy == SortBy.MyOrder,
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: pendingTaskList.length,
+            itemBuilder: (_, index) => Wrap(
+              key: Key(index.toString()),
+              children: [
+                if (taskList.sortBy == SortBy.Date)
+                  if (pendingTaskList[index].dateTime != null &&
+                      (index == 0 ||
+                          pendingTaskList[index].dateTime!.format('dmY') !=
+                              pendingTaskList[index - 1]
+                                  .dateTime
+                                  ?.format('dmY')))
+                    _dateCategoryTitle(
+                        context,
+                        pendingTaskList[index]
+                            .dateTime!
+                            .getYTTorFormat('D, M j', false))
+                  else if (pendingTaskList[index].dateTime == null &&
+                      (index == 0 ||
+                          pendingTaskList[index - 1].dateTime != null))
+                    _dateCategoryTitle(context, 'No due date'),
+                TaskItem(
+                  taskList: taskList,
+                  task: pendingTaskList[index],
+                  viewDate: !(taskList.sortBy == SortBy.Date),
+                ),
+              ],
+            ),
+            onReorder: (prev, curr) =>
+                context.read<HomeBloc>().add(HomeEvent.reorder(prev, curr)),
+          ),
         if (pendingTaskList.isNotEmpty && completedTaskList.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
