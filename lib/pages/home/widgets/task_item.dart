@@ -25,9 +25,7 @@ class TaskItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        final route =
-            MaterialPageRoute(builder: (_) => DetailsPage(task: task));
-        Navigator.of(context).push(route);
+        Navigator.of(context).pushNamed('/details', arguments: task);
       },
       child: Dismissible(
         key: Key('${task.id}'),

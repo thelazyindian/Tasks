@@ -17,6 +17,7 @@ final lightTheme = ThemeData.light().copyWith(
   dividerColor: Colors.grey.shade300,
   appBarTheme: AppBarTheme(
     backgroundColor: primaryColorLight,
+    brightness: Brightness.light,
     iconTheme: IconThemeData(
       color: Colors.grey.shade700,
     ),
@@ -51,6 +52,7 @@ final darkTheme = ThemeData.dark().copyWith(
   dividerColor: Colors.white24,
   appBarTheme: AppBarTheme(
     backgroundColor: primaryColorDark,
+    brightness: Brightness.dark,
     iconTheme: IconThemeData(
       color: Colors.white38,
     ),

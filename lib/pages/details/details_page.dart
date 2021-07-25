@@ -7,13 +7,9 @@ import 'package:tasks/models/task.dart';
 import 'package:tasks/pages/details/widgets/details_view.dart';
 
 class DetailsPage extends StatelessWidget {
-  final Task task;
-  const DetailsPage({
-    required this.task,
-  });
-
   @override
   Widget build(BuildContext context) {
+    final task = ModalRoute.of(context)!.settings.arguments as Task;
     final detailsBloc = DetailsBloc(DetailsState(
       taskLists: context.read<HomeBloc>().state.taskLists,
       activeTaskList: context.read<HomeBloc>().state.activeTaskList!,
@@ -26,10 +22,7 @@ class DetailsPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            context.read<HomeBloc>().add(HomeEvent.updateTask(
-                  taskListId: detailsBloc.state.activeTaskList.id,
-                  task: detailsBloc.state.task,
-                ));
+            _updateTask(context, detailsBloc);
             Navigator.pop(context);
           },
         ),
@@ -51,10 +44,7 @@ class DetailsPage extends StatelessWidget {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          context.read<HomeBloc>().add(HomeEvent.updateTask(
-                taskListId: detailsBloc.state.activeTaskList.id,
-                task: detailsBloc.state.task,
-              ));
+          _updateTask(context, detailsBloc);
           return true;
         },
         child: BlocProvider.value(
@@ -102,5 +92,15 @@ class DetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _updateTask(
+    BuildContext context,
+    DetailsBloc detailsBloc,
+  ) {
+    context.read<HomeBloc>().add(HomeEvent.updateTask(
+          taskListId: detailsBloc.state.activeTaskList.id,
+          task: detailsBloc.state.task,
+        ));
   }
 }
