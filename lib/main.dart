@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +11,15 @@ import 'package:tasks/pages/new_list/new_list_page.dart';
 import 'package:tasks/pages/splash/splash_page.dart';
 import 'package:tasks/utils/theme.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:window_size/window_size.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    setWindowTitle('Tasks');
+    setWindowMinSize(Size(375, 850));
+    setWindowMaxSize(Size(600, 1000));
+  }
   tz.initializeTimeZones();
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('assets/google_fonts/OFL.txt');

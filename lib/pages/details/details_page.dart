@@ -62,38 +62,42 @@ class DetailsPage extends StatelessWidget {
           child: DetailsView(task: task),
         ),
       ),
-      bottomNavigationBar: Material(
-        color: Theme.of(context).bottomAppBarColor,
-        shadowColor: Colors.black,
-        elevation: 32.0,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  final taskListId = detailsBloc.state.activeTaskList.id;
-                  context.read<HomeBloc>().add(task.completed
-                      ? HomeEvent.incompletedTask(
-                          taskListId: taskListId,
-                          task: detailsBloc.state.task,
-                        )
-                      : HomeEvent.completedTask(
-                          taskListId: taskListId,
-                          task: detailsBloc.state.task,
-                        ));
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Mark ${task.completed ? 'uncompleted' : 'completed'}',
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.bold,
+      bottomNavigationBar: SizedBox(
+        height: 50.0,
+        child: Material(
+          color: Theme.of(context).bottomAppBarColor,
+          shadowColor: Colors.black,
+          elevation: 32.0,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    final taskListId = detailsBloc.state.activeTaskList.id;
+                    context.read<HomeBloc>().add(task.completed
+                        ? HomeEvent.incompletedTask(
+                            taskListId: taskListId,
+                            task: detailsBloc.state.task,
+                          )
+                        : HomeEvent.completedTask(
+                            taskListId: taskListId,
+                            task: detailsBloc.state.task,
+                          ));
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Mark ${task.completed ? 'uncompleted' : 'completed'}',
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

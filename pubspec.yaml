@@ -6,6 +6,8 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
+publish_to: none
+
 dependencies:
   flutter:
     sdk: flutter
@@ -19,6 +21,11 @@ dependencies:
   community_material_icon: 5.9.55
   flutter_local_notifications: ^6.0.0
   timezone: ^0.7.0
+  window_size:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: master
 
 dev_dependencies:
   flutter_test:

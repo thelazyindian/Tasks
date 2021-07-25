@@ -25,24 +25,27 @@ class _HomePageState extends State<HomePage> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: BottomAppBar(
-            elevation: 8.0,
-            shape: CircularNotchedRectangle(),
-            notchMargin: 6.0,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () =>
-                      _showMainMenu(state.taskLists, state.activeTaskList!),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () => _showMoreMenu(),
-                )
-              ],
+          bottomNavigationBar: SizedBox(
+            height: 50.0,
+            child: BottomAppBar(
+              elevation: 8.0,
+              shape: CircularNotchedRectangle(),
+              notchMargin: 6.0,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () =>
+                        _showMainMenu(state.taskLists, state.activeTaskList!),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () => _showMoreMenu(),
+                  )
+                ],
+              ),
             ),
           ),
           body: state.activeTaskList == null
