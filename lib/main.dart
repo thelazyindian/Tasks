@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/application/home/home_bloc.dart';
 import 'package:tasks/application/theme/theme_cubit.dart';
-import 'package:tasks/models/task.dart';
 import 'package:tasks/pages/details/details_page.dart';
 import 'package:tasks/pages/home/home_page.dart';
 import 'package:tasks/pages/new_list/new_list_page.dart';
